@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Velora - Bot</title>
+<title>Velora</title>
 
 <style>
 * {
@@ -12,30 +12,17 @@
 body {
   margin: 0;
   font-family: system-ui;
-  background: #0d0d0d;
+  background: #000;
   color: white;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 
-/* top */
-.topbar {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-}
-
-.menu {
-  font-size: 22px;
-  cursor: pointer;
-}
-
-/* chat */
+/* chat area */
 .chat {
   flex: 1;
-  padding: 10px 15px;
+  padding: 20px 14px 90px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -44,59 +31,77 @@ body {
 /* message */
 .msg {
   max-width: 75%;
-  margin-bottom: 12px;
   padding: 10px 14px;
   border-radius: 18px;
-  line-height: 1.4;
+  margin-bottom: 10px;
   font-size: 14px;
+  line-height: 1.4;
 }
 
+/* user right */
 .user {
   align-self: flex-end;
-  background: #2a2a2a;
+  background: #2b2b2b;
+  border-bottom-right-radius: 6px;
 }
 
+/* bot left */
 .bot {
   align-self: flex-start;
   background: #1a1a1a;
+  border-bottom-left-radius: 6px;
 }
 
-/* image inside message */
+/* image */
 .msg img {
   width: 100%;
-  border-radius: 12px;
+  border-radius: 10px;
   margin-top: 6px;
 }
 
-/* input */
+/* input floating */
+.inputWrapper {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* input container */
 .inputBox {
+  width: 92%;
+  background: #111;
+  border-radius: 30px;
   display: flex;
   align-items: center;
-  padding: 10px;
-  background: #0d0d0d;
-  border-top: 1px solid #222;
+  padding: 8px 10px;
+  gap: 6px;
 }
 
-input[type="text"] {
+/* text */
+.inputBox input[type="text"] {
   flex: 1;
-  padding: 12px;
-  border-radius: 20px;
+  background: transparent;
   border: none;
-  background: #1a1a1a;
   color: white;
+  outline: none;
+  padding: 8px;
 }
 
-.file {
-  margin-left: 8px;
-  cursor: pointer;
+/* file */
+.inputBox input[type="file"] {
+  width: 90px;
+  color: gray;
 }
 
-button {
-  margin-left: 8px;
-  padding: 10px 14px;
-  border-radius: 20px;
-  border: none;
+/* button */
+.inputBox button {
   background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
   cursor: pointer;
 }
 </style>
@@ -105,71 +110,68 @@ button {
 
 <body>
 
-<div class="topbar">
-  <div class="menu">☰</div>
-</div>
-
 <div class="chat" id="chat"></div>
 
-<div class="inputBox">
-  <input id="message" type="text" placeholder="Type a message...">
-  <input type="file" id="imageInput" class="file">
-  <button onclick="send()">Send</button>
+<div class="inputWrapper">
+  <div class="inputBox">
+    <input id="message" placeholder="Message...">
+    <input type="file" id="imageInput">
+    <button onclick="send()">Send</button>
+  </div>
 </div>
 
 <script>
 
-// نوع المستخدم
 let userType = localStorage.getItem("userType") || "guest";
-
-// عدد الصور
 let imageCount = 0;
 
 function send() {
   let text = document.getElementById("message").value;
-  let fileInput = document.getElementById("imageInput");
-  let file = fileInput.files[0];
+  let file = document.getElementById("imageInput").files[0];
 
-  // شرط الضيف (21 صورة فقط)
   if (file && userType === "guest" && imageCount >= 21) {
-    alert("Guest limit reached (21 images)");
+    alert("Limit 21 images for guest");
     return;
   }
 
-  if (text === "" && !file) return;
+  if (!text && !file) return;
 
-  let imageURL = null;
+  let imgURL = null;
 
   if (file) {
-    imageURL = URL.createObjectURL(file);
+    imgURL = URL.createObjectURL(file);
     imageCount++;
   }
 
-  addMessage(text, imageURL, "user");
+  addMessage(text, imgURL, "user");
 
   setTimeout(() => {
-    addMessage("Bot reply 🔥", null, "bot");
+    addMessage("Reply 👀", null, "bot");
   }, 400);
 
   document.getElementById("message").value = "";
-  fileInput.value = "";
+  document.getElementById("imageInput").value = "";
 }
 
-function addMessage(text, image, type) {
+function addMessage(text, img, type) {
   let chat = document.getElementById("chat");
 
-  let msg = document.createElement("div");
-  msg.classList.add("msg", type);
+  let div = document.createElement("div");
+  div.className = "msg " + type;
 
-  msg.innerHTML = text;
-
-  if (image) {
-    let img = document.createElement("img");
-    img.src = image;
-    msg.appendChild(img);
+  if (text) {
+    let t = document.createElement("div");
+    t.innerText = text;
+    div.appendChild(t);
   }
 
-  chat.appendChild(msg);
+  if (img) {
+    let i = document.createElement("img");
+    i.src = img;
+    div.appendChild(i);
+  }
+
+  chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
