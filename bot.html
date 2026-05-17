@@ -11,98 +11,79 @@
 
 body {
   margin: 0;
-  font-family: system-ui;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background: #000;
   color: white;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
-/* chat area */
-.chat {
-  flex: 1;
-  padding: 20px 14px 90px;
-  overflow-y: auto;
+/* top right */
+.top {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px;
 }
 
-/* message */
-.msg {
-  max-width: 75%;
-  padding: 10px 14px;
-  border-radius: 18px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 1.4;
+/* subscribe */
+.sub {
+  background: #1c1c1e;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
 }
 
-/* user right */
-.user {
-  align-self: flex-end;
-  background: #2b2b2b;
-  border-bottom-right-radius: 6px;
-}
-
-/* bot left */
-.bot {
-  align-self: flex-start;
-  background: #1a1a1a;
-  border-bottom-left-radius: 6px;
-}
-
-/* image */
-.msg img {
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 6px;
-}
-
-/* input floating */
-.inputWrapper {
-  position: fixed;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
+/* menu */
+.menu {
+  width: 36px;
+  height: 36px;
+  background: #1c1c1e;
+  border-radius: 50%;
   display: flex;
+  align-items: center;
   justify-content: center;
+  font-size: 18px;
+}
+
+/* center text */
+.center {
+  text-align: center;
+  font-size: 18px;
+  color: #d1d1d1;
+}
+
+/* bottom */
+.bottom {
+  padding: 10px;
 }
 
 /* input container */
 .inputBox {
-  width: 92%;
-  background: #111;
-  border-radius: 30px;
   display: flex;
   align-items: center;
-  padding: 8px 10px;
-  gap: 6px;
+  background: #1c1c1e;
+  border-radius: 25px;
+  padding: 6px 10px;
 }
 
-/* text */
-.inputBox input[type="text"] {
+/* icons */
+.icon {
+  font-size: 18px;
+  margin: 0 6px;
+  opacity: 0.7;
+}
+
+/* input */
+input {
   flex: 1;
   background: transparent;
   border: none;
   color: white;
   outline: none;
-  padding: 8px;
-}
-
-/* file */
-.inputBox input[type="file"] {
-  width: 90px;
-  color: gray;
-}
-
-/* button */
-.inputBox button {
-  background: white;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 12px;
-  cursor: pointer;
+  font-size: 14px;
 }
 </style>
 
@@ -110,72 +91,25 @@ body {
 
 <body>
 
-<div class="chat" id="chat"></div>
-
-<div class="inputWrapper">
-  <div class="inputBox">
-    <input id="message" placeholder="Message...">
-    <input type="file" id="imageInput">
-    <button onclick="send()">Send</button>
-  </div>
+<!-- top -->
+<div class="top">
+  <div class="sub">Subscribe</div>
+  <div class="menu">≡</div>
 </div>
 
-<script>
+<!-- center -->
+<div class="center">
+  How can I help you?
+</div>
 
-let userType = localStorage.getItem("userType") || "guest";
-let imageCount = 0;
-
-function send() {
-  let text = document.getElementById("message").value;
-  let file = document.getElementById("imageInput").files[0];
-
-  if (file && userType === "guest" && imageCount >= 21) {
-    alert("Limit 21 images for guest");
-    return;
-  }
-
-  if (!text && !file) return;
-
-  let imgURL = null;
-
-  if (file) {
-    imgURL = URL.createObjectURL(file);
-    imageCount++;
-  }
-
-  addMessage(text, imgURL, "user");
-
-  setTimeout(() => {
-    addMessage("Reply 👀", null, "bot");
-  }, 400);
-
-  document.getElementById("message").value = "";
-  document.getElementById("imageInput").value = "";
-}
-
-function addMessage(text, img, type) {
-  let chat = document.getElementById("chat");
-
-  let div = document.createElement("div");
-  div.className = "msg " + type;
-
-  if (text) {
-    let t = document.createElement("div");
-    t.innerText = text;
-    div.appendChild(t);
-  }
-
-  if (img) {
-    let i = document.createElement("img");
-    i.src = img;
-    div.appendChild(i);
-  }
-
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-</script>
+<!-- bottom -->
+<div class="bottom">
+  <div class="inputBox">
+    <div class="icon">🎤</div>
+    <input placeholder="Ask ChatGPT">
+    <div class="icon">＋</div>
+  </div>
+</div>
 
 </body>
 </html>
