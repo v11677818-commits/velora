@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Velora - Login</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f3b6d2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+/* center text */
+.title {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 120px;
+  color: #000;
+}
+
+/* buttons container */
+.buttons {
+  padding: 20px;
+  background: #000;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* button style */
+.btn {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 30px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* google */
+.google {
+  background: #fff;
+  color: #000;
+}
+
+/* register */
+.register {
+  background: #ccc;
+}
+
+/* guest */
+.guest {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #333;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="title">Thanks</div>
+
+<div class="buttons">
+
+  <button class="btn google" onclick="loginGoogle()">
+    Continue with Google
+  </button>
+
+  <button class="btn register" onclick="goRegister()">
+    Register
+  </button>
+
+  <button class="btn guest" onclick="continueGuest()">
+    Continue as Guest
+  </button>
+
+</div>
+
+<script>
+function loginGoogle() {
+  alert("Google login will be connected later");
+  window.location.href = "bot.html";
+}
+
+function goRegister() {
+  window.location.href = "register.html";
+}
+
+function continueGuest() {
+  localStorage.setItem("userType", "guest");
+  window.location.href = "bot.html";
+}
+</script>
+
+</body>
+</html>
