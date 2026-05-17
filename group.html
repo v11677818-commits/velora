@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Group Chat</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+.chat {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.msg {
+  background: #1c1c1e;
+  padding: 10px 14px;
+  border-radius: 15px;
+  margin-bottom: 8px;
+  max-width: 80%;
+}
+
+.name {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.bottom {
+  padding: 10px;
+}
+
+.inputBox {
+  display: flex;
+  background: #1c1c1e;
+  border-radius: 25px;
+  padding: 6px 10px;
+}
+
+input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+}
+</style>
+
+</head>
+
+<body>
+
+<script src="sidebar.js"></script>
+
+<!-- top -->
+<div class="top">
+  <div class="sub">Group</div>
+  <div class="menu" onclick="toggleMenu()">≡</div>
+</div>
+
+<!-- chat -->
+<div class="chat" id="chat"></div>
+
+<!-- bottom -->
+<div class="bottom">
+  <div class="inputBox">
+    <input id="msg" placeholder="Message...">
+  </div>
+</div>
+
+<script>
+
+function sendMessage() {
+  let input = document.getElementById("msg");
+  let text = input.value;
+
+  if (!text) return;
+
+  let chat = document.getElementById("chat");
+
+  let msg = document.createElement("div");
+  msg.className = "msg";
+
+  msg.innerHTML = `
+    <div class="name">You</div>
+    ${text}
+  `;
+
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+
+  input.value = "";
+}
+
+document.getElementById("msg").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
+
+</script>
+
+</body>
+</html>
