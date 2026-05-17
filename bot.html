@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Velora - Bot</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #111;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* top bar */
+.topbar {
+  padding: 15px;
+  background: #000;
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* chat area */
+.chat {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+/* messages */
+.msg {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 70%;
+}
+
+.user {
+  background: #444;
+  align-self: flex-end;
+}
+
+.bot {
+  background: #222;
+}
+
+/* input area */
+.inputBox {
+  display: flex;
+  padding: 10px;
+  background: #000;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="menu" onclick="toggleMenu()">☰</div>
+</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="inputBox">
+  <input id="message" placeholder="Type a message...">
+  <button onclick="send()">Send</button>
+</div>
+
+<script>
+
+function send() {
+  let input = document.getElementById("message");
+  let text = input.value;
+
+  if(text === "") return;
+
+  addMessage(text, "user");
+
+  // رد وهمي (نغيره لاحقاً AI)
+  setTimeout(() => {
+    addMessage("This is a bot reply 👀", "bot");
+  }, 500);
+
+  input.value = "";
+}
+
+function addMessage(text, type) {
+  let chat = document.getElementById("chat");
+
+  let msg = document.createElement("div");
+  msg.classList.add("msg", type);
+  msg.innerText = text;
+
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function toggleMenu() {
+  alert("Sidebar later 😎");
+}
+
+</script>
+
+</body>
+</html>
