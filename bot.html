@@ -5,22 +5,26 @@
 <title>Velora - Bot</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial;
-  background: #111;
+  font-family: system-ui;
+  background: #0d0d0d;
   color: white;
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-/* top bar */
+/* top */
 .topbar {
-  padding: 15px;
-  background: #000;
+  height: 60px;
   display: flex;
   align-items: center;
+  padding: 0 15px;
 }
 
 .menu {
@@ -28,50 +32,71 @@ body {
   cursor: pointer;
 }
 
-/* chat area */
+/* chat */
 .chat {
   flex: 1;
-  padding: 15px;
+  padding: 10px 15px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-/* messages */
+/* message */
 .msg {
-  margin-bottom: 10px;
-  padding: 10px 15px;
-  border-radius: 20px;
-  max-width: 70%;
+  max-width: 75%;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  line-height: 1.4;
+  font-size: 14px;
 }
 
 .user {
-  background: #444;
   align-self: flex-end;
+  background: #2a2a2a;
 }
 
 .bot {
-  background: #222;
+  align-self: flex-start;
+  background: #1a1a1a;
 }
 
-/* input area */
+/* image inside message */
+.msg img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 6px;
+}
+
+/* input */
 .inputBox {
   display: flex;
+  align-items: center;
   padding: 10px;
-  background: #000;
+  background: #0d0d0d;
+  border-top: 1px solid #222;
 }
 
-input {
+input[type="text"] {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   border-radius: 20px;
   border: none;
-  outline: none;
+  background: #1a1a1a;
+  color: white;
+}
+
+.file {
+  margin-left: 8px;
+  cursor: pointer;
 }
 
 button {
-  margin-left: 10px;
-  padding: 10px 15px;
+  margin-left: 8px;
+  padding: 10px 14px;
   border-radius: 20px;
   border: none;
+  background: white;
   cursor: pointer;
 }
 </style>
@@ -81,47 +106,71 @@ button {
 <body>
 
 <div class="topbar">
-  <div class="menu" onclick="toggleMenu()">☰</div>
+  <div class="menu">☰</div>
 </div>
 
 <div class="chat" id="chat"></div>
 
 <div class="inputBox">
-  <input id="message" placeholder="Type a message...">
+  <input id="message" type="text" placeholder="Type a message...">
+  <input type="file" id="imageInput" class="file">
   <button onclick="send()">Send</button>
 </div>
 
 <script>
 
+// نوع المستخدم
+let userType = localStorage.getItem("userType") || "guest";
+
+// عدد الصور
+let imageCount = 0;
+
 function send() {
-  let input = document.getElementById("message");
-  let text = input.value;
+  let text = document.getElementById("message").value;
+  let fileInput = document.getElementById("imageInput");
+  let file = fileInput.files[0];
 
-  if(text === "") return;
+  // شرط الضيف (21 صورة فقط)
+  if (file && userType === "guest" && imageCount >= 21) {
+    alert("Guest limit reached (21 images)");
+    return;
+  }
 
-  addMessage(text, "user");
+  if (text === "" && !file) return;
 
-  // رد وهمي (نغيره لاحقاً AI)
+  let imageURL = null;
+
+  if (file) {
+    imageURL = URL.createObjectURL(file);
+    imageCount++;
+  }
+
+  addMessage(text, imageURL, "user");
+
   setTimeout(() => {
-    addMessage("This is a bot reply 👀", "bot");
-  }, 500);
+    addMessage("Bot reply 🔥", null, "bot");
+  }, 400);
 
-  input.value = "";
+  document.getElementById("message").value = "";
+  fileInput.value = "";
 }
 
-function addMessage(text, type) {
+function addMessage(text, image, type) {
   let chat = document.getElementById("chat");
 
   let msg = document.createElement("div");
   msg.classList.add("msg", type);
-  msg.innerText = text;
+
+  msg.innerHTML = text;
+
+  if (image) {
+    let img = document.createElement("img");
+    img.src = image;
+    msg.appendChild(img);
+  }
 
   chat.appendChild(msg);
   chat.scrollTop = chat.scrollHeight;
-}
-
-function toggleMenu() {
-  alert("Sidebar later 😎");
 }
 
 </script>
