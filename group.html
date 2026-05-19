@@ -2,101 +2,583 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Group Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+<title>Velora Group</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-.chat {
-  flex: 1;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
-.msg {
-  background: #1c1c1e;
-  padding: 10px 14px;
-  border-radius: 15px;
-  margin-bottom: 8px;
-  max-width: 80%;
+body{
+background:#000;
+color:#fff;
+overflow:hidden;
+height:100vh;
 }
 
-.name {
-  font-size: 12px;
-  color: #aaa;
-  margin-bottom: 4px;
+/* MAIN */
+
+.app{
+width:100%;
+height:100vh;
+position:relative;
+display:flex;
+flex-direction:column;
 }
 
-.bottom {
-  padding: 10px;
+/* TOPBAR */
+
+.topbar{
+position:absolute;
+top:18px;
+left:18px;
+right:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:100;
 }
 
-.inputBox {
-  display: flex;
-  background: #1c1c1e;
-  border-radius: 25px;
-  padding: 6px 10px;
+.menu-btn{
+width:52px;
+height:52px;
+border-radius:50%;
+background:#141414;
+border:1px solid #262626;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
 }
 
-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: white;
-  outline: none;
+.menu-btn span{
+font-size:25px;
+color:#fff;
 }
+
+.group-title{
+font-size:16px;
+color:#fff;
+font-weight:500;
+}
+
+.online-box{
+background:#141414;
+border:1px solid #262626;
+padding:14px 20px;
+border-radius:40px;
+font-size:14px;
+}
+
+/* CHAT AREA */
+
+.chat-area{
+flex:1;
+overflow-y:auto;
+padding:
+110px 18px
+150px;
+scroll-behavior:smooth;
+}
+
+.messages{
+max-width:950px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+/* MESSAGE */
+
+.message{
+display:flex;
+gap:12px;
+align-items:flex-start;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#202020;
+flex-shrink:0;
+}
+
+.message-content{
+background:#111;
+border:1px solid #232323;
+padding:16px;
+border-radius:24px;
+max-width:720px;
+}
+
+.username{
+font-size:14px;
+font-weight:600;
+margin-bottom:7px;
+color:#fff;
+}
+
+.text{
+font-size:15px;
+line-height:1.7;
+color:#ddd;
+}
+
+.message-content img{
+width:100%;
+margin-top:12px;
+border-radius:18px;
+}
+
+/* INPUT */
+
+.bottom-bar{
+position:fixed;
+bottom:22px;
+left:50%;
+transform:translateX(-50%);
+width:95%;
+max-width:930px;
+background:#161616;
+border:1px solid #2b2b2b;
+border-radius:36px;
+padding:12px;
+display:flex;
+align-items:center;
+gap:12px;
+z-index:100;
+}
+
+.upload-btn{
+width:48px;
+height:48px;
+border:none;
+border-radius:50%;
+background:#1f1f1f;
+color:#fff;
+font-size:28px;
+cursor:pointer;
+flex-shrink:0;
+}
+
+.chat-input{
+flex:1;
+background:none;
+border:none;
+outline:none;
+color:#fff;
+font-size:16px;
+padding:0 10px;
+}
+
+.chat-input::placeholder{
+color:#8a8a8a;
+}
+
+.send-btn{
+width:48px;
+height:48px;
+border:none;
+border-radius:50%;
+background:#fff;
+color:#000;
+font-size:20px;
+font-weight:600;
+cursor:pointer;
+flex-shrink:0;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-320px;
+width:320px;
+height:100vh;
+background:#0a0a0a;
+border-right:1px solid #1f1f1f;
+padding:100px 28px;
+transition:.35s;
+z-index:999;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.sidebar a{
+display:block;
+color:#fff;
+text-decoration:none;
+font-size:20px;
+margin-bottom:34px;
+font-weight:500;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:998;
+}
+
+.overlay.active{
+opacity:1;
+pointer-events:auto;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.message-content{
+max-width:100%;
+}
+
+.bottom-bar{
+width:94%;
+bottom:14px;
+}
+
+.sidebar{
+width:280px;
+}
+
+.online-box{
+display:none;
+}
+
+}
+
 </style>
-
 </head>
 
 <body>
 
-<script src="sidebar.js"></script>
+<div class="app">
 
-<!-- top -->
-<div class="top">
-  <div class="sub">Group</div>
-  <div class="menu" onclick="toggleMenu()">≡</div>
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div class="menu-btn" onclick="openMenu()">
+<span>☰</span>
 </div>
 
-<!-- chat -->
-<div class="chat" id="chat"></div>
+<div class="group-title">
+Velora Group
+</div>
 
-<!-- bottom -->
-<div class="bottom">
-  <div class="inputBox">
-    <input id="msg" placeholder="Message...">
-  </div>
+<div class="online-box">
+2,481 Online
+</div>
+
+</div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<a href="group.html">Group</a>
+
+<a href="chat.html">Bot</a>
+
+<a href="game.html">Velora Game</a>
+
+<a href="styles.html">Outfits</a>
+
+<a href="challenges.html">Weekly Challenges</a>
+
+<a href="store.html">Velora Store</a>
+
+<a href="subscription.html">Subscription</a>
+
+<a href="profile.html">Profile</a>
+
+<a href="private.html">Create Group</a>
+
+</div>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- CHAT -->
+
+<div class="chat-area" id="chatArea">
+
+<div class="messages" id="messages">
+
+<div class="message">
+
+<div class="avatar"></div>
+
+<div class="message-content">
+
+<div class="username">
+Sophia
+</div>
+
+<div class="text">
+Does anyone have outfit ideas for a summer challenge?
+</div>
+
+</div>
+
+</div>
+
+<div class="message">
+
+<div class="avatar"></div>
+
+<div class="message-content">
+
+<div class="username">
+Luna
+</div>
+
+<div class="text">
+Try white oversized outfits with silver accessories.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- INPUT -->
+
+<div class="bottom-bar">
+
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+hidden
+>
+
+<button class="upload-btn" id="uploadButton">
++
+</button>
+
+<input
+type="text"
+class="chat-input"
+id="messageInput"
+placeholder="Send message"
+/>
+
+<button class="send-btn" id="sendButton">
+↑
+</button>
+
+</div>
+
 </div>
 
 <script>
 
-function sendMessage() {
-  let input = document.getElementById("msg");
-  let text = input.value;
+/* SIDEBAR */
 
-  if (!text) return;
+const sidebar =
+document.getElementById("sidebar");
 
-  let chat = document.getElementById("chat");
+const overlay =
+document.getElementById("overlay");
 
-  let msg = document.createElement("div");
-  msg.className = "msg";
-
-  msg.innerHTML = `
-    <div class="name">You</div>
-    ${text}
-  `;
-
-  chat.appendChild(msg);
-  chat.scrollTop = chat.scrollHeight;
-
-  input.value = "";
+function openMenu(){
+sidebar.classList.add("active");
+overlay.classList.add("active");
 }
 
-document.getElementById("msg").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") sendMessage();
+function closeMenu(){
+sidebar.classList.remove("active");
+overlay.classList.remove("active");
+}
+
+/* SYSTEM */
+
+let role = "registered";
+
+/*
+
+guest
+registered
+subscriber
+
+*/
+
+let groupMessages = 0;
+
+let limits = {
+guest:0,
+registered:6,
+subscriber:999999
+};
+
+/* ELEMENTS */
+
+const sendButton =
+document.getElementById("sendButton");
+
+const messageInput =
+document.getElementById("messageInput");
+
+const messages =
+document.getElementById("messages");
+
+const imageInput =
+document.getElementById("imageInput");
+
+const uploadButton =
+document.getElementById("uploadButton");
+
+let selectedImage = null;
+
+/* IMAGE */
+
+uploadButton.onclick = ()=>{
+
+if(role === "guest"){
+alert("Guests cannot send messages");
+return;
+}
+
+imageInput.click();
+
+};
+
+imageInput.addEventListener("change",(e)=>{
+
+selectedImage = e.target.files[0];
+
+});
+
+/* SEND */
+
+function createMessage(text,image=null){
+
+const message =
+document.createElement("div");
+
+message.className = "message";
+
+let imageHTML = "";
+
+if(image){
+imageHTML = `<img src="${image}">`;
+}
+
+message.innerHTML = `
+
+<div class="avatar"></div>
+
+<div class="message-content">
+
+<div class="username">
+You
+</div>
+
+<div class="text">
+${text}
+</div>
+
+${imageHTML}
+
+</div>
+
+`;
+
+messages.appendChild(message);
+
+document
+.getElementById("chatArea")
+.scrollTop =
+document
+.getElementById("chatArea")
+.scrollHeight;
+
+}
+
+function sendMessage(){
+
+if(role === "guest"){
+
+alert("Guests can only view the group");
+
+return;
+
+}
+
+if(role === "registered" &&
+groupMessages >= 6){
+
+alert("Registered users reached limit");
+
+return;
+
+}
+
+const text =
+messageInput.value.trim();
+
+if(!text && !selectedImage) return;
+
+groupMessages++;
+
+if(selectedImage){
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+createMessage(
+text,
+event.target.result
+);
+
+};
+
+reader.readAsDataURL(selectedImage);
+
+}else{
+
+createMessage(text);
+
+}
+
+messageInput.value = "";
+
+selectedImage = null;
+
+imageInput.value = "";
+
+}
+
+sendButton.onclick = sendMessage;
+
+messageInput.addEventListener("keypress",(e)=>{
+
+if(e.key === "Enter"){
+sendMessage();
+}
+
 });
 
 </script>
