@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<title>Velora</title>
 
 <style>
 body {
     margin: 0;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background: #d69ac2;
     display: flex;
     justify-content: center;
@@ -21,16 +21,9 @@ body {
 }
 
 .title {
-    font-size: 28px;
-    margin-bottom: 30px;
-}
-
-.input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    border: none;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: black;
 }
 
 .btn {
@@ -38,12 +31,20 @@ body {
     padding: 14px;
     border-radius: 25px;
     border: none;
-    background: #ccc;
+    margin-bottom: 12px;
+    font-size: 14px;
     cursor: pointer;
 }
 
-.back {
-    margin-top: 10px;
+.google {
+    background: white;
+}
+
+.login {
+    background: #ccc;
+}
+
+.guest {
     background: black;
     color: white;
 }
@@ -54,23 +55,34 @@ body {
 <body>
 
 <div class="container">
-    <div class="title">Login</div>
 
-    <input class="input" type="email" placeholder="Email">
-    <input class="input" type="password" placeholder="Password">
+    <div class="title">Thanks</div>
 
-    <button class="btn" onclick="login()">Login</button>
+    <button class="btn google" onclick="googleLogin()">
+        Continue with Google
+    </button>
 
-    <button class="btn back" onclick="back()">Back</button>
+    <button class="btn login" onclick="login()">
+        Login
+    </button>
+
+    <button class="btn guest" onclick="guestLogin()">
+        Guest
+    </button>
+
 </div>
 
 <script>
-function login() {
-    alert("Logged in");
+function googleLogin() {
+    alert("Google login");
 }
 
-function back() {
-    window.location.href = "index.html";
+function login() {
+    alert("Go to login page");
+}
+
+function guestLogin() {
+    alert("Guest mode");
 }
 </script>
 
