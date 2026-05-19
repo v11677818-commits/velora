@@ -2,62 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Velora - Login</title>
+<title>Auth Page</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial;
-  background: #f3b6d2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #d69ac2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* center text */
+.container {
+    width: 300px;
+    text-align: center;
+}
+
 .title {
-  text-align: center;
-  font-size: 40px;
-  margin-top: 120px;
-  color: #000;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: black;
 }
 
-/* buttons container */
-.buttons {
-  padding: 20px;
-  background: #000;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+.input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 14px;
 }
 
-/* button style */
 .btn {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 10px;
-  border-radius: 30px;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 25px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-/* google */
 .google {
-  background: #fff;
-  color: #000;
+    background: white;
 }
 
-/* register */
-.register {
-  background: #ccc;
+.login {
+    background: #ccc;
 }
 
-/* guest */
 .guest {
-  background: transparent;
-  color: #fff;
-  border: 1px solid #333;
+    background: black;
+    color: white;
+}
+
+.divider {
+    height: 1px;
+    background: #333;
+    margin: 10px 0;
 }
 </style>
 
@@ -65,37 +71,62 @@ body {
 
 <body>
 
-<div class="title">Thanks</div>
+<div class="container">
 
-<div class="buttons">
+    <div class="title">Thanks</div>
 
-  <button class="btn google" onclick="loginGoogle()">
-    Continue with Google
-  </button>
+    <!-- Email Login -->
+    <input class="input" type="email" id="email" placeholder="Email">
+    <input class="input" type="password" id="password" placeholder="Password">
 
-  <button class="btn register" onclick="goRegister()">
-    Register
-  </button>
+    <!-- Google -->
+    <button class="btn google" onclick="googleLogin()">
+        Continue with Google
+    </button>
 
-  <button class="btn guest" onclick="continueGuest()">
-    Continue as Guest
-  </button>
+    <!-- Login -->
+    <button class="btn login" onclick="login()">
+        Login
+    </button>
+
+    <div class="divider"></div>
+
+    <!-- Guest -->
+    <button class="btn guest" onclick="guestLogin()">
+        Guest
+    </button>
 
 </div>
 
 <script>
-function loginGoogle() {
-  alert("Google login will be connected later");
-  window.location.href = "bot.html";
+function login() {
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+
+    if (email === "" || password === "") {
+        alert("Fill all fields");
+        return;
+    }
+
+    if (!email.includes("@")) {
+        alert("Invalid email");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+    }
+
+    alert("Logged in successfully");
 }
 
-function goRegister() {
-  window.location.href = "register.html";
+function googleLogin() {
+    alert("Google login coming soon");
 }
 
-function continueGuest() {
-  localStorage.setItem("userType", "guest");
-  window.location.href = "bot.html";
+function guestLogin() {
+    alert("Entered as guest");
 }
 </script>
 
