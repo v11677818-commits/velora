@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Velora</title>
+
+<title>Velora Chat</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,77 +20,12 @@ font-family:'Inter',sans-serif;
 
 body{
 background:#000;
-color:#fff;
-height:100vh;
 overflow:hidden;
+color:white;
+height:100vh;
 }
 
 .container{
-display:flex;
-height:100vh;
-width:100%;
-}
-
-.sidebar{
-position:fixed;
-top:0;
-left:-320px;
-width:320px;
-height:100%;
-background:#0a0a0a;
-border-right:1px solid #1f1f1f;
-padding:25px;
-transition:.3s;
-z-index:999;
-overflow-y:auto;
-}
-
-.sidebar.active{
-left:0;
-}
-
-.sidebar-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:35px;
-}
-
-.sidebar-title{
-font-size:24px;
-font-weight:600;
-}
-
-.close-btn{
-background:none;
-border:none;
-color:#fff;
-font-size:30px;
-cursor:pointer;
-}
-
-.menu{
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.menu a{
-text-decoration:none;
-color:#fff;
-background:#111;
-padding:16px;
-border-radius:18px;
-font-size:16px;
-transition:.2s;
-border:1px solid #1c1c1c;
-}
-
-.menu a:hover{
-background:#171717;
-}
-
-.main{
 width:100%;
 height:100vh;
 display:flex;
@@ -105,114 +41,235 @@ right:20px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-z-index:10;
+z-index:100;
 }
 
 .menu-btn{
-width:54px;
-height:54px;
+width:52px;
+height:52px;
 border-radius:50%;
-border:none;
-background:#171717;
-color:#fff;
-font-size:24px;
+background:#151515;
+border:1px solid #2b2b2b;
+display:flex;
+align-items:center;
+justify-content:center;
 cursor:pointer;
+transition:.2s;
+}
+
+.menu-btn:hover{
+background:#1d1d1d;
+}
+
+.menu-btn span{
+font-size:28px;
+color:white;
+margin-top:-2px;
 }
 
 .subscribe-btn{
-background:#171717;
-border:1px solid #2b2b2b;
-color:#fff;
-padding:16px 28px;
-border-radius:40px;
+height:52px;
+padding:0 24px;
+border-radius:30px;
+border:1px solid #2d2d2d;
+background:#151515;
+color:white;
 font-size:15px;
 cursor:pointer;
 }
 
-.chat-center{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
+.sidebar{
+position:fixed;
+top:0;
+left:-310px;
+width:310px;
+height:100vh;
+background:#0b0b0b;
+border-right:1px solid #1e1e1e;
+padding:100px 28px;
+transition:.35s;
+z-index:999;
 }
 
-.chat-center h1{
+.sidebar.active{
+left:0;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+font-size:20px;
+margin-bottom:34px;
+font-weight:500;
+transition:.2s;
+}
+
+.sidebar a:hover{
+opacity:.7;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:998;
+}
+
+.overlay.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.chat-area{
+flex:1;
+overflow-y:auto;
+padding:
+130px 18px
+170px;
+scroll-behavior:smooth;
+}
+
+.center-text{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 font-size:42px;
 font-weight:600;
-color:#fff;
+color:white;
+text-align:center;
+opacity:.95;
+pointer-events:none;
+}
+
+.messages{
+max-width:900px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.message{
+max-width:78%;
+padding:16px 18px;
+border-radius:24px;
+font-size:16px;
+line-height:1.6;
+word-wrap:break-word;
+}
+
+.user{
+align-self:flex-end;
+background:#1f1f1f;
+border-bottom-right-radius:8px;
+}
+
+.bot{
+align-self:flex-start;
+background:#111;
+border:1px solid #242424;
+border-bottom-left-radius:8px;
+}
+
+.message img{
+width:100%;
+border-radius:18px;
+margin-top:10px;
 }
 
 .bottom-bar{
-position:absolute;
-bottom:25px;
+position:fixed;
+bottom:22px;
 left:50%;
 transform:translateX(-50%);
 width:95%;
-max-width:900px;
-}
-
-.input-container{
-background:#111;
-border:1px solid #262626;
-border-radius:40px;
-height:72px;
+max-width:920px;
+background:#171717;
+border:1px solid #2a2a2a;
+border-radius:36px;
+padding:12px 14px;
 display:flex;
 align-items:center;
-padding:0 16px;
 gap:12px;
+z-index:100;
 }
 
-.voice-btn,
-.upload-btn,
-.send-btn{
-width:46px;
-height:46px;
+.upload-btn{
+width:48px;
+height:48px;
 border-radius:50%;
+background:#202020;
 border:none;
-background:#1b1b1b;
-color:#fff;
-font-size:18px;
+color:white;
+font-size:28px;
 cursor:pointer;
 flex-shrink:0;
 }
 
-.chat-input{
+.input{
 flex:1;
-height:100%;
 background:transparent;
 border:none;
 outline:none;
-color:#fff;
+color:white;
 font-size:16px;
-padding:0 10px;
 }
 
-.chat-input::placeholder{
-color:#8d8d8d;
+.input::placeholder{
+color:#8e8e8e;
 }
 
-.hidden{
+.send-btn{
+width:48px;
+height:48px;
+border-radius:50%;
+background:white;
+color:black;
+border:none;
+font-size:20px;
+cursor:pointer;
+font-weight:600;
+flex-shrink:0;
+}
+
+.preview{
+max-width:900px;
+margin:auto;
+margin-bottom:16px;
 display:none;
+}
+
+.preview img{
+width:120px;
+border-radius:18px;
+border:1px solid #2a2a2a;
 }
 
 @media(max-width:768px){
 
-.chat-center h1{
-font-size:28px;
+.center-text{
+font-size:26px;
+width:100%;
+padding:0 20px;
 }
 
-.bottom-bar{
-width:92%;
-}
-
-.input-container{
-height:66px;
+.message{
+max-width:88%;
+font-size:15px;
 }
 
 .sidebar{
 width:280px;
+}
+
+.bottom-bar{
+bottom:14px;
+width:94%;
 }
 
 }
@@ -224,17 +281,19 @@ width:280px;
 
 <div class="container">
 
-<div class="sidebar" id="sidebar">
+<div class="topbar">
 
-<div class="sidebar-top">
-<div class="sidebar-title">Velora</div>
-
-<button class="close-btn" onclick="closeMenu()">
-×
+<button class="subscribe-btn">
+Subscribe
 </button>
+
+<div class="menu-btn" onclick="openMenu()">
+<span>☰</span>
 </div>
 
-<div class="menu">
+</div>
+
+<div class="sidebar" id="sidebar">
 
 <a href="group.html">Group</a>
 
@@ -242,7 +301,7 @@ width:280px;
 
 <a href="game.html">Velora Game</a>
 
-<a href="styles.html">Styles</a>
+<a href="styles.html">Outfits</a>
 
 <a href="challenges.html">Weekly Challenges</a>
 
@@ -255,46 +314,44 @@ width:280px;
 <a href="create.html">Create Group</a>
 
 </div>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="chat-area" id="chatArea">
+
+<div class="center-text" id="welcomeText">
+How can I help you?
 </div>
 
-<div class="main">
-
-<div class="topbar">
-
-<button class="menu-btn" onclick="openMenu()">
-☰
-</button>
-
-<button class="subscribe-btn">
-Subscribe
-</button>
-
+<div class="preview" id="preview">
+<img id="previewImg">
 </div>
 
-<div class="chat-center">
-<h1>How can I help you?</h1>
+<div class="messages" id="messages"></div>
+
 </div>
 
 <div class="bottom-bar">
 
-<div class="input-container">
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+hidden
+>
 
-<button class="voice-btn">
-⌁
-</button>
-
-<label class="upload-btn">
+<button class="upload-btn" id="uploadButton">
 +
-<input type="file" id="imageUpload" class="hidden">
-</label>
+</button>
 
 <input
 type="text"
-class="chat-input"
+class="input"
+id="messageInput"
 placeholder="Ask Velora"
-/>
+>
 
-<button class="send-btn">
+<button class="send-btn" id="sendButton">
 ↑
 </button>
 
@@ -302,49 +359,51 @@ placeholder="Ask Velora"
 
 </div>
 
-</div>
-
-</div>
-
 <script>
 
+const sidebar =
+document.getElementById("sidebar");
+
+const overlay =
+document.getElementById("overlay");
+
 function openMenu(){
-document.getElementById("sidebar").classList.add("active");
+sidebar.classList.add("active");
+overlay.classList.add("active");
 }
 
 function closeMenu(){
-document.getElementById("sidebar").classList.remove("active");
+sidebar.classList.remove("active");
+overlay.classList.remove("active");
 }
 
-const uploadInput = document.getElementById("imageUpload");
+const uploadButton =
+document.getElementById("uploadButton");
 
-uploadInput.addEventListener("change", function(){
+const imageInput =
+document.getElementById("imageInput");
 
-const userType = "registered";
+const preview =
+document.getElementById("preview");
 
-/*
-guest
-registered
-subscriber
-*/
+const previewImg =
+document.getElementById("previewImg");
 
-if(userType === "guest"){
-alert("Guests cannot upload images");
-uploadInput.value = "";
-return;
-}
+const sendButton =
+document.getElementById("sendButton");
 
-const file = this.files[0];
+const messageInput =
+document.getElementById("messageInput");
 
-if(file){
-console.log("Image Selected:", file.name);
-}
+const messages =
+document.getElementById("messages");
 
-});
+const welcomeText =
+document.getElementById("welcomeText");
 
-let messageCount = 0;
+let selectedImage = null;
 
-const userType = "registered";
+let role = "registered";
 
 /*
 guest = 6
@@ -352,21 +411,159 @@ registered = 21
 subscriber = unlimited
 */
 
-document.querySelector(".send-btn").addEventListener("click", ()=>{
+let messageLimit = {
+guest:6,
+registered:21,
+subscriber:999999
+};
 
-if(userType === "guest" && messageCount >= 6){
-alert("Guest limit reached");
+let messagesSent = 0;
+
+uploadButton.onclick = () => {
+
+if(role === "guest"){
+alert("Guests cannot send images");
 return;
 }
 
-if(userType === "registered" && messageCount >= 21){
-alert("Registered user limit reached");
-return;
+imageInput.click();
+
+};
+
+imageInput.addEventListener("change",(e)=>{
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+selectedImage = file;
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+preview.style.display = "block";
+
+previewImg.src = event.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+function createMessage(type,text,image=null){
+
+const div =
+document.createElement("div");
+
+div.className =
+`message ${type}`;
+
+let html = "";
+
+if(text){
+html += `<div>${text}</div>`;
 }
 
-messageCount++;
+if(image){
+html += `<img src="${image}">`;
+}
 
-console.log("Message Sent");
+div.innerHTML = html;
+
+messages.appendChild(div);
+
+messages.scrollTop =
+messages.scrollHeight;
+
+document
+.getElementById("chatArea")
+.scrollTop =
+document
+.getElementById("chatArea")
+.scrollHeight;
+
+}
+
+function botReply(){
+
+setTimeout(()=>{
+
+createMessage(
+"bot",
+"Velora AI response..."
+);
+
+},900);
+
+}
+
+function sendMessage(){
+
+const text =
+messageInput.value.trim();
+
+if(!text && !selectedImage) return;
+
+if(messagesSent >= messageLimit[role]){
+
+alert("Message limit reached");
+
+return;
+
+}
+
+messagesSent++;
+
+welcomeText.style.display = "none";
+
+if(selectedImage){
+
+const reader = new FileReader();
+
+reader.onload = function(event){
+
+createMessage(
+"user",
+text,
+event.target.result
+);
+
+botReply();
+
+};
+
+reader.readAsDataURL(selectedImage);
+
+}else{
+
+createMessage(
+"user",
+text
+);
+
+botReply();
+
+}
+
+messageInput.value = "";
+
+selectedImage = null;
+
+preview.style.display = "none";
+
+imageInput.value = "";
+
+}
+
+sendButton.onclick = sendMessage;
+
+messageInput.addEventListener("keypress",(e)=>{
+
+if(e.key === "Enter"){
+sendMessage();
+}
 
 });
 
