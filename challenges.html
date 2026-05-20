@@ -171,7 +171,7 @@ z-index:2;
 
 .card{
 position:relative;
-height:430px;
+height:340px;
 border-radius:36px;
 overflow:hidden;
 background:#111;
@@ -180,35 +180,27 @@ cursor:pointer;
 transition:.3s;
 box-shadow:
 0 0 30px rgba(255,255,255,.03);
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+padding:26px;
 }
 
 .card:hover{
 transform:translateY(-8px);
 }
 
-/* IMAGE */
+/* CARD BG */
 
-.card img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-/* OVERLAY */
-
-.card-overlay{
+.card-bg{
 position:absolute;
 inset:0;
 background:
 linear-gradient(
 180deg,
-transparent,
-rgba(0,0,0,.88)
+rgba(255,255,255,.02),
+rgba(255,255,255,.01)
 );
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-padding:24px;
 }
 
 /* BADGE */
@@ -223,21 +215,27 @@ background:rgba(0,0,0,.5);
 backdrop-filter:blur(10px);
 border:1px solid rgba(255,255,255,.1);
 font-size:13px;
+z-index:2;
 }
 
-/* CARD TEXT */
+/* CARD CONTENT */
+
+.card-content{
+position:relative;
+z-index:2;
+}
 
 .challenge-name{
 font-size:26px;
 font-weight:600;
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .challenge-info{
 font-size:14px;
-line-height:1.8;
+line-height:1.9;
 color:#d4d4d4;
-margin-bottom:18px;
+margin-bottom:22px;
 }
 
 /* BUTTON */
@@ -251,6 +249,7 @@ color:black;
 font-size:15px;
 font-weight:600;
 cursor:pointer;
+width:100%;
 }
 
 /* FLOAT */
@@ -402,8 +401,9 @@ gap:16px;
 }
 
 .card{
-height:300px;
+height:270px;
 border-radius:24px;
+padding:18px;
 }
 
 .challenge-name{
@@ -631,42 +631,152 @@ const challenges = [
 
 {
 name:"Sleepover",
-image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b"
+description:"Soft cozy night outfits with warm tones and oversized fashion."
 },
 
 {
 name:"Eid Al Fitr",
-image:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f"
+description:"Elegant luxury outfits inspired by modern Eid celebrations."
+},
+
+{
+name:"Eid Al Adha",
+description:"Traditional and classy outfits with soft neutral colors."
 },
 
 {
 name:"Wedding",
-image:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1"
+description:"Create a luxury wedding guest look with elegant accessories."
 },
 
 {
-name:"Korean Style",
-image:"https://images.unsplash.com/photo-1496747611176-843222e1e57c"
+name:"University",
+description:"Modern university fashion with casual clean aesthetics."
 },
 
 {
-name:"Luxury Style",
-image:"https://images.unsplash.com/photo-1483985988355-763728e1935b"
-},
-
-{
-name:"Beach Trip",
-image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+name:"Daily Casual",
+description:"Simple everyday outfits with balanced styling."
 },
 
 {
 name:"Winter Style",
-image:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f"
+description:"Layered winter fashion with coats, boots and luxury textures."
+},
+
+{
+name:"Summer Style",
+description:"Bright summer outfits with soft lightweight styling."
+},
+
+{
+name:"Beach Trip",
+description:"Vacation inspired beach outfits with relaxed fashion."
+},
+
+{
+name:"Graduation",
+description:"Elegant graduation ceremony outfits with classy details."
+},
+
+{
+name:"Dinner Date",
+description:"Luxury dinner styling with elegant modern fashion."
+},
+
+{
+name:"Korean Style",
+description:"Minimal Korean inspired outfits with soft layering."
+},
+
+{
+name:"Classic Style",
+description:"Timeless classy fashion with luxury neutral colors."
+},
+
+{
+name:"Luxury Style",
+description:"Premium luxury outfits inspired by celebrity fashion."
+},
+
+{
+name:"Sport Style",
+description:"Modern sporty outfits with trendy streetwear energy."
 },
 
 {
 name:"Instagram Style",
-image:"https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+description:"Trendy social media inspired outfits with stylish balance."
+},
+
+{
+name:"Celebrity Style",
+description:"High-end celebrity inspired fashion challenge."
+},
+
+{
+name:"Office Wear",
+description:"Professional outfits with elegant clean styling."
+},
+
+{
+name:"Minimal Style",
+description:"Simple minimal fashion with soft monochrome aesthetics."
+},
+
+{
+name:"Bold Style",
+description:"Confident bold outfits with strong statement pieces."
+},
+
+{
+name:"Pink Theme",
+description:"Create a full pink aesthetic outfit with luxury details."
+},
+
+{
+name:"Black Theme",
+description:"All black fashion challenge with modern luxury styling."
+},
+
+{
+name:"Streetwear",
+description:"Urban oversized outfits inspired by modern street fashion."
+},
+
+{
+name:"Soft Girl",
+description:"Soft feminine outfits with pastel color balance."
+},
+
+{
+name:"Dark Fashion",
+description:"Dark aesthetic outfits with dramatic styling energy."
+},
+
+{
+name:"Airport Look",
+description:"Comfortable luxury travel outfits with clean layering."
+},
+
+{
+name:"Birthday Party",
+description:"Stylish birthday outfits with glamorous details."
+},
+
+{
+name:"Coffee Date",
+description:"Relaxed coffee shop fashion with cozy modern styling."
+},
+
+{
+name:"Shopping Day",
+description:"Trendy shopping outfits with social fashion aesthetics."
+},
+
+{
+name:"Red Carpet",
+description:"Luxury celebrity red carpet fashion challenge."
 }
 
 ];
@@ -683,22 +793,20 @@ class="card"
 onclick="openPopup('${challenge.name}')"
 >
 
-<img src="${challenge.image}">
+<div class="card-bg"></div>
 
 <div class="badge">
 07:00 Timer
 </div>
 
-<div class="card-overlay">
+<div class="card-content">
 
 <div class="challenge-name">
 ${challenge.name}
 </div>
 
 <div class="challenge-info">
-
-Create a luxury outfit design and earn points from your final rating.
-
+${challenge.description}
 </div>
 
 <button class="start-btn">
@@ -748,4 +856,4 @@ popup.classList.remove("active");
 </script>
 
 </body>
-  </html>
+</html>
