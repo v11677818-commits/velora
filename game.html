@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Velora Game</title>
+<title>Velora Studio</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,18 +21,67 @@ font-family:'Inter',sans-serif;
 body{
 background:#000;
 overflow:hidden;
-color:#fff;
 height:100vh;
+color:#fff;
 }
 
 /* APP */
 
 .app{
+display:flex;
 width:100%;
 height:100vh;
+overflow:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:95px;
+background:#0b0b0b;
+border-right:1px solid #1d1d1d;
 display:flex;
 flex-direction:column;
+align-items:center;
+padding:22px 0;
+gap:18px;
+z-index:50;
+}
+
+.logo{
+font-size:24px;
+font-weight:600;
+margin-bottom:18px;
+}
+
+.tool{
+width:62px;
+height:62px;
+border-radius:22px;
+background:#141414;
+border:1px solid #252525;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:13px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
+padding:6px;
+}
+
+.tool:hover{
+background:#1d1d1d;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
 position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
 overflow:hidden;
 }
 
@@ -40,224 +89,219 @@ overflow:hidden;
 
 .topbar{
 position:absolute;
-top:20px;
-left:20px;
-right:20px;
+top:18px;
+left:18px;
+right:18px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 z-index:100;
 }
 
-.menu-btn{
-width:52px;
-height:52px;
-border-radius:50%;
-border:1px solid #2a2a2a;
-background:#151515;
-color:#fff;
-font-size:24px;
-cursor:pointer;
-}
-
 .timer{
-background:#151515;
-border:1px solid #2a2a2a;
-padding:15px 28px;
-border-radius:40px;
-font-size:18px;
+padding:14px 26px;
+border-radius:999px;
+background:#121212;
+border:1px solid #252525;
+font-size:17px;
 font-weight:600;
 }
 
-/* MAIN */
-
-.main{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-padding-top:80px;
+.finish-btn{
+height:54px;
+padding:0 28px;
+border:none;
+border-radius:999px;
+background:#fff;
+color:#000;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
 }
 
-/* MODEL AREA */
+/* STAGE */
 
-.model-area{
+.stage{
 position:relative;
 width:100%;
-max-width:1200px;
 height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-}
-
-/* MODEL */
-
-.model-card{
-width:360px;
-height:620px;
-background:linear-gradient(
-180deg,
-#1a1a1a,
-#0d0d0d
-);
-border:1px solid #252525;
-border-radius:40px;
-position:relative;
 overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-box-shadow:
-0 0 40px rgba(255,255,255,.03);
-}
-
-/* FAKE 3D MODEL */
-
-.model{
-width:260px;
-height:520px;
-position:relative;
-display:flex;
-justify-content:center;
-align-items:center;
-animation:float 4s ease-in-out infinite;
-}
-
-/* BODY */
-
-.body{
-width:170px;
-height:420px;
-background:
-linear-gradient(
-180deg,
-#ffe5d7,
-#f2c5af
-);
-border-radius:90px;
-position:absolute;
-bottom:0;
-}
-
-/* HEAD */
-
-.head{
-width:120px;
-height:120px;
-background:
-linear-gradient(
-180deg,
-#ffe5d7,
-#f1c1a9
-);
-border-radius:50%;
-position:absolute;
-top:20px;
-z-index:2;
-}
-
-/* HAIR */
-
-.hair{
-width:150px;
-height:140px;
-background:#111;
-border-radius:80px;
-position:absolute;
-top:0;
-z-index:1;
-}
-
-/* CLOTHES */
-
-.clothes{
-position:absolute;
-width:180px;
-height:260px;
-top:160px;
-border-radius:30px;
-overflow:hidden;
-z-index:3;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-.clothes img{
-width:100%;
-height:100%;
-object-fit:cover;
 }
 
 /* GLOW */
 
 .glow{
 position:absolute;
-width:420px;
-height:420px;
+width:700px;
+height:700px;
 background:
 radial-gradient(
 circle,
 rgba(255,255,255,.08),
 transparent
 );
-filter:blur(40px);
-z-index:-1;
+filter:blur(80px);
 }
 
-/* SIDE TOOLS */
+/* MODEL */
 
-.tools{
-position:absolute;
-right:40px;
+.model-wrapper{
+position:relative;
+width:340px;
+height:700px;
 display:flex;
-flex-direction:column;
-gap:18px;
+justify-content:center;
+align-items:center;
+animation:float 4s ease-in-out infinite;
 }
 
-.tool-btn{
-width:68px;
-height:68px;
-border-radius:24px;
-background:#151515;
-border:1px solid #292929;
-color:#fff;
-font-size:15px;
-cursor:pointer;
+/* MODEL BODY */
+
+.model{
+position:relative;
+width:250px;
+height:620px;
 }
 
-/* BOTTOM */
+/* HEAD */
 
-.bottom{
+.head{
 position:absolute;
-bottom:20px;
+top:10px;
+left:50%;
+transform:translateX(-50%);
+width:120px;
+height:120px;
+background:
+linear-gradient(
+180deg,
+#ffe6d7,
+#f2c3ab
+);
+border-radius:50%;
+z-index:3;
+}
+
+/* HAIR */
+
+.hair{
+position:absolute;
+top:-5px;
+left:50%;
+transform:translateX(-50%);
+width:145px;
+height:155px;
+background:#0f0f0f;
+border-radius:80px;
+z-index:2;
+}
+
+/* BODY */
+
+.body{
+position:absolute;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:180px;
+height:500px;
+background:
+linear-gradient(
+180deg,
+#ffe7d9,
+#f1c0a7
+);
+border-radius:100px;
+z-index:1;
+}
+
+/* CLOTHES AREA */
+
+.clothes-layer{
+position:absolute;
+top:160px;
+left:50%;
+transform:translateX(-50%);
+width:220px;
+height:320px;
+z-index:5;
+overflow:visible;
+}
+
+/* DRAG IMAGE */
+
+.draggable{
+position:absolute;
+top:0;
+left:0;
+width:220px;
+cursor:grab;
+user-select:none;
+touch-action:none;
+}
+
+/* BOTTOM TOOLS */
+
+.bottom-tools{
+position:absolute;
+bottom:22px;
 left:50%;
 transform:translateX(-50%);
 display:flex;
-gap:16px;
+gap:14px;
+z-index:100;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.bottom-tools button{
+height:54px;
+padding:0 24px;
+border:none;
+border-radius:999px;
+background:#141414;
+border:1px solid #262626;
+color:#fff;
+cursor:pointer;
+font-size:15px;
+}
+
+/* POSES */
+
+.poses{
+position:absolute;
+right:22px;
+top:50%;
+transform:translateY(-50%);
+display:flex;
+flex-direction:column;
+gap:14px;
 z-index:100;
 }
 
-.bottom button{
+.pose{
+width:110px;
 height:56px;
-padding:0 26px;
-border:none;
-border-radius:999px;
-background:#151515;
-border:1px solid #2a2a2a;
-color:#fff;
-font-size:15px;
+border-radius:18px;
+background:#141414;
+border:1px solid #252525;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
 cursor:pointer;
 }
 
-/* RESULT SCREEN */
+/* RESULT */
 
-.result-screen{
+.result{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.88);
-backdrop-filter:blur(16px);
+background:rgba(0,0,0,.92);
+backdrop-filter:blur(18px);
 display:none;
 justify-content:center;
 align-items:center;
@@ -265,92 +309,89 @@ flex-direction:column;
 z-index:9999;
 }
 
-.result-screen.active{
+.result.active{
 display:flex;
 }
 
-/* ANALYZE */
-
-.analyze-text{
-font-size:34px;
+.result-title{
+font-size:38px;
 font-weight:600;
 margin-bottom:20px;
 }
 
 .loading{
-width:260px;
+width:280px;
 height:8px;
-background:#1d1d1d;
 border-radius:999px;
+background:#1c1c1c;
 overflow:hidden;
-margin-bottom:26px;
+margin-bottom:24px;
 }
 
 .loading span{
 display:block;
-width:0%;
 height:100%;
+width:0%;
 background:#fff;
 animation:load 10s linear forwards;
 }
 
-.pose-title{
-font-size:18px;
-margin-bottom:18px;
-color:#cfcfcf;
+.analyze{
+font-size:17px;
+color:#b8b8b8;
+margin-bottom:32px;
 }
-
-.poses{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-justify-content:center;
-max-width:700px;
-}
-
-.pose-btn{
-padding:14px 22px;
-background:#151515;
-border:1px solid #2a2a2a;
-border-radius:999px;
-color:#fff;
-cursor:pointer;
-}
-
-/* FINAL */
 
 .final-rating{
 display:none;
 flex-direction:column;
 align-items:center;
-animation:fade .6s ease;
+animation:fade .5s ease;
 }
 
 .stars{
-font-size:46px;
+font-size:50px;
+letter-spacing:8px;
 margin:20px 0;
-letter-spacing:10px;
 }
 
 .points{
-font-size:26px;
+font-size:28px;
 font-weight:600;
-margin-top:10px;
 }
 
 .continue-btn{
-margin-top:28px;
+margin-top:30px;
 height:56px;
 padding:0 34px;
 border:none;
 border-radius:999px;
 background:#fff;
 color:#000;
-font-size:16px;
+font-size:15px;
 cursor:pointer;
 }
 
-/* ANIMATION */
+/* PARTICLES */
+
+.particles{
+position:absolute;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+}
+
+.particles span{
+position:absolute;
+width:4px;
+height:4px;
+background:#fff;
+border-radius:50%;
+opacity:.2;
+animation:particles 12s linear infinite;
+}
+
+/* ANIMATIONS */
 
 @keyframes load{
 
@@ -394,31 +435,53 @@ transform:translateY(0);
 
 }
 
+@keyframes particles{
+
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+
+20%{
+opacity:.2;
+}
+
+100%{
+transform:translateY(-100px);
+opacity:0;
+}
+
+}
+
 /* MOBILE */
 
 @media(max-width:900px){
 
-.model-card{
-width:280px;
-height:520px;
+.sidebar{
+width:78px;
 }
 
-.model{
-transform:scale(.85);
+.tool{
+width:54px;
+height:54px;
+font-size:11px;
 }
 
-.tools{
-right:18px;
+.model-wrapper{
+transform:scale(.82);
 }
 
-.tool-btn{
-width:58px;
-height:58px;
-font-size:13px;
+.poses{
+right:10px;
 }
 
-.analyze-text{
-font-size:26px;
+.pose{
+width:90px;
+font-size:12px;
+}
+
+.result-title{
+font-size:28px;
 }
 
 }
@@ -430,16 +493,41 @@ font-size:26px;
 
 <div class="app">
 
-<!-- TOP -->
+<!-- SIDEBAR -->
 
-<div class="topbar">
+<div class="sidebar">
 
-<button class="menu-btn">
-☰
-</button>
+<div class="logo">
+V
+</div>
 
-<div class="timer" id="timer">
-07:00
+<label class="tool">
+Upload
+<input type="file" id="uploadInput" hidden accept="image/*">
+</label>
+
+<div class="tool" id="zoomIn">
+Zoom +
+</div>
+
+<div class="tool" id="zoomOut">
+Zoom -
+</div>
+
+<div class="tool" id="rotateBtn">
+Rotate
+</div>
+
+<div class="tool">
+Brush
+</div>
+
+<div class="tool">
+Color
+</div>
+
+<div class="tool">
+Save
 </div>
 
 </div>
@@ -448,15 +536,37 @@ font-size:26px;
 
 <div class="main">
 
-<div class="model-area">
+<div class="particles">
+
+<span style="left:10%;animation-delay:0s"></span>
+<span style="left:20%;animation-delay:2s"></span>
+<span style="left:40%;animation-delay:4s"></span>
+<span style="left:60%;animation-delay:1s"></span>
+<span style="left:80%;animation-delay:5s"></span>
+
+</div>
+
+<div class="topbar">
+
+<div class="timer" id="timer">
+07:00
+</div>
+
+<button class="finish-btn" id="finishBtn">
+Finish Design
+</button>
+
+</div>
+
+<!-- STAGE -->
+
+<div class="stage">
 
 <div class="glow"></div>
 
-<!-- MODEL -->
+<div class="model-wrapper">
 
-<div class="model-card">
-
-<div class="model" id="model">
+<div class="model">
 
 <div class="hair"></div>
 
@@ -464,59 +574,57 @@ font-size:26px;
 
 <div class="body"></div>
 
-<div class="clothes" id="clothes"></div>
+<div class="clothes-layer" id="clothesLayer"></div>
 
 </div>
 
 </div>
 
-<!-- TOOLS -->
-
-<div class="tools">
-
-<input
-type="file"
-id="upload"
-accept="image/*"
-hidden
->
-
-<button
-class="tool-btn"
-id="uploadBtn"
->
-Upload
-</button>
-
-<button class="tool-btn">
-Brush
-</button>
-
-<button class="tool-btn">
-Color
-</button>
-
-<button class="tool-btn" id="saveBtn">
-Save
-</button>
-
 </div>
 
+<!-- POSES -->
+
+<div class="poses">
+
+<div class="pose">
+Elegant
+</div>
+
+<div class="pose">
+Luxury
+</div>
+
+<div class="pose">
+Fashion
+</div>
+
+<div class="pose">
+Soft
+</div>
+
+<div class="pose">
+Model
 </div>
 
 </div>
 
 <!-- BOTTOM -->
 
-<div class="bottom">
+<div class="bottom-tools">
 
-<button id="finishBtn">
-Finish Design
+<button>
+Weekly Challenge
 </button>
 
 <button>
-Challenges
+Save Design
 </button>
+
+<button>
+My Designs
+</button>
+
+</div>
 
 </div>
 
@@ -524,11 +632,11 @@ Challenges
 
 <!-- RESULT -->
 
-<div class="result-screen" id="resultScreen">
+<div class="result" id="result">
 
-<div id="analyzeSection">
+<div id="analyzeScreen">
 
-<div class="analyze-text">
+<div class="result-title">
 Analyzing Design
 </div>
 
@@ -536,43 +644,15 @@ Analyzing Design
 <span></span>
 </div>
 
-<div class="pose-title">
-Choose Pose
-</div>
-
-<div class="poses">
-
-<button class="pose-btn">
-Elegant
-</button>
-
-<button class="pose-btn">
-Luxury
-</button>
-
-<button class="pose-btn">
-Cute
-</button>
-
-<button class="pose-btn">
-Fashion
-</button>
-
-<button class="pose-btn">
-Model
-</button>
-
-<button class="pose-btn">
-Soft
-</button>
-
+<div class="analyze">
+Reviewing outfit balance and style quality
 </div>
 
 </div>
 
 <div class="final-rating" id="finalRating">
 
-<div class="analyze-text">
+<div class="result-title">
 Final Rating
 </div>
 
@@ -622,38 +702,44 @@ time--;
 
 },1000);
 
-/* UPLOAD */
+/* IMAGE */
 
-const uploadBtn =
-document.getElementById("uploadBtn");
+const uploadInput =
+document.getElementById("uploadInput");
 
-const upload =
-document.getElementById("upload");
+const clothesLayer =
+document.getElementById("clothesLayer");
 
-const clothes =
-document.getElementById("clothes");
+let currentImage = null;
 
-uploadBtn.onclick = ()=>{
+let scale = 1;
 
-upload.click();
+let rotation = 0;
 
-};
+uploadInput.addEventListener("change",(e)=>{
 
-upload.addEventListener("change",(e)=>{
-
-const file =
-e.target.files[0];
+const file = e.target.files[0];
 
 if(!file) return;
 
-const reader =
-new FileReader();
+const reader = new FileReader();
 
 reader.onload = function(event){
 
-clothes.innerHTML = `
-<img src="${event.target.result}">
+clothesLayer.innerHTML = `
+
+<img
+src="${event.target.result}"
+class="draggable"
+id="dragItem"
+>
+
 `;
+
+currentImage =
+document.getElementById("dragItem");
+
+dragElement(currentImage);
 
 };
 
@@ -661,31 +747,127 @@ reader.readAsDataURL(file);
 
 });
 
+/* DRAG */
+
+function dragElement(elmnt){
+
+let pos1=0,pos2=0,pos3=0,pos4=0;
+
+elmnt.onmousedown = dragMouseDown;
+
+function dragMouseDown(e){
+
+e.preventDefault();
+
+pos3 = e.clientX;
+pos4 = e.clientY;
+
+document.onmouseup =
+closeDragElement;
+
+document.onmousemove =
+elementDrag;
+
+}
+
+function elementDrag(e){
+
+e.preventDefault();
+
+pos1 = pos3 - e.clientX;
+pos2 = pos4 - e.clientY;
+
+pos3 = e.clientX;
+pos4 = e.clientY;
+
+elmnt.style.top =
+(elmnt.offsetTop - pos2) + "px";
+
+elmnt.style.left =
+(elmnt.offsetLeft - pos1) + "px";
+
+}
+
+function closeDragElement(){
+
+document.onmouseup = null;
+document.onmousemove = null;
+
+}
+
+}
+
+/* ZOOM */
+
+document
+.getElementById("zoomIn")
+.onclick = ()=>{
+
+if(!currentImage) return;
+
+scale += 0.1;
+
+updateTransform();
+
+};
+
+document
+.getElementById("zoomOut")
+.onclick = ()=>{
+
+if(!currentImage) return;
+
+scale -= 0.1;
+
+updateTransform();
+
+};
+
+/* ROTATE */
+
+document
+.getElementById("rotateBtn")
+.onclick = ()=>{
+
+if(!currentImage) return;
+
+rotation += 15;
+
+updateTransform();
+
+};
+
+function updateTransform(){
+
+currentImage.style.transform = `
+scale(${scale})
+rotate(${rotation}deg)
+`;
+
+}
+
 /* FINISH */
 
 const finishBtn =
 document.getElementById("finishBtn");
 
-const resultScreen =
-document.getElementById("resultScreen");
-
-const analyzeSection =
-document.getElementById("analyzeSection");
+const result =
+document.getElementById("result");
 
 const finalRating =
 document.getElementById("finalRating");
 
 finishBtn.onclick = ()=>{
 
-resultScreen.classList.add("active");
+result.classList.add("active");
 
 setTimeout(()=>{
 
-analyzeSection.style.display =
-"none";
+document
+.getElementById("analyzeScreen")
+.style.display = "none";
 
-finalRating.style.display =
-"flex";
+finalRating.style.display = "flex";
 
 },10000);
 
@@ -694,4 +876,4 @@ finalRating.style.display =
 </script>
 
 </body>
-</html>
+  </html>
