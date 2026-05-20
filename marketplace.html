@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>Velora Marketplace</title>
 
@@ -31,8 +31,8 @@ height:100vh;
 width:100%;
 height:100vh;
 display:flex;
-position:relative;
 overflow:hidden;
+position:relative;
 }
 
 /* SIDEBAR */
@@ -101,20 +101,26 @@ gap:14px;
 
 .menu-btn,
 .add-btn{
-width:52px;
-height:52px;
+width:54px;
+height:54px;
 border-radius:50%;
-background:#151515;
+background:#141414;
 border:1px solid #2b2b2b;
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:24px;
 cursor:pointer;
+transition:.2s;
+}
+
+.menu-btn:hover,
+.add-btn:hover{
+background:#1d1d1d;
 }
 
 .title{
-font-size:28px;
+font-size:30px;
 font-weight:600;
 }
 
@@ -139,7 +145,7 @@ padding:
 /* HERO */
 
 .hero{
-max-width:1450px;
+max-width:1500px;
 margin:auto;
 position:relative;
 }
@@ -168,7 +174,7 @@ pointer-events:none;
 .grid{
 display:grid;
 grid-template-columns:
-repeat(auto-fill,minmax(280px,1fr));
+repeat(auto-fill,minmax(300px,1fr));
 gap:24px;
 position:relative;
 z-index:2;
@@ -179,10 +185,9 @@ z-index:2;
 .card{
 position:relative;
 background:#111;
-border:1px solid #252525;
-border-radius:34px;
+border:1px solid #232323;
+border-radius:36px;
 overflow:hidden;
-padding-bottom:22px;
 transition:.3s;
 }
 
@@ -190,84 +195,41 @@ transition:.3s;
 transform:translateY(-8px);
 }
 
-/* VIP */
+/* VIP CARD */
 
 .vip{
-border:1px solid rgba(255,255,255,.2);
+border:1px solid rgba(255,255,255,.18);
 box-shadow:
-0 0 40px rgba(255,255,255,.08);
+0 0 40px rgba(255,255,255,.07);
 }
 
 /* IMAGE */
 
-.card img{
+.item-image{
 width:100%;
-height:290px;
-object-fit:cover;
-}
-
-/* CONTENT */
-
-.content{
-padding:20px;
-}
-
-.item-name{
-font-size:22px;
-font-weight:600;
-margin-bottom:10px;
-}
-
-.item-description{
-font-size:14px;
-line-height:1.9;
-color:#d4d4d4;
-margin-bottom:18px;
-}
-
-.price{
-font-size:15px;
-margin-bottom:18px;
-}
-
-/* ACTIONS */
-
-.actions{
+height:330px;
+background:#0e0e0e;
 display:flex;
-justify-content:space-between;
+justify-content:center;
 align-items:center;
-gap:10px;
+overflow:hidden;
+position:relative;
 }
 
-.buy-btn{
-flex:1;
-height:52px;
-border:none;
-border-radius:999px;
-background:white;
-color:black;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
+.item-image img{
+width:82%;
+height:82%;
+object-fit:contain;
+filter:
+drop-shadow(0 0 30px rgba(255,255,255,.15));
+transition:.3s;
 }
 
-.reactions{
-display:flex;
-gap:10px;
+.card:hover .item-image img{
+transform:scale(1.04);
 }
 
-.react-btn{
-width:52px;
-height:52px;
-border:none;
-border-radius:50%;
-background:#1a1a1a;
-color:white;
-font-size:18px;
-cursor:pointer;
-}
-
-/* VIP BADGE */
+/* VIP */
 
 .vip-badge{
 position:absolute;
@@ -276,23 +238,85 @@ left:16px;
 padding:10px 16px;
 border-radius:999px;
 background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.14);
 backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.12);
 font-size:13px;
+z-index:5;
 }
 
-/* PRIVATE */
+/* CONTENT */
 
-.private-tag{
-position:absolute;
-top:16px;
-right:16px;
-padding:10px 14px;
+.content{
+padding:22px;
+}
+
+.item-name{
+font-size:23px;
+font-weight:600;
+margin-bottom:12px;
+}
+
+.item-description{
+font-size:14px;
+line-height:1.9;
+color:#d4d4d4;
+margin-bottom:20px;
+}
+
+.price{
+font-size:15px;
+margin-bottom:20px;
+}
+
+/* ACTIONS */
+
+.actions{
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.buy-btn{
+flex:1;
+height:54px;
+border:none;
 border-radius:999px;
-background:rgba(0,0,0,.55);
-backdrop-filter:blur(10px);
-font-size:13px;
-border:1px solid rgba(255,255,255,.08);
+background:white;
+color:black;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+}
+
+.buy-btn:hover{
+transform:scale(.98);
+}
+
+.reaction-btn{
+width:54px;
+height:54px;
+border:none;
+border-radius:50%;
+background:#181818;
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:.2s;
+}
+
+.reaction-btn:hover{
+background:#232323;
+}
+
+/* COUNTERS */
+
+.counter-row{
+display:flex;
+gap:14px;
+margin-top:16px;
+font-size:14px;
+color:#bdbdbd;
 }
 
 /* POPUP */
@@ -300,7 +324,7 @@ border:1px solid rgba(255,255,255,.08);
 .popup{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.84);
+background:rgba(0,0,0,.82);
 backdrop-filter:blur(18px);
 display:none;
 justify-content:center;
@@ -326,16 +350,16 @@ animation:fade .4s ease;
 .popup-title{
 font-size:30px;
 font-weight:600;
-margin-bottom:26px;
+margin-bottom:28px;
 }
 
-/* INPUTS */
+/* UPLOAD */
 
 .upload-box{
-height:220px;
-border-radius:28px;
+height:240px;
+border-radius:30px;
 background:#151515;
-border:1px dashed #333;
+border:1px dashed #353535;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -348,8 +372,11 @@ overflow:hidden;
 .upload-box img{
 width:100%;
 height:100%;
-object-fit:cover;
+object-fit:contain;
+padding:20px;
 }
+
+/* INPUTS */
 
 .input{
 width:100%;
@@ -371,20 +398,11 @@ background:#161616;
 border:1px solid #292929;
 border-radius:20px;
 padding:18px;
-margin-bottom:16px;
+margin-bottom:22px;
 color:white;
 font-size:15px;
 outline:none;
 resize:none;
-}
-
-.checkbox{
-display:flex;
-align-items:center;
-gap:12px;
-margin-bottom:24px;
-font-size:15px;
-color:#d4d4d4;
 }
 
 .publish-btn{
@@ -417,8 +435,8 @@ repeat(2,1fr);
 gap:16px;
 }
 
-.card img{
-height:180px;
+.item-image{
+height:190px;
 }
 
 .item-name{
@@ -434,7 +452,7 @@ height:44px;
 font-size:13px;
 }
 
-.react-btn{
+.reaction-btn{
 width:44px;
 height:44px;
 }
@@ -442,6 +460,22 @@ height:44px;
 .popup-card{
 padding:24px;
 border-radius:28px;
+}
+
+}
+
+/* ANIMATION */
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
 }
 
 }
@@ -498,7 +532,7 @@ onclick="openMenu()"
 class="add-btn"
 onclick="openPopup()"
 >
-🛍️
+＋
 </div>
 
 <div class="title">
@@ -507,8 +541,11 @@ Marketplace
 
 </div>
 
-<div class="points-box">
-Points: 12,450
+<div
+class="points-box"
+id="pointsBox"
+>
+Points: 2500
 </div>
 
 </div>
@@ -531,11 +568,11 @@ Points: 12,450
 VIP
 </div>
 
-<div class="private-tag">
-🔒 Private
-</div>
+<div class="item-image">
 
-<img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c">
+<img src="https://pngimg.com/d/dress_PNG52.png">
+
+</div>
 
 <div class="content">
 
@@ -544,7 +581,7 @@ Luxury Black Dress
 </div>
 
 <div class="item-description">
-Exclusive luxury outfit with soft elegant styling and premium textures.
+Premium luxury outfit designed for elegant fashion styling.
 </div>
 
 <div class="price">
@@ -553,20 +590,43 @@ Exclusive luxury outfit with soft elegant styling and premium textures.
 
 <div class="actions">
 
-<button class="buy-btn">
+<button
+class="buy-btn"
+onclick="buyItem(1200)"
+>
 Buy
 </button>
 
-<div class="reactions">
-
-<button class="react-btn">
+<button
+class="reaction-btn"
+onclick="likeItem(this)"
+>
 👍🏻
 </button>
 
-<button class="react-btn">
+<button
+class="reaction-btn"
+onclick="dislikeItem(this)"
+>
 👎🏻
 </button>
 
+</div>
+
+<div class="counter-row">
+
+<div>
+Likes:
+<span class="like-count">
+12
+</span>
+</div>
+
+<div>
+Dislikes:
+<span class="dislike-count">
+1
+</span>
 </div>
 
 </div>
@@ -579,7 +639,11 @@ Buy
 
 <div class="card">
 
-<img src="https://images.unsplash.com/photo-1483985988355-763728e1935b">
+<div class="item-image">
+
+<img src="https://pngimg.com/d/jacket_PNG8055.png">
+
+</div>
 
 <div class="content">
 
@@ -588,7 +652,7 @@ Streetwear Jacket
 </div>
 
 <div class="item-description">
-Modern oversized streetwear fashion with relaxed aesthetic styling.
+Oversized modern streetwear outfit with soft luxury details.
 </div>
 
 <div class="price">
@@ -597,20 +661,43 @@ Modern oversized streetwear fashion with relaxed aesthetic styling.
 
 <div class="actions">
 
-<button class="buy-btn">
+<button
+class="buy-btn"
+onclick="buyItem(650)"
+>
 Buy
 </button>
 
-<div class="reactions">
-
-<button class="react-btn">
+<button
+class="reaction-btn"
+onclick="likeItem(this)"
+>
 👍🏻
 </button>
 
-<button class="react-btn">
+<button
+class="reaction-btn"
+onclick="dislikeItem(this)"
+>
 👎🏻
 </button>
 
+</div>
+
+<div class="counter-row">
+
+<div>
+Likes:
+<span class="like-count">
+7
+</span>
+</div>
+
+<div>
+Dislikes:
+<span class="dislike-count">
+0
+</span>
 </div>
 
 </div>
@@ -635,14 +722,17 @@ Buy
 Publish Item
 </div>
 
-<label class="upload-box" id="uploadBox">
+<label
+class="upload-box"
+id="uploadBox"
+>
 
-📷
+📷 Upload Outfit
 
 <input
 type="file"
 id="uploadInput"
-accept="image/*"
+accept="image/png,image/webp"
 hidden
 >
 
@@ -651,7 +741,7 @@ hidden
 <input
 type="text"
 class="input"
-placeholder="Name"
+placeholder="Item Name"
 >
 
 <textarea
@@ -665,18 +755,8 @@ class="input"
 placeholder="Price"
 >
 
-<div class="checkbox">
-
-<input type="checkbox">
-
-<label>
-🔒 Private For Buyer
-</label>
-
-</div>
-
 <button class="publish-btn">
-Publish
+Publish Item
 </button>
 
 </div>
@@ -684,6 +764,19 @@ Publish
 </div>
 
 <script>
+
+/* USER */
+
+const user = {
+
+role:"subscriber",
+points:2500
+
+};
+
+document.getElementById("pointsBox")
+.innerHTML =
+`Points: ${user.points}`;
 
 /* SIDEBAR */
 
@@ -716,6 +809,16 @@ document.getElementById("popup");
 
 function openPopup(){
 
+if(
+user.role === "registered"
+){
+
+alert(
+"You can publish 2 items every 24 hours"
+);
+
+}
+
 popup.classList.add("active");
 
 }
@@ -725,6 +828,60 @@ overlay.addEventListener("click",()=>{
 popup.classList.remove("active");
 
 });
+
+/* BUY */
+
+function buyItem(price){
+
+if(user.points >= price){
+
+user.points -= price;
+
+document.getElementById("pointsBox")
+.innerHTML =
+`Points: ${user.points}`;
+
+alert(
+"Item added to your wardrobe"
+);
+
+}else{
+
+alert(
+"Not enough points"
+);
+
+}
+
+}
+
+/* LIKE */
+
+function likeItem(btn){
+
+const count =
+btn.parentElement
+.parentElement
+.querySelector(".like-count");
+
+count.innerHTML =
+Number(count.innerHTML)+1;
+
+}
+
+/* DISLIKE */
+
+function dislikeItem(btn){
+
+const count =
+btn.parentElement
+.parentElement
+.querySelector(".dislike-count");
+
+count.innerHTML =
+Number(count.innerHTML)+1;
+
+}
 
 /* IMAGE */
 
