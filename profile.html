@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Velora Profile</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -29,7 +32,7 @@ margin:auto;
 padding:20px 16px 120px;
 }
 
-/* TOP */
+/* TOPBAR */
 
 .topbar{
 display:flex;
@@ -100,9 +103,9 @@ justify-content:center;
 align-items:center;
 font-size:32px;
 color:black;
-font-weight:700;
 cursor:pointer;
-box-shadow:0 10px 30px rgba(0,0,0,.3);
+box-shadow:
+0 10px 30px rgba(0,0,0,.3);
 }
 
 .change-photo{
@@ -159,6 +162,14 @@ text-align:center;
 
 .input::placeholder{
 color:#8d8d8d;
+}
+
+.auto-value{
+flex:1;
+text-align:center;
+font-size:24px;
+font-weight:600;
+color:#d6d6d6;
 }
 
 /* SECTION */
@@ -247,6 +258,10 @@ font-size:18px;
 font-size:17px;
 }
 
+.auto-value{
+font-size:18px;
+}
+
 .bio-box{
 padding:20px 16px;
 border-radius:24px;
@@ -268,7 +283,9 @@ font-size:16px;
 }
 
 </style>
+
 </head>
+
 <body>
 
 <div class="main">
@@ -285,7 +302,10 @@ font-size:16px;
 Edit Profile
 </div>
 
-<div class="save-btn" onclick="saveProfile()">
+<div
+class="save-btn"
+onclick="saveProfile()"
+>
 ✓
 </div>
 
@@ -341,7 +361,7 @@ Change Photo
 class="input"
 id="nameInput"
 type="text"
-placeholder="Any Name"
+placeholder="Your Name"
 >
 
 <div class="label">
@@ -371,12 +391,12 @@ Username
 
 <div class="arrow">‹</div>
 
-<input
-class="input"
-id="pointsInput"
-type="number"
-placeholder="0"
+<div
+class="auto-value"
+id="pointsValue"
 >
+0
+</div>
 
 <div class="label">
 Points
@@ -401,7 +421,7 @@ Basic Information
 <textarea
 class="bio-input"
 id="bioInput"
-placeholder="Write a short bio about yourself or your account..."
+placeholder="Write a short bio about yourself..."
 ></textarea>
 
 <div class="bio-label">
@@ -418,15 +438,15 @@ Bio
 
 <div class="arrow">‹</div>
 
-<input
-class="input"
-id="challengeInput"
-type="number"
-placeholder="0"
+<div
+class="auto-value"
+id="challengeValue"
 >
+0
+</div>
 
 <div class="label">
-Number of Challenges
+Challenges
 </div>
 
 </div>
@@ -441,12 +461,12 @@ Number of Challenges
 
 <div class="arrow">‹</div>
 
-<input
-class="input"
-id="salesInput"
-type="number"
-placeholder="0"
+<div
+class="auto-value"
+id="salesValue"
 >
+0
+</div>
 
 <div class="label">
 Sales
@@ -464,12 +484,12 @@ Sales
 
 <div class="arrow">‹</div>
 
-<input
-class="input"
-id="levelInput"
-type="number"
-placeholder="1"
+<div
+class="auto-value"
+id="levelValue"
 >
+1
+</div>
 
 <div class="label">
 Level
@@ -483,7 +503,7 @@ Level
 
 <script>
 
-/* IMAGE UPLOAD */
+/* IMAGE */
 
 const uploadAvatar =
 document.getElementById("uploadAvatar");
@@ -519,20 +539,8 @@ document.getElementById("nameInput").value,
 username:
 document.getElementById("usernameInput").value,
 
-points:
-document.getElementById("pointsInput").value,
-
 bio:
-document.getElementById("bioInput").value,
-
-challenges:
-document.getElementById("challengeInput").value,
-
-sales:
-document.getElementById("salesInput").value,
-
-level:
-document.getElementById("levelInput").value
+document.getElementById("bioInput").value
 
 };
 
@@ -548,25 +556,74 @@ alert("Profile Saved");
 /* LOAD PROFILE */
 
 const savedProfile =
-JSON.parse(localStorage.getItem("veloraProfile"));
+JSON.parse(
+localStorage.getItem("veloraProfile")
+);
 
 if(savedProfile){
 
-nameInput.value = savedProfile.name || "";
+document.getElementById(
+"nameInput"
+).value =
+savedProfile.name || "";
 
-usernameInput.value = savedProfile.username || "";
+document.getElementById(
+"usernameInput"
+).value =
+savedProfile.username || "";
 
-pointsInput.value = savedProfile.points || "";
-
-bioInput.value = savedProfile.bio || "";
-
-challengeInput.value = savedProfile.challenges || "";
-
-salesInput.value = savedProfile.sales || "";
-
-levelInput.value = savedProfile.level || "";
+document.getElementById(
+"bioInput"
+).value =
+savedProfile.bio || "";
 
 }
+
+/* AUTO SYSTEM */
+
+let points = 2450;
+
+let challenges = 18;
+
+let sales = 34;
+
+/* LEVEL SYSTEM */
+
+let level = 1;
+
+if(points >= 500){
+level = 2;
+}
+
+if(points >= 1500){
+level = 3;
+}
+
+if(points >= 3000){
+level = 4;
+}
+
+if(points >= 6000){
+level = 5;
+}
+
+/* DISPLAY */
+
+document.getElementById(
+"pointsValue"
+).innerHTML = points;
+
+document.getElementById(
+"challengeValue"
+).innerHTML = challenges;
+
+document.getElementById(
+"salesValue"
+).innerHTML = sales;
+
+document.getElementById(
+"levelValue"
+).innerHTML = level;
 
 </script>
 
