@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Velora Profile</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -19,18 +21,20 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:black;
+background:#000;
 color:white;
 overflow-x:hidden;
 }
 
+/* MAIN */
+
 .main{
 max-width:700px;
 margin:auto;
-padding:30px 20px 120px;
+padding:30px 18px 120px;
 }
 
-/* TOP */
+/* TITLE */
 
 .top-title{
 text-align:center;
@@ -60,6 +64,7 @@ width:100%;
 height:100%;
 border-radius:50%;
 object-fit:cover;
+border:3px solid #1f1f1f;
 }
 
 .camera-btn{
@@ -90,12 +95,12 @@ font-weight:600;
 cursor:pointer;
 }
 
-/* CARDS */
+/* CARD */
 
 .card{
 background:#171717;
 border-radius:30px;
-padding:10px 24px;
+padding:0 22px;
 margin-bottom:30px;
 }
 
@@ -104,6 +109,7 @@ height:90px;
 display:flex;
 align-items:center;
 justify-content:space-between;
+gap:14px;
 border-bottom:1px solid #262626;
 }
 
@@ -114,23 +120,35 @@ border-bottom:none;
 .label{
 font-size:28px;
 font-weight:500;
-}
-
-.value{
-font-size:24px;
-color:#d0d0d0;
+white-space:nowrap;
 }
 
 .arrow{
 font-size:36px;
-color:#9f9f9f;
+color:#9d9d9d;
+}
+
+/* INPUT */
+
+.input{
+flex:1;
+background:transparent;
+border:none;
+outline:none;
+color:white;
+font-size:24px;
+text-align:center;
+}
+
+.input::placeholder{
+color:#8f8f8f;
 }
 
 /* SECTION */
 
 .section-title{
 font-size:24px;
-color:#9e9e9e;
+color:#8d8d8d;
 margin:
 20px 10px
 18px;
@@ -141,25 +159,36 @@ margin:
 .bio-box{
 background:#171717;
 border-radius:30px;
-padding:34px 24px;
+padding:28px 22px;
 margin-bottom:40px;
 display:flex;
+align-items:flex-start;
 justify-content:space-between;
-align-items:center;
 gap:20px;
-}
-
-.bio-text{
-font-size:24px;
-line-height:1.7;
-color:#9d9d9d;
-text-align:right;
 }
 
 .bio-label{
 font-size:28px;
 font-weight:500;
 white-space:nowrap;
+margin-top:10px;
+}
+
+.bio-input{
+flex:1;
+height:120px;
+resize:none;
+background:transparent;
+border:none;
+outline:none;
+color:white;
+font-size:22px;
+line-height:1.7;
+text-align:right;
+}
+
+.bio-input::placeholder{
+color:#8f8f8f;
 }
 
 /* MOBILE */
@@ -167,7 +196,7 @@ white-space:nowrap;
 @media(max-width:768px){
 
 .main{
-padding:20px 16px 100px;
+padding:20px 14px 100px;
 }
 
 .top-title{
@@ -203,24 +232,11 @@ height:78px;
 font-size:20px;
 }
 
-.value{
-font-size:18px;
-}
-
 .arrow{
 font-size:28px;
 }
 
-.bio-box{
-border-radius:24px;
-padding:24px 18px;
-}
-
-.bio-label{
-font-size:22px;
-}
-
-.bio-text{
+.input{
 font-size:18px;
 }
 
@@ -228,9 +244,24 @@ font-size:18px;
 font-size:18px;
 }
 
+.bio-box{
+border-radius:24px;
+padding:22px 18px;
+}
+
+.bio-label{
+font-size:22px;
+}
+
+.bio-input{
+font-size:18px;
+height:100px;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
@@ -257,7 +288,10 @@ src="https://i.pinimg.com/736x/c8/7f/f2/c87ff2c6d0d92d8d8fd9d5b9f2d0a2a7.jpg"
 
 <div class="camera-btn">
 
-<label class="camera-circle" for="uploadAvatar">
+<label
+class="camera-circle"
+for="uploadAvatar"
+>
 📷
 </label>
 
@@ -278,7 +312,7 @@ Change Photo
 
 </div>
 
-<!-- INFO -->
+<!-- INFO CARD -->
 
 <div class="card">
 
@@ -286,9 +320,11 @@ Change Photo
 
 <div class="arrow">›</div>
 
-<div class="value">
-Any Name
-</div>
+<input
+class="input"
+type="text"
+placeholder="Your Name"
+>
 
 <div class="label">
 Name
@@ -300,9 +336,11 @@ Name
 
 <div class="arrow">›</div>
 
-<div class="value">
-@velora
-</div>
+<input
+class="input"
+type="text"
+placeholder="@username"
+>
 
 <div class="label">
 Username
@@ -314,9 +352,11 @@ Username
 
 <div class="arrow">›</div>
 
-<div class="value">
-2450
-</div>
+<input
+class="input"
+type="number"
+placeholder="0"
+>
 
 <div class="label">
 Points
@@ -338,9 +378,10 @@ Basic Information
 
 <div class="arrow">›</div>
 
-<div class="bio-text">
-Write a short bio about your personality or your account.
-</div>
+<textarea
+class="bio-input"
+placeholder="Write something about yourself..."
+></textarea>
 
 <div class="bio-label">
 Bio
@@ -356,9 +397,11 @@ Bio
 
 <div class="arrow">›</div>
 
-<div class="value">
-18
-</div>
+<input
+class="input"
+type="number"
+placeholder="0"
+>
 
 <div class="label">
 Challenges
@@ -376,9 +419,11 @@ Challenges
 
 <div class="arrow">›</div>
 
-<div class="value">
-9200
-</div>
+<input
+class="input"
+type="number"
+placeholder="0"
+>
 
 <div class="label">
 Sales
@@ -396,9 +441,11 @@ Sales
 
 <div class="arrow">›</div>
 
-<div class="value">
-12
-</div>
+<input
+class="input"
+type="number"
+placeholder="1"
+>
 
 <div class="label">
 Level
@@ -439,4 +486,4 @@ URL.createObjectURL(file);
 </script>
 
 </body>
-  </html>
+</html>
