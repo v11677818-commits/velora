@@ -3,7 +3,11 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
 
 <title>Velora Game</title>
 
@@ -21,8 +25,9 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#f4f1f3;
+background:#050505;
 overflow:hidden;
+color:white;
 }
 
 /* APP */
@@ -32,343 +37,357 @@ width:100%;
 height:100vh;
 display:flex;
 position:relative;
-overflow:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-300px;
+width:300px;
+height:100vh;
+background:#0c0c0c;
+border-right:1px solid #1d1d1d;
+padding:100px 25px;
+transition:.35s;
+z-index:9999;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+margin-bottom:34px;
+font-size:19px;
+}
+
+/* OVERLAY */
+
+.overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+opacity:0;
+pointer-events:none;
+transition:.3s;
+z-index:999;
+}
+
+.overlay.active{
+opacity:1;
+pointer-events:auto;
+}
+
+/* TOPBAR */
+
+.topbar{
+position:absolute;
+top:20px;
+left:20px;
+right:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:100;
+}
+
+.menu-btn{
+width:52px;
+height:52px;
+border-radius:50%;
+background:#121212;
+border:1px solid #262626;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+cursor:pointer;
+}
+
+.timer{
+padding:15px 26px;
+border-radius:999px;
+background:#121212;
+border:1px solid #262626;
+font-size:16px;
+font-weight:600;
+}
+
+/* MAIN */
+
+.main{
+width:100%;
+height:100vh;
+display:flex;
 }
 
 /* LEFT */
 
-.left{
-width:50%;
-height:100vh;
-position:relative;
+.left-panel{
+width:260px;
+background:#090909;
+border-right:1px solid #1c1c1c;
+padding:110px 20px 20px;
+overflow-y:auto;
+}
+
+.category{
+height:64px;
+border-radius:22px;
+background:#111;
+border:1px solid #262626;
+display:flex;
+align-items:center;
+padding-left:22px;
+margin-bottom:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+.category:hover{
+background:#181818;
+}
+
+/* CENTER */
+
+.center{
+flex:1;
 display:flex;
 justify-content:center;
 align-items:center;
-background:
-linear-gradient(
-180deg,
-#f6f1f4,
-#ece6ea
-);
+position:relative;
+overflow:hidden;
 }
 
-/* TIMER */
-
-.timer{
+.glow{
 position:absolute;
-top:28px;
-left:28px;
-background:black;
-color:white;
-padding:16px 26px;
-border-radius:18px;
-font-size:42px;
-font-weight:700;
-letter-spacing:2px;
-box-shadow:
-0 10px 30px rgba(0,0,0,.15);
-}
-
-/* STAGE */
-
-.stage{
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
+width:700px;
+height:700px;
+background:
+radial-gradient(
+circle,
+rgba(255,255,255,.08),
+transparent
+);
+filter:blur(100px);
 }
 
 /* CHARACTER */
 
 .character{
 position:relative;
-width:260px;
-height:720px;
+width:320px;
+height:620px;
+border-radius:40px;
+background:
+linear-gradient(
+180deg,
+#1d1d1d,
+#0f0f0f
+);
+border:1px solid #2a2a2a;
+overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
-}
-
-/* BODY */
-
-.body{
-position:absolute;
-width:150px;
-height:520px;
-background:#efc2ae;
-border-radius:90px;
-top:90px;
 box-shadow:
-inset 0 0 30px rgba(0,0,0,.08);
-}
-
-/* HEAD */
-
-.head{
-position:absolute;
-top:0;
-width:160px;
-height:160px;
-background:#efc2ae;
-border-radius:40px;
-}
-
-/* LEGS */
-
-.leg1,
-.leg2{
-position:absolute;
-width:48px;
-height:240px;
-background:#efc2ae;
-bottom:0;
-border-radius:40px;
-}
-
-.leg1{
-left:70px;
-}
-
-.leg2{
-right:70px;
-}
-
-/* DRESS */
-
-.dress{
-position:absolute;
-top:210px;
-width:170px;
-height:260px;
-background:black;
-border-radius:
-40px
-40px
-26px
-26px;
-box-shadow:
-0 0 30px rgba(0,0,0,.18);
-}
-
-/* RIGHT */
-
-.right{
-width:50%;
-height:100vh;
-background:white;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
+0 0 60px rgba(255,255,255,.06);
 }
 
 /* MODEL */
 
 .model{
-width:340px;
-height:760px;
-position:relative;
-opacity:.8;
-}
-
-.line{
 position:absolute;
-border:2px solid #bcbcbc;
-border-radius:100px;
+width:220px;
+height:500px;
+background:
+linear-gradient(
+180deg,
+#ffdcc7,
+#d7a893
+);
+border-radius:120px 120px 70px 70px;
 }
 
-/* HEAD */
+/* LAYERS */
 
-.m-head{
-top:0;
-left:120px;
-width:90px;
-height:110px;
+.layer{
+position:absolute;
+inset:0;
+pointer-events:none;
 }
 
-/* BODY */
-
-.m-body{
-top:100px;
-left:95px;
-width:140px;
-height:420px;
+#topLayer{
+background:
+linear-gradient(
+180deg,
+transparent 0%,
+transparent 35%,
+#ffffff 35%,
+#ffffff 55%,
+transparent 55%
+);
+opacity:.9;
 }
 
-/* LEGS */
-
-.m-leg1{
-bottom:0;
-left:120px;
-width:40px;
-height:260px;
+#bottomLayer{
+background:
+linear-gradient(
+180deg,
+transparent 55%,
+#2b2b2b 55%,
+#2b2b2b 80%,
+transparent 80%
+);
 }
 
-.m-leg2{
-bottom:0;
-right:120px;
-width:40px;
-height:260px;
+#shoesLayer{
+background:
+linear-gradient(
+180deg,
+transparent 82%,
+white 82%,
+white 88%,
+transparent 88%
+);
+}
+
+/* RIGHT */
+
+.right-panel{
+width:330px;
+background:#090909;
+border-left:1px solid #1c1c1c;
+padding:110px 20px 20px;
+display:flex;
+flex-direction:column;
+}
+
+/* DESIGN */
+
+.design-box{
+flex:1;
+border-radius:34px;
+background:#111;
+border:1px solid #262626;
+overflow:hidden;
+margin-bottom:20px;
+}
+
+canvas{
+width:100%;
+height:100%;
+background:#151515;
 }
 
 /* TOOLS */
 
 .tools{
+display:flex;
+justify-content:space-between;
+gap:12px;
+}
+
+.tool{
+flex:1;
+height:70px;
+border-radius:26px;
+background:#111;
+border:1px solid #262626;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+cursor:pointer;
+transition:.3s;
+}
+
+.tool:hover{
+background:#181818;
+}
+
+/* RATE BUTTON */
+
+.rate-btn{
 position:absolute;
-bottom:24px;
+bottom:30px;
 left:50%;
 transform:translateX(-50%);
-display:flex;
-gap:18px;
-z-index:10;
-}
-
-.tool-btn{
-width:78px;
-height:78px;
-border-radius:24px;
-background:white;
-border:none;
-font-size:34px;
-cursor:pointer;
-box-shadow:
-0 10px 30px rgba(0,0,0,.12);
-transition:.25s;
-}
-
-.tool-btn:hover{
-transform:translateY(-4px);
-}
-
-/* WARDROBE */
-
-.wardrobe{
-position:fixed;
-right:-420px;
-top:0;
-width:420px;
-height:100vh;
-background:white;
-transition:.35s;
-z-index:999;
-padding:30px;
-overflow-y:auto;
-box-shadow:
--10px 0 40px rgba(0,0,0,.08);
-}
-
-.wardrobe.active{
-right:0;
-}
-
-.wardrobe-title{
-font-size:34px;
-font-weight:700;
-margin-bottom:30px;
-}
-
-.items{
-display:grid;
-grid-template-columns:
-repeat(2,1fr);
-gap:18px;
-}
-
-.item{
-background:#f4f4f4;
-border-radius:28px;
-padding:18px;
-cursor:pointer;
-transition:.25s;
-text-align:center;
-}
-
-.item:hover{
-transform:scale(1.03);
-}
-
-.item img{
-width:100%;
-height:170px;
-object-fit:contain;
-margin-bottom:14px;
-}
-
-.item-name{
-font-size:16px;
-font-weight:600;
-}
-
-/* SUBMIT */
-
-.submit-btn{
-position:absolute;
-top:28px;
-right:28px;
-height:70px;
-padding:0 34px;
+width:260px;
+height:64px;
 border:none;
 border-radius:999px;
-background:black;
-color:white;
-font-size:20px;
-font-weight:600;
+background:white;
+color:black;
+font-size:16px;
+font-weight:700;
 cursor:pointer;
+z-index:50;
 }
 
-/* ANALYZE */
+/* RATING */
 
-.analyze{
+.rating-screen{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.9);
-backdrop-filter:blur(12px);
+background:rgba(0,0,0,.92);
+backdrop-filter:blur(18px);
 display:none;
 justify-content:center;
 align-items:center;
-flex-direction:column;
 z-index:99999;
-color:white;
+flex-direction:column;
 }
 
-.analyze.active{
+.rating-screen.active{
 display:flex;
 }
 
-.loading{
-font-size:42px;
-font-weight:700;
-margin-bottom:20px;
-animation:pulse 1s infinite;
-}
-
-.score{
-font-size:64px;
-font-weight:700;
-margin-bottom:18px;
-display:none;
+.scan{
+font-size:22px;
+margin-bottom:30px;
+animation:pulse 1.4s infinite;
 }
 
 .stars{
-font-size:42px;
-display:none;
-margin-bottom:18px;
+font-size:70px;
+margin-bottom:20px;
 }
 
-.feedback{
-font-size:24px;
-opacity:.85;
-display:none;
-text-align:center;
-line-height:1.7;
+.rating-title{
+font-size:42px;
+font-weight:700;
+margin-bottom:12px;
 }
+
+.rating-text{
+font-size:18px;
+opacity:.8;
+margin-bottom:20px;
+}
+
+.points{
+font-size:30px;
+font-weight:700;
+margin-bottom:12px;
+}
+
+.level{
+font-size:20px;
+opacity:.85;
+}
+
+/* ANIMATIONS */
 
 @keyframes pulse{
 
 0%{
-opacity:.4;
+opacity:.3;
 }
 
 50%{
@@ -376,7 +395,7 @@ opacity:1;
 }
 
 100%{
-opacity:.4;
+opacity:.3;
 }
 
 }
@@ -385,206 +404,160 @@ opacity:.4;
 
 @media(max-width:900px){
 
-.app{
-flex-direction:column;
+.left-panel{
+display:none;
 }
 
-.left,
-.right{
+.right-panel{
 width:100%;
-height:50vh;
+height:250px;
+position:absolute;
+bottom:0;
+right:0;
+padding:20px;
+background:rgba(10,10,10,.95);
+backdrop-filter:blur(18px);
+}
+
+.design-box{
+height:130px;
 }
 
 .character{
-transform:scale(.72);
+width:220px;
+height:430px;
 }
 
 .model{
-transform:scale(.72);
-}
-
-.timer{
-font-size:28px;
-padding:12px 18px;
-}
-
-.submit-btn{
-height:54px;
-font-size:15px;
-padding:0 22px;
-}
-
-.tool-btn{
-width:62px;
-height:62px;
-font-size:28px;
-}
-
-.wardrobe{
-width:100%;
-right:-100%;
+width:160px;
+height:360px;
 }
 
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div class="app">
 
-<!-- LEFT -->
+<!-- SIDEBAR -->
 
-<div class="left">
+<div class="sidebar" id="sidebar">
 
-<div class="timer">
+<a href="group.html">Group</a>
+
+<a href="chat.html">Bot</a>
+
+<a href="outfits.html">Outfits</a>
+
+<a href="challenges.html">Challenges</a>
+
+<a href="store.html">Marketplace</a>
+
+<a href="subscription.html">Subscription</a>
+
+<a href="profile.html">Profile</a>
+
+</div>
+
+<div
+class="overlay"
+id="overlay"
+onclick="closeMenu()"
+></div>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<div
+class="menu-btn"
+onclick="openMenu()"
+>
+☰
+</div>
+
+<div class="timer" id="timer">
 07:00
 </div>
 
-<button
-class="submit-btn"
-onclick="submitOutfit()"
->
-Submit Outfit
-</button>
+</div>
 
-<div class="stage">
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- LEFT -->
+
+<div class="left-panel">
+
+<div class="category">Hair</div>
+
+<div class="category">Tops</div>
+
+<div class="category">Bottoms</div>
+
+<div class="category">Shoes</div>
+
+<div class="category">Accessories</div>
+
+<div class="category">Makeup</div>
+
+<div class="category">Bags</div>
+
+<div class="category">Luxury</div>
+
+</div>
+
+<!-- CENTER -->
+
+<div class="center">
+
+<div class="glow"></div>
 
 <div class="character">
 
-<div class="head"></div>
+<div class="model"></div>
 
-<div class="body"></div>
+<div class="layer" id="topLayer"></div>
 
-<div class="leg1"></div>
+<div class="layer" id="bottomLayer"></div>
 
-<div class="leg2"></div>
-
-<div
-class="dress"
-id="dress"
-></div>
+<div class="layer" id="shoesLayer"></div>
 
 </div>
-
-</div>
-
-<!-- TOOLS -->
-
-<div class="tools">
-
-<label
-class="tool-btn"
-for="uploadImage"
->
-📷
-</label>
-
-<button class="tool-btn">
-🖌️
-</button>
 
 <button
-class="tool-btn"
-onclick="openWardrobe()"
+class="rate-btn"
+onclick="startRating()"
 >
-🗄️
+Finish Outfit
 </button>
-
-</div>
-
-<input
-type="file"
-id="uploadImage"
-hidden
-accept="image/*"
->
 
 </div>
 
 <!-- RIGHT -->
 
-<div class="right">
+<div class="right-panel">
 
-<div class="model">
+<div class="design-box">
 
-<div class="line m-head"></div>
-
-<div class="line m-body"></div>
-
-<div class="line m-leg1"></div>
-
-<div class="line m-leg2"></div>
+<canvas id="canvas"></canvas>
 
 </div>
 
-</div>
+<div class="tools">
 
-</div>
+<div class="tool">📷</div>
 
-<!-- WARDROBE -->
+<div class="tool">AI</div>
 
-<div
-class="wardrobe"
-id="wardrobe"
->
+<div class="tool">🎨</div>
 
-<div class="wardrobe-title">
-Wardrobe
-</div>
+<div class="tool">🗄️</div>
 
-<div class="items">
-
-<div
-class="item"
-onclick="changeDress('black')"
->
-
-<img src="https://pngimg.com/d/dress_PNG52.png">
-
-<div class="item-name">
-Black Dress
-</div>
-
-</div>
-
-<div
-class="item"
-onclick="changeDress('#f5b5cf')"
->
-
-<img src="https://pngimg.com/d/dress_PNG56.png">
-
-<div class="item-name">
-Pink Dress
-</div>
-
-</div>
-
-<div
-class="item"
-onclick="changeDress('#d9d9d9')"
->
-
-<img src="https://pngimg.com/d/dress_PNG57.png">
-
-<div class="item-name">
-Silver Dress
-</div>
-
-</div>
-
-<div
-class="item"
-onclick="changeDress('#784cff')"
->
-
-<img src="https://pngimg.com/d/dress_PNG58.png">
-
-<div class="item-name">
-Purple Dress
 </div>
 
 </div>
@@ -593,113 +566,314 @@ Purple Dress
 
 </div>
 
-<!-- ANALYZE -->
+<!-- RATING -->
 
-<div
-class="analyze"
-id="analyze"
->
+<div class="rating-screen" id="ratingScreen">
 
-<div
-class="loading"
-id="loading"
->
+<div class="scan">
 Analyzing Outfit...
 </div>
 
-<div
-class="score"
-id="score"
->
-Style Score: 98
-</div>
-
-<div
-class="stars"
-id="stars"
->
+<div class="stars" id="stars">
 ★★★★★
 </div>
 
-<div
-class="feedback"
-id="feedback"
->
-Luxury Styling<br>
-Perfect Color Balance<br>
-Elegant Fashion Choice
+<div class="rating-title" id="ratingTitle">
+Luxury Fashion
+</div>
+
+<div class="rating-text" id="ratingText">
+Perfect Color Balance
+</div>
+
+<div class="points" id="points">
++50 Points
+</div>
+
+<div class="level" id="level">
+Level 1
 </div>
 
 </div>
 
 <script>
 
-/* WARDROBE */
+/* =========================
+SIDEBAR
+========================= */
 
-const wardrobe =
-document.getElementById("wardrobe");
+const sidebar =
+document.getElementById("sidebar");
 
-function openWardrobe(){
+const overlay =
+document.getElementById("overlay");
 
-wardrobe.classList.toggle("active");
+function openMenu(){
 
-}
+sidebar.classList.add("active");
 
-/* DRESS */
-
-const dress =
-document.getElementById("dress");
-
-function changeDress(color){
-
-dress.style.background = color;
+overlay.classList.add("active");
 
 }
 
-/* ANALYZE */
+function closeMenu(){
 
-const analyze =
-document.getElementById("analyze");
+sidebar.classList.remove("active");
 
-const loading =
-document.getElementById("loading");
+overlay.classList.remove("active");
 
-const score =
-document.getElementById("score");
+}
 
-const stars =
-document.getElementById("stars");
+/* =========================
+USER SYSTEM
+========================= */
 
-const feedback =
-document.getElementById("feedback");
+let role = "registered";
 
-function submitOutfit(){
+let userData = {
 
-analyze.classList.add("active");
+points:0,
+level:1
 
-loading.style.display = "block";
+};
 
-score.style.display = "none";
+function updateLevel(){
 
-stars.style.display = "none";
+if(userData.points >= 10000){
 
-feedback.style.display = "none";
+userData.level = 10;
 
-setTimeout(()=>{
+}
 
-loading.style.display = "none";
+else if(userData.points >= 7000){
 
-score.style.display = "block";
+userData.level = 8;
 
-stars.style.display = "block";
+}
 
-feedback.style.display = "block";
+else if(userData.points >= 5000){
 
-},10000);
+userData.level = 6;
+
+}
+
+else if(userData.points >= 3000){
+
+userData.level = 4;
+
+}
+
+else{
+
+userData.level = 1;
+
+}
+
+}
+
+function addPoints(amount){
+
+userData.points += amount;
+
+updateLevel();
+
+localStorage.setItem(
+"veloraGame",
+JSON.stringify(userData)
+);
+
+}
+
+const savedData =
+localStorage.getItem(
+"veloraGame"
+);
+
+if(savedData){
+
+userData =
+JSON.parse(savedData);
+
+}
+
+/* =========================
+TIMER
+========================= */
+
+let time = 420;
+
+const timer =
+document.getElementById("timer");
+
+const timerInterval =
+setInterval(()=>{
+
+let minutes =
+Math.floor(time / 60);
+
+let seconds =
+time % 60;
+
+seconds =
+seconds < 10
+? "0" + seconds
+: seconds;
+
+timer.innerHTML =
+`${minutes}:${seconds}`;
+
+if(time > 0){
+
+time--;
+
+}
+
+if(time === 0){
+
+clearInterval(timerInterval);
+
+startRating();
+
+}
+
+},1000);
+
+/* =========================
+RATING
+========================= */
+
+const ratingScreen =
+document.getElementById("ratingScreen");
+
+function startRating(){
+
+ratingScreen.classList.add("active");
+
+let stars =
+Math.floor(Math.random() * 5) + 1;
+
+document.getElementById(
+"stars"
+).innerHTML =
+"★".repeat(stars);
+
+let reward = 0;
+
+if(role === "registered"){
+
+if(stars === 1) reward = 10;
+if(stars === 2) reward = 20;
+if(stars === 3) reward = 30;
+if(stars === 4) reward = 40;
+if(stars === 5) reward = 50;
+
+}
+
+if(role === "subscriber"){
+
+if(stars === 1) reward = 20;
+if(stars === 2) reward = 40;
+if(stars === 3) reward = 60;
+if(stars === 4) reward = 75;
+if(stars === 5) reward = 80;
+
+}
+
+addPoints(reward);
+
+document.getElementById(
+"points"
+).innerHTML =
+"+" + reward + " Points";
+
+document.getElementById(
+"level"
+).innerHTML =
+"Level " + userData.level;
+
+if(stars === 5){
+
+document.getElementById(
+"ratingTitle"
+).innerHTML =
+"Perfect Fashion";
+
+document.getElementById(
+"ratingText"
+).innerHTML =
+"Luxury aesthetic detected";
+
+}
+
+}
+
+/* =========================
+CANVAS
+========================= */
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width = 600;
+canvas.height = 600;
+
+let drawing = false;
+
+canvas.addEventListener(
+"mousedown",
+()=>{
+
+drawing = true;
+
+}
+);
+
+canvas.addEventListener(
+"mouseup",
+()=>{
+
+drawing = false;
+
+ctx.beginPath();
+
+}
+);
+
+canvas.addEventListener(
+"mousemove",
+draw
+);
+
+function draw(e){
+
+if(!drawing) return;
+
+ctx.lineWidth = 4;
+
+ctx.lineCap = "round";
+
+ctx.strokeStyle = "white";
+
+ctx.lineTo(
+e.offsetX,
+e.offsetY
+);
+
+ctx.stroke();
+
+ctx.beginPath();
+
+ctx.moveTo(
+e.offsetX,
+e.offsetY
+);
 
 }
 
 </script>
 
 </body>
-  </html>
+</html>
