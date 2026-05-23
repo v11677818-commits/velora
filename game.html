@@ -9,7 +9,7 @@ name="viewport"
 content="width=device-width, initial-scale=1.0"
 />
 
-<title>Velora 3D Studio</title>
+<title>Velora Game</title>
 
 <style>
 
@@ -22,152 +22,386 @@ font-family:Arial;
 
 body{
 overflow:hidden;
-background:#050505;
-color:white;
+background:#f6f0f0;
 }
 
-/* MAIN */
+/* APP */
 
 .app{
+display:flex;
 width:100%;
 height:100vh;
-display:flex;
 }
 
 /* LEFT */
 
 .left{
-width:260px;
-background:#0b0b0b;
-border-right:1px solid #1d1d1d;
-padding:25px;
+width:50%;
+height:100%;
+position:relative;
+overflow:hidden;
 display:flex;
-flex-direction:column;
-gap:18px;
-z-index:10;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(
+180deg,
+#f7f3f3 0%,
+#efe6e6 100%
+);
 }
 
-.category{
-height:70px;
-border-radius:22px;
-background:#121212;
-border:1px solid #262626;
+/* WALL */
+
+.wall{
+position:absolute;
+width:100%;
+height:100%;
+background:
+linear-gradient(
+90deg,
+#f4eeee 0%,
+#f7f3f3 20%,
+#ffffff 50%,
+#f7f3f3 80%,
+#f4eeee 100%
+);
+}
+
+/* FLOOR */
+
+.floor{
+position:absolute;
+bottom:0;
+width:100%;
+height:180px;
+background:
+linear-gradient(
+180deg,
+#3d2a25 0%,
+#241714 100%
+);
+}
+
+/* COLUMNS */
+
+.column-left{
+position:absolute;
+left:0;
+top:0;
+width:120px;
+height:100%;
+background:#f4eeee;
+box-shadow:
+10px 0 20px rgba(0,0,0,.04);
+}
+
+.column-right{
+position:absolute;
+right:0;
+top:0;
+width:120px;
+height:100%;
+background:#f4eeee;
+box-shadow:
+-10px 0 20px rgba(0,0,0,.04);
+}
+
+/* TIMER */
+
+.timer{
+position:absolute;
+top:25px;
+left:50%;
+transform:translateX(-50%);
+width:170px;
+height:78px;
+background:black;
+border-radius:18px;
 display:flex;
+justify-content:center;
 align-items:center;
-padding-left:20px;
-font-size:18px;
+color:white;
+font-size:42px;
+font-weight:700;
+letter-spacing:2px;
+z-index:20;
+}
+
+/* MENU BUTTON */
+
+.menu-button{
+position:absolute;
+top:25px;
+left:25px;
+width:70px;
+height:70px;
+border-radius:50%;
+background:#161616;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+color:white;
+z-index:999;
 cursor:pointer;
+box-shadow:
+0 10px 30px rgba(0,0,0,.25);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-300px;
+width:280px;
+height:100vh;
+background:#111111;
+z-index:1000;
+padding-top:120px;
+transition:.4s;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.sidebar-logo{
+position:absolute;
+top:35px;
+left:35px;
+font-size:30px;
+font-weight:700;
+color:white;
+letter-spacing:3px;
+}
+
+.sidebar a{
+color:white;
+text-decoration:none;
+padding:18px 35px;
+font-size:20px;
 transition:.3s;
 }
 
-.category:hover{
-background:#1a1a1a;
+.sidebar a:hover{
+background:#1f1f1f;
 }
 
-/* CENTER */
+/* CHARACTER */
 
-.center{
-flex:1;
+.character{
+position:relative;
+width:250px;
+height:720px;
+z-index:10;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* HEAD */
+
+.head{
+position:absolute;
+top:110px;
+width:120px;
+height:120px;
+background:#ddb39d;
+border-radius:30px;
+}
+
+/* NECK */
+
+.neck{
+position:absolute;
+top:215px;
+width:30px;
+height:35px;
+background:#ddb39d;
+border-radius:12px;
+}
+
+/* BODY */
+
+.body{
+position:absolute;
+top:235px;
+width:95px;
+height:220px;
+background:#080808;
+border-radius:40px;
+}
+
+/* ARMS */
+
+.arm-left{
+position:absolute;
+left:42px;
+top:250px;
+width:28px;
+height:250px;
+background:#ddb39d;
+border-radius:30px;
+transform:rotate(6deg);
+}
+
+.arm-right{
+position:absolute;
+right:42px;
+top:255px;
+width:28px;
+height:235px;
+background:#ddb39d;
+border-radius:30px;
+transform:rotate(-7deg);
+}
+
+/* LEGS */
+
+.leg-left{
+position:absolute;
+left:72px;
+top:430px;
+width:38px;
+height:280px;
+background:#ddb39d;
+border-radius:40px;
+transform:rotate(4deg);
+}
+
+.leg-right{
+position:absolute;
+right:72px;
+top:430px;
+width:38px;
+height:280px;
+background:#ddb39d;
+border-radius:40px;
+transform:rotate(-5deg);
+}
+
+/* SHOES */
+
+.shoe-left{
+position:absolute;
+left:64px;
+bottom:-8px;
+width:46px;
+height:18px;
+background:#f7e7de;
+border-radius:30px;
+transform:rotate(5deg);
+}
+
+.shoe-right{
+position:absolute;
+right:64px;
+bottom:-8px;
+width:46px;
+height:18px;
+background:#f7e7de;
+border-radius:30px;
+transform:rotate(-5deg);
+}
+
+/* RIGHT */
+
+.right{
+width:50%;
+height:100%;
+background:white;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* CANVAS */
+
+.canvas-box{
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
 position:relative;
 }
 
-/* TOPBAR */
+/* MANNEQUIN */
 
-.topbar{
-position:absolute;
-top:20px;
-left:20px;
-right:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:100;
-}
-
-.logo{
-font-size:24px;
-font-weight:700;
-}
-
-.timer{
-padding:14px 24px;
-border-radius:999px;
-background:#111;
-border:1px solid #262626;
-font-size:16px;
+.mannequin{
+width:340px;
+height:720px;
+object-fit:contain;
 }
 
 /* TOOLS */
 
 .tools{
 position:absolute;
-bottom:25px;
+bottom:35px;
 left:50%;
 transform:translateX(-50%);
 display:flex;
-gap:14px;
-z-index:100;
+gap:20px;
 }
 
+/* TOOL */
+
 .tool{
-width:70px;
-height:70px;
-border-radius:24px;
-background:#111;
-border:1px solid #262626;
+width:80px;
+height:80px;
+background:#555555;
+border-radius:18px;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:26px;
+font-size:34px;
+color:white;
 cursor:pointer;
 transition:.3s;
 }
 
 .tool:hover{
-background:#1b1b1b;
-}
-
-/* RATING */
-
-.finish-btn{
-position:absolute;
-right:30px;
-bottom:30px;
-width:220px;
-height:65px;
-border:none;
-border-radius:999px;
-background:white;
-color:black;
-font-size:17px;
-font-weight:700;
-cursor:pointer;
-z-index:100;
-}
-
-/* CANVAS */
-
-canvas{
-display:block;
+background:#2d2d2d;
 }
 
 /* MOBILE */
 
 @media(max-width:900px){
 
-.left{
-display:none;
+.app{
+flex-direction:column;
 }
 
-.finish-btn{
-width:180px;
-height:58px;
-font-size:15px;
+.left{
+width:100%;
+height:50%;
+}
+
+.right{
+width:100%;
+height:50%;
+}
+
+.character{
+transform:scale(.72);
+}
+
+.mannequin{
+width:240px;
+height:520px;
 }
 
 .tool{
-width:60px;
-height:60px;
+width:65px;
+height:65px;
+font-size:28px;
 }
 
 }
@@ -177,276 +411,153 @@ height:60px;
 
 <body>
 
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<div class="sidebar-logo">
+VELORA
+</div>
+
+<a href="bot.html">
+Bot
+</a>
+
+<a href="game.html">
+Game
+</a>
+
+<a href="marketplace.html">
+Marketplace
+</a>
+
+<a href="challenges.html">
+Challenges
+</a>
+
+<a href="outfits.html">
+Outfits
+</a>
+
+<a href="group.html">
+Group
+</a>
+
+<a href="profile.html">
+Profile
+</a>
+
+<a href="subscription.html">
+Subscription
+</a>
+
+</div>
+
+<!-- APP -->
+
 <div class="app">
 
 <!-- LEFT -->
 
 <div class="left">
 
-<div class="category">Hair</div>
+<div class="wall"></div>
 
-<div class="category">Tops</div>
+<div class="floor"></div>
 
-<div class="category">Bottoms</div>
+<div class="column-left"></div>
 
-<div class="category">Shoes</div>
+<div class="column-right"></div>
 
-<div class="category">Luxury</div>
+<!-- MENU -->
 
-<div class="category">Accessories</div>
-
-<div class="category">Bags</div>
-
+<div
+class="menu-button"
+onclick="toggleMenu()"
+>
+☰
 </div>
 
-<!-- CENTER -->
+<!-- TIMER -->
 
-<div class="center">
-
-<div class="topbar">
-
-<div class="logo">
-VELORA
-</div>
-
-<div class="timer" id="timer">
+<div
+class="timer"
+id="timer"
+>
 07:00
 </div>
 
+<!-- CHARACTER -->
+
+<div class="character">
+
+<div class="head"></div>
+
+<div class="neck"></div>
+
+<div class="body"></div>
+
+<div class="arm-left"></div>
+
+<div class="arm-right"></div>
+
+<div class="leg-left"></div>
+
+<div class="leg-right"></div>
+
+<div class="shoe-left"></div>
+
+<div class="shoe-right"></div>
+
 </div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="right">
+
+<div class="canvas-box">
+
+<img
+src="assets/girl.png"
+class="mannequin"
+/>
 
 <div class="tools">
 
-<div class="tool">📷</div>
-
-<div class="tool">🎨</div>
-
-<div class="tool">🗄️</div>
-
+<div class="tool">
+📷
 </div>
 
-<button
-class="finish-btn"
-onclick="finishOutfit()"
->
-Finish Outfit
-</button>
+<div class="tool">
+AI
+</div>
+
+<div class="tool">
+✏️
+</div>
 
 </div>
 
 </div>
 
-<!-- THREE JS -->
+</div>
 
-<script type="module">
+</div>
 
-import * as THREE from
-'https://unpkg.com/three@0.160.0/build/three.module.js';
+<script>
 
-import { OrbitControls } from
-'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+/* MENU */
 
-/* SCENE */
+function toggleMenu(){
 
-const scene =
-new THREE.Scene();
+document
+.getElementById("sidebar")
+.classList
+.toggle("active");
 
-scene.background =
-new THREE.Color(0x050505);
-
-/* CAMERA */
-
-const camera =
-new THREE.PerspectiveCamera(
-45,
-window.innerWidth / window.innerHeight,
-0.1,
-1000
-);
-
-camera.position.set(0,1.4,4);
-
-/* RENDERER */
-
-const renderer =
-new THREE.WebGLRenderer({
-antialias:true
-});
-
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
-
-renderer.shadowMap.enabled = true;
-
-document.body.appendChild(
-renderer.domElement
-);
-
-/* LIGHTS */
-
-const light =
-new THREE.DirectionalLight(
-0xffffff,
-3
-);
-
-light.position.set(3,5,3);
-
-scene.add(light);
-
-const ambient =
-new THREE.AmbientLight(
-0xffffff,
-1.5
-);
-
-scene.add(ambient);
-
-/* FLOOR */
-
-const floor =
-new THREE.Mesh(
-
-new THREE.CircleGeometry(6,64),
-
-new THREE.MeshStandardMaterial({
-color:0x111111
-})
-
-);
-
-floor.rotation.x = -Math.PI/2;
-
-floor.position.y = -1.5;
-
-scene.add(floor);
-
-/* CHARACTER */
-
-const body =
-new THREE.Mesh(
-
-new THREE.CapsuleGeometry(
-0.6,
-2,
-8,
-16
-),
-
-new THREE.MeshStandardMaterial({
-
-color:0xe2b7a1,
-roughness:0.7
-
-})
-
-);
-
-scene.add(body);
-
-/* HEAD */
-
-const head =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-0.48,
-32,
-32
-),
-
-new THREE.MeshStandardMaterial({
-color:0xf2c9b2
-})
-
-);
-
-head.position.y = 1.8;
-
-scene.add(head);
-
-/* HAIR */
-
-const hair =
-new THREE.Mesh(
-
-new THREE.SphereGeometry(
-0.53,
-32,
-32
-),
-
-new THREE.MeshStandardMaterial({
-color:0x111111
-})
-
-);
-
-hair.position.y = 1.9;
-
-hair.scale.y = 0.8;
-
-scene.add(hair);
-
-/* CLOTHES */
-
-const top =
-new THREE.Mesh(
-
-new THREE.CylinderGeometry(
-0.7,
-0.75,
-1,
-32
-),
-
-new THREE.MeshStandardMaterial({
-color:0xffffff
-})
-
-);
-
-top.position.y = 0.5;
-
-scene.add(top);
-
-const bottom =
-new THREE.Mesh(
-
-new THREE.CylinderGeometry(
-0.55,
-0.55,
-1,
-32
-),
-
-new THREE.MeshStandardMaterial({
-color:0x2c2c2c
-})
-
-);
-
-bottom.position.y = -0.6;
-
-scene.add(bottom);
-
-/* CONTROLS */
-
-const controls =
-new OrbitControls(
-camera,
-renderer.domElement
-);
-
-controls.enableDamping = true;
-
-controls.enablePan = false;
-
-controls.minDistance = 3;
-
-controls.maxDistance = 6;
+}
 
 /* TIMER */
 
@@ -479,56 +590,7 @@ time--;
 
 },1000);
 
-/* FINISH */
-
-window.finishOutfit = ()=>{
-
-alert(
-"Outfit Submitted Successfully"
-);
-
-};
-
-/* ANIMATE */
-
-function animate(){
-
-requestAnimationFrame(
-animate
-);
-
-controls.update();
-
-renderer.render(
-scene,
-camera
-);
-
-}
-
-animate();
-
-/* RESIZE */
-
-window.addEventListener(
-'resize',
-()=>{
-
-camera.aspect =
-window.innerWidth /
-window.innerHeight;
-
-camera.updateProjectionMatrix();
-
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
-
-}
-);
-
 </script>
 
 </body>
-  </html>
+</html>
