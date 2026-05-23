@@ -9,11 +9,7 @@ name="viewport"
 content="width=device-width, initial-scale=1.0"
 />
 
-<title>Velora Game</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Velora 3D Studio</title>
 
 <style>
 
@@ -21,66 +17,58 @@ content="width=device-width, initial-scale=1.0"
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Inter',sans-serif;
+font-family:Arial;
 }
 
 body{
-background:#050505;
 overflow:hidden;
+background:#050505;
 color:white;
 }
 
-/* APP */
+/* MAIN */
 
 .app{
 width:100%;
 height:100vh;
 display:flex;
-position:relative;
 }
 
-/* SIDEBAR */
+/* LEFT */
 
-.sidebar{
-position:fixed;
-top:0;
-left:-300px;
-width:300px;
-height:100vh;
-background:#0c0c0c;
+.left{
+width:260px;
+background:#0b0b0b;
 border-right:1px solid #1d1d1d;
-padding:100px 25px;
-transition:.35s;
-z-index:9999;
+padding:25px;
+display:flex;
+flex-direction:column;
+gap:18px;
+z-index:10;
 }
 
-.sidebar.active{
-left:0;
-}
-
-.sidebar a{
-display:block;
-color:white;
-text-decoration:none;
-margin-bottom:34px;
-font-size:19px;
-}
-
-/* OVERLAY */
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.6);
-opacity:0;
-pointer-events:none;
+.category{
+height:70px;
+border-radius:22px;
+background:#121212;
+border:1px solid #262626;
+display:flex;
+align-items:center;
+padding-left:20px;
+font-size:18px;
+cursor:pointer;
 transition:.3s;
-z-index:999;
 }
 
-.overlay.active{
-opacity:1;
-pointer-events:auto;
+.category:hover{
+background:#1a1a1a;
+}
+
+/* CENTER */
+
+.center{
+flex:1;
+position:relative;
 }
 
 /* TOPBAR */
@@ -96,341 +84,90 @@ align-items:center;
 z-index:100;
 }
 
-.menu-btn{
-width:52px;
-height:52px;
-border-radius:50%;
-background:#121212;
-border:1px solid #262626;
-display:flex;
-justify-content:center;
-align-items:center;
+.logo{
 font-size:24px;
-cursor:pointer;
+font-weight:700;
 }
 
 .timer{
-padding:15px 26px;
+padding:14px 24px;
 border-radius:999px;
-background:#121212;
+background:#111;
 border:1px solid #262626;
 font-size:16px;
-font-weight:600;
-}
-
-/* MAIN */
-
-.main{
-width:100%;
-height:100vh;
-display:flex;
-}
-
-/* LEFT */
-
-.left-panel{
-width:260px;
-background:#090909;
-border-right:1px solid #1c1c1c;
-padding:110px 20px 20px;
-overflow-y:auto;
-}
-
-.category{
-height:64px;
-border-radius:22px;
-background:#111;
-border:1px solid #262626;
-display:flex;
-align-items:center;
-padding-left:22px;
-margin-bottom:16px;
-cursor:pointer;
-transition:.3s;
-}
-
-.category:hover{
-background:#181818;
-}
-
-/* CENTER */
-
-.center{
-flex:1;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
-overflow:hidden;
-}
-
-.glow{
-position:absolute;
-width:700px;
-height:700px;
-background:
-radial-gradient(
-circle,
-rgba(255,255,255,.08),
-transparent
-);
-filter:blur(100px);
-}
-
-/* CHARACTER */
-
-.character{
-position:relative;
-width:320px;
-height:620px;
-border-radius:40px;
-background:
-linear-gradient(
-180deg,
-#1d1d1d,
-#0f0f0f
-);
-border:1px solid #2a2a2a;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-box-shadow:
-0 0 60px rgba(255,255,255,.06);
-}
-
-/* MODEL */
-
-.model{
-position:absolute;
-width:220px;
-height:500px;
-background:
-linear-gradient(
-180deg,
-#ffdcc7,
-#d7a893
-);
-border-radius:120px 120px 70px 70px;
-}
-
-/* LAYERS */
-
-.layer{
-position:absolute;
-inset:0;
-pointer-events:none;
-}
-
-#topLayer{
-background:
-linear-gradient(
-180deg,
-transparent 0%,
-transparent 35%,
-#ffffff 35%,
-#ffffff 55%,
-transparent 55%
-);
-opacity:.9;
-}
-
-#bottomLayer{
-background:
-linear-gradient(
-180deg,
-transparent 55%,
-#2b2b2b 55%,
-#2b2b2b 80%,
-transparent 80%
-);
-}
-
-#shoesLayer{
-background:
-linear-gradient(
-180deg,
-transparent 82%,
-white 82%,
-white 88%,
-transparent 88%
-);
-}
-
-/* RIGHT */
-
-.right-panel{
-width:330px;
-background:#090909;
-border-left:1px solid #1c1c1c;
-padding:110px 20px 20px;
-display:flex;
-flex-direction:column;
-}
-
-/* DESIGN */
-
-.design-box{
-flex:1;
-border-radius:34px;
-background:#111;
-border:1px solid #262626;
-overflow:hidden;
-margin-bottom:20px;
-}
-
-canvas{
-width:100%;
-height:100%;
-background:#151515;
 }
 
 /* TOOLS */
 
 .tools{
+position:absolute;
+bottom:25px;
+left:50%;
+transform:translateX(-50%);
 display:flex;
-justify-content:space-between;
-gap:12px;
+gap:14px;
+z-index:100;
 }
 
 .tool{
-flex:1;
+width:70px;
 height:70px;
-border-radius:26px;
+border-radius:24px;
 background:#111;
 border:1px solid #262626;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:28px;
+font-size:26px;
 cursor:pointer;
 transition:.3s;
 }
 
 .tool:hover{
-background:#181818;
-}
-
-/* RATE BUTTON */
-
-.rate-btn{
-position:absolute;
-bottom:30px;
-left:50%;
-transform:translateX(-50%);
-width:260px;
-height:64px;
-border:none;
-border-radius:999px;
-background:white;
-color:black;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-z-index:50;
+background:#1b1b1b;
 }
 
 /* RATING */
 
-.rating-screen{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.92);
-backdrop-filter:blur(18px);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:99999;
-flex-direction:column;
-}
-
-.rating-screen.active{
-display:flex;
-}
-
-.scan{
-font-size:22px;
-margin-bottom:30px;
-animation:pulse 1.4s infinite;
-}
-
-.stars{
-font-size:70px;
-margin-bottom:20px;
-}
-
-.rating-title{
-font-size:42px;
+.finish-btn{
+position:absolute;
+right:30px;
+bottom:30px;
+width:220px;
+height:65px;
+border:none;
+border-radius:999px;
+background:white;
+color:black;
+font-size:17px;
 font-weight:700;
-margin-bottom:12px;
+cursor:pointer;
+z-index:100;
 }
 
-.rating-text{
-font-size:18px;
-opacity:.8;
-margin-bottom:20px;
-}
+/* CANVAS */
 
-.points{
-font-size:30px;
-font-weight:700;
-margin-bottom:12px;
-}
-
-.level{
-font-size:20px;
-opacity:.85;
-}
-
-/* ANIMATIONS */
-
-@keyframes pulse{
-
-0%{
-opacity:.3;
-}
-
-50%{
-opacity:1;
-}
-
-100%{
-opacity:.3;
-}
-
+canvas{
+display:block;
 }
 
 /* MOBILE */
 
 @media(max-width:900px){
 
-.left-panel{
+.left{
 display:none;
 }
 
-.right-panel{
-width:100%;
-height:250px;
-position:absolute;
-bottom:0;
-right:0;
-padding:20px;
-background:rgba(10,10,10,.95);
-backdrop-filter:blur(18px);
+.finish-btn{
+width:180px;
+height:58px;
+font-size:15px;
 }
 
-.design-box{
-height:130px;
-}
-
-.character{
-width:220px;
-height:430px;
-}
-
-.model{
-width:160px;
-height:360px;
+.tool{
+width:60px;
+height:60px;
 }
 
 }
@@ -442,56 +179,9 @@ height:360px;
 
 <div class="app">
 
-<!-- SIDEBAR -->
-
-<div class="sidebar" id="sidebar">
-
-<a href="group.html">Group</a>
-
-<a href="chat.html">Bot</a>
-
-<a href="outfits.html">Outfits</a>
-
-<a href="challenges.html">Challenges</a>
-
-<a href="store.html">Marketplace</a>
-
-<a href="subscription.html">Subscription</a>
-
-<a href="profile.html">Profile</a>
-
-</div>
-
-<div
-class="overlay"
-id="overlay"
-onclick="closeMenu()"
-></div>
-
-<!-- TOPBAR -->
-
-<div class="topbar">
-
-<div
-class="menu-btn"
-onclick="openMenu()"
->
-☰
-</div>
-
-<div class="timer" id="timer">
-07:00
-</div>
-
-</div>
-
-<!-- MAIN -->
-
-<div class="main">
-
 <!-- LEFT -->
 
-<div class="left-panel">
+<div class="left">
 
 <div class="category">Hair</div>
 
@@ -501,13 +191,11 @@ onclick="openMenu()"
 
 <div class="category">Shoes</div>
 
+<div class="category">Luxury</div>
+
 <div class="category">Accessories</div>
 
-<div class="category">Makeup</div>
-
 <div class="category">Bags</div>
-
-<div class="category">Luxury</div>
 
 </div>
 
@@ -515,36 +203,15 @@ onclick="openMenu()"
 
 <div class="center">
 
-<div class="glow"></div>
+<div class="topbar">
 
-<div class="character">
-
-<div class="model"></div>
-
-<div class="layer" id="topLayer"></div>
-
-<div class="layer" id="bottomLayer"></div>
-
-<div class="layer" id="shoesLayer"></div>
-
+<div class="logo">
+VELORA
 </div>
 
-<button
-class="rate-btn"
-onclick="startRating()"
->
-Finish Outfit
-</button>
-
+<div class="timer" id="timer">
+07:00
 </div>
-
-<!-- RIGHT -->
-
-<div class="right-panel">
-
-<div class="design-box">
-
-<canvas id="canvas"></canvas>
 
 </div>
 
@@ -552,160 +219,242 @@ Finish Outfit
 
 <div class="tool">📷</div>
 
-<div class="tool">AI</div>
-
 <div class="tool">🎨</div>
 
 <div class="tool">🗄️</div>
 
 </div>
 
-</div>
+<button
+class="finish-btn"
+onclick="finishOutfit()"
+>
+Finish Outfit
+</button>
 
 </div>
 
 </div>
 
-<!-- RATING -->
+<!-- THREE JS -->
 
-<div class="rating-screen" id="ratingScreen">
+<script type="module">
 
-<div class="scan">
-Analyzing Outfit...
-</div>
+import * as THREE from
+'https://unpkg.com/three@0.160.0/build/three.module.js';
 
-<div class="stars" id="stars">
-★★★★★
-</div>
+import { OrbitControls } from
+'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
-<div class="rating-title" id="ratingTitle">
-Luxury Fashion
-</div>
+/* SCENE */
 
-<div class="rating-text" id="ratingText">
-Perfect Color Balance
-</div>
+const scene =
+new THREE.Scene();
 
-<div class="points" id="points">
-+50 Points
-</div>
+scene.background =
+new THREE.Color(0x050505);
 
-<div class="level" id="level">
-Level 1
-</div>
+/* CAMERA */
 
-</div>
-
-<script>
-
-/* =========================
-SIDEBAR
-========================= */
-
-const sidebar =
-document.getElementById("sidebar");
-
-const overlay =
-document.getElementById("overlay");
-
-function openMenu(){
-
-sidebar.classList.add("active");
-
-overlay.classList.add("active");
-
-}
-
-function closeMenu(){
-
-sidebar.classList.remove("active");
-
-overlay.classList.remove("active");
-
-}
-
-/* =========================
-USER SYSTEM
-========================= */
-
-let role = "registered";
-
-let userData = {
-
-points:0,
-level:1
-
-};
-
-function updateLevel(){
-
-if(userData.points >= 10000){
-
-userData.level = 10;
-
-}
-
-else if(userData.points >= 7000){
-
-userData.level = 8;
-
-}
-
-else if(userData.points >= 5000){
-
-userData.level = 6;
-
-}
-
-else if(userData.points >= 3000){
-
-userData.level = 4;
-
-}
-
-else{
-
-userData.level = 1;
-
-}
-
-}
-
-function addPoints(amount){
-
-userData.points += amount;
-
-updateLevel();
-
-localStorage.setItem(
-"veloraGame",
-JSON.stringify(userData)
+const camera =
+new THREE.PerspectiveCamera(
+45,
+window.innerWidth / window.innerHeight,
+0.1,
+1000
 );
 
-}
+camera.position.set(0,1.4,4);
 
-const savedData =
-localStorage.getItem(
-"veloraGame"
+/* RENDERER */
+
+const renderer =
+new THREE.WebGLRenderer({
+antialias:true
+});
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
 );
 
-if(savedData){
+renderer.shadowMap.enabled = true;
 
-userData =
-JSON.parse(savedData);
+document.body.appendChild(
+renderer.domElement
+);
 
-}
+/* LIGHTS */
 
-/* =========================
-TIMER
-========================= */
+const light =
+new THREE.DirectionalLight(
+0xffffff,
+3
+);
+
+light.position.set(3,5,3);
+
+scene.add(light);
+
+const ambient =
+new THREE.AmbientLight(
+0xffffff,
+1.5
+);
+
+scene.add(ambient);
+
+/* FLOOR */
+
+const floor =
+new THREE.Mesh(
+
+new THREE.CircleGeometry(6,64),
+
+new THREE.MeshStandardMaterial({
+color:0x111111
+})
+
+);
+
+floor.rotation.x = -Math.PI/2;
+
+floor.position.y = -1.5;
+
+scene.add(floor);
+
+/* CHARACTER */
+
+const body =
+new THREE.Mesh(
+
+new THREE.CapsuleGeometry(
+0.6,
+2,
+8,
+16
+),
+
+new THREE.MeshStandardMaterial({
+
+color:0xe2b7a1,
+roughness:0.7
+
+})
+
+);
+
+scene.add(body);
+
+/* HEAD */
+
+const head =
+new THREE.Mesh(
+
+new THREE.SphereGeometry(
+0.48,
+32,
+32
+),
+
+new THREE.MeshStandardMaterial({
+color:0xf2c9b2
+})
+
+);
+
+head.position.y = 1.8;
+
+scene.add(head);
+
+/* HAIR */
+
+const hair =
+new THREE.Mesh(
+
+new THREE.SphereGeometry(
+0.53,
+32,
+32
+),
+
+new THREE.MeshStandardMaterial({
+color:0x111111
+})
+
+);
+
+hair.position.y = 1.9;
+
+hair.scale.y = 0.8;
+
+scene.add(hair);
+
+/* CLOTHES */
+
+const top =
+new THREE.Mesh(
+
+new THREE.CylinderGeometry(
+0.7,
+0.75,
+1,
+32
+),
+
+new THREE.MeshStandardMaterial({
+color:0xffffff
+})
+
+);
+
+top.position.y = 0.5;
+
+scene.add(top);
+
+const bottom =
+new THREE.Mesh(
+
+new THREE.CylinderGeometry(
+0.55,
+0.55,
+1,
+32
+),
+
+new THREE.MeshStandardMaterial({
+color:0x2c2c2c
+})
+
+);
+
+bottom.position.y = -0.6;
+
+scene.add(bottom);
+
+/* CONTROLS */
+
+const controls =
+new OrbitControls(
+camera,
+renderer.domElement
+);
+
+controls.enableDamping = true;
+
+controls.enablePan = false;
+
+controls.minDistance = 3;
+
+controls.maxDistance = 6;
+
+/* TIMER */
 
 let time = 420;
 
 const timer =
 document.getElementById("timer");
 
-const timerInterval =
 setInterval(()=>{
 
 let minutes =
@@ -716,11 +465,11 @@ time % 60;
 
 seconds =
 seconds < 10
-? "0" + seconds
+? "0"+seconds
 : seconds;
 
 timer.innerHTML =
-`${minutes}:${seconds}`;
+minutes + ":" + seconds;
 
 if(time > 0){
 
@@ -728,152 +477,58 @@ time--;
 
 }
 
-if(time === 0){
-
-clearInterval(timerInterval);
-
-startRating();
-
-}
-
 },1000);
 
-/* =========================
-RATING
-========================= */
+/* FINISH */
 
-const ratingScreen =
-document.getElementById("ratingScreen");
+window.finishOutfit = ()=>{
 
-function startRating(){
+alert(
+"Outfit Submitted Successfully"
+);
 
-ratingScreen.classList.add("active");
+};
 
-let stars =
-Math.floor(Math.random() * 5) + 1;
+/* ANIMATE */
 
-document.getElementById(
-"stars"
-).innerHTML =
-"★".repeat(stars);
+function animate(){
 
-let reward = 0;
+requestAnimationFrame(
+animate
+);
 
-if(role === "registered"){
+controls.update();
 
-if(stars === 1) reward = 10;
-if(stars === 2) reward = 20;
-if(stars === 3) reward = 30;
-if(stars === 4) reward = 40;
-if(stars === 5) reward = 50;
+renderer.render(
+scene,
+camera
+);
 
 }
 
-if(role === "subscriber"){
+animate();
 
-if(stars === 1) reward = 20;
-if(stars === 2) reward = 40;
-if(stars === 3) reward = 60;
-if(stars === 4) reward = 75;
-if(stars === 5) reward = 80;
+/* RESIZE */
 
-}
-
-addPoints(reward);
-
-document.getElementById(
-"points"
-).innerHTML =
-"+" + reward + " Points";
-
-document.getElementById(
-"level"
-).innerHTML =
-"Level " + userData.level;
-
-if(stars === 5){
-
-document.getElementById(
-"ratingTitle"
-).innerHTML =
-"Perfect Fashion";
-
-document.getElementById(
-"ratingText"
-).innerHTML =
-"Luxury aesthetic detected";
-
-}
-
-}
-
-/* =========================
-CANVAS
-========================= */
-
-const canvas =
-document.getElementById("canvas");
-
-const ctx =
-canvas.getContext("2d");
-
-canvas.width = 600;
-canvas.height = 600;
-
-let drawing = false;
-
-canvas.addEventListener(
-"mousedown",
+window.addEventListener(
+'resize',
 ()=>{
 
-drawing = true;
+camera.aspect =
+window.innerWidth /
+window.innerHeight;
 
-}
-);
+camera.updateProjectionMatrix();
 
-canvas.addEventListener(
-"mouseup",
-()=>{
-
-drawing = false;
-
-ctx.beginPath();
-
-}
-);
-
-canvas.addEventListener(
-"mousemove",
-draw
-);
-
-function draw(e){
-
-if(!drawing) return;
-
-ctx.lineWidth = 4;
-
-ctx.lineCap = "round";
-
-ctx.strokeStyle = "white";
-
-ctx.lineTo(
-e.offsetX,
-e.offsetY
-);
-
-ctx.stroke();
-
-ctx.beginPath();
-
-ctx.moveTo(
-e.offsetX,
-e.offsetY
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
 );
 
 }
+);
 
 </script>
 
 </body>
-</html>
+  </html>
