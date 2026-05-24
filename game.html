@@ -9,7 +9,7 @@ name="viewport"
 content="width=device-width, initial-scale=1.0"
 />
 
-<title>Velora Studio</title>
+<title>Velora</title>
 
 <style>
 
@@ -22,15 +22,35 @@ font-family:Arial;
 
 body{
 overflow:hidden;
-background:#f4efef;
+background:black;
 }
 
-/* APP */
+/* FULL UI */
 
-.app{
+.full-ui{
+position:fixed;
 width:100%;
-height:100vh;
+height:100%;
+object-fit:cover;
+}
+
+/* MENU */
+
+.menu-button{
+position:fixed;
+top:25px;
+left:25px;
+width:70px;
+height:70px;
+border-radius:50%;
+background:#111;
 display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+color:white;
+cursor:pointer;
+z-index:1000;
 }
 
 /* SIDEBAR */
@@ -38,11 +58,11 @@ display:flex;
 .sidebar{
 position:fixed;
 top:0;
-left:-320px;
-width:300px;
+left:-300px;
+width:280px;
 height:100vh;
-background:#111111;
-z-index:9999;
+background:#111;
+z-index:2000;
 transition:.35s;
 padding-top:120px;
 display:flex;
@@ -53,246 +73,66 @@ flex-direction:column;
 left:0;
 }
 
-.sidebar-logo{
-position:absolute;
-top:35px;
-left:35px;
-color:white;
-font-size:34px;
-font-weight:700;
-letter-spacing:3px;
-}
-
 .sidebar a{
-padding:20px 35px;
 color:white;
 text-decoration:none;
+padding:20px 35px;
 font-size:20px;
-transition:.3s;
 }
 
 .sidebar a:hover{
 background:#1f1f1f;
 }
 
-/* MENU BUTTON */
-
-.menu-button{
-position:absolute;
-top:25px;
-left:25px;
-width:72px;
-height:72px;
-border-radius:50%;
-background:#111111;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:34px;
-color:white;
-cursor:pointer;
-z-index:999;
-}
-
-/* LEFT */
-
-.left{
-width:50%;
-height:100%;
-position:relative;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:flex-end;
-}
-
-/* ROOM */
-
-.room{
-position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-/* GIRL */
-
-.girl{
-position:absolute;
-height:88%;
-bottom:0;
-z-index:5;
-object-fit:contain;
-pointer-events:none;
-filter:
-drop-shadow(
-0 10px 30px rgba(0,0,0,.2)
-);
-}
-
-/* TIMER */
-
-.timer{
-position:absolute;
-top:25px;
-left:50%;
-transform:translateX(-50%);
-width:180px;
-height:82px;
-background:#111111;
-border-radius:20px;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:42px;
-font-weight:700;
-color:white;
-z-index:20;
-letter-spacing:2px;
-}
-
-/* SCORE */
-
-.score{
-position:absolute;
-top:125px;
-left:50%;
-transform:translateX(-50%);
-background:white;
-padding:12px 28px;
-border-radius:20px;
-font-size:22px;
-font-weight:700;
-z-index:20;
-box-shadow:
-0 8px 20px rgba(0,0,0,.1);
-}
-
-/* RIGHT */
-
-.right{
-width:50%;
-height:100%;
-background:white;
-position:relative;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-/* MANNEQUIN */
-
-.mannequin{
-position:absolute;
-height:84%;
-opacity:.95;
-pointer-events:none;
-}
-
-/* DRAW CANVAS */
+/* DRAW */
 
 #drawCanvas{
-position:absolute;
-width:100%;
+position:fixed;
+right:0;
+top:0;
+width:50%;
 height:100%;
-z-index:10;
+z-index:500;
 touch-action:none;
-}
-
-/* UPLOAD IMAGE */
-
-.uploaded-clothes{
-position:absolute;
-max-width:220px;
-z-index:30;
-cursor:grab;
 }
 
 /* TOOLS */
 
 .tools{
-position:absolute;
-bottom:35px;
-left:50%;
-transform:translateX(-50%);
+position:fixed;
+bottom:30px;
+right:12%;
 display:flex;
 gap:18px;
-z-index:100;
+z-index:1000;
 }
 
-/* TOOL */
-
 .tool{
-width:82px;
-height:82px;
-background:#5c5c5c;
-border-radius:22px;
+width:80px;
+height:80px;
+border-radius:20px;
+background:#555;
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:32px;
 color:white;
 cursor:pointer;
-transition:.3s;
-box-shadow:
-0 10px 25px rgba(0,0,0,.12);
 }
 
-.tool:hover{
-background:#2f2f2f;
-transform:translateY(-4px);
-}
-
-/* FILE INPUT */
+/* FILE */
 
 #uploadInput{
 display:none;
 }
 
-/* MOBILE */
-
-@media(max-width:900px){
-
-.app{
-flex-direction:column;
-}
-
-.left{
-width:100%;
-height:50%;
-}
-
-.right{
-width:100%;
-height:50%;
-}
-
-.girl{
-height:78%;
-}
-
-.mannequin{
-height:76%;
-}
-
-.tool{
-width:65px;
-height:65px;
-font-size:26px;
-}
-
-.timer{
-width:150px;
-height:65px;
-font-size:32px;
-}
-
-.score{
-top:100px;
-font-size:18px;
-}
-
+.uploaded{
+position:fixed;
+right:15%;
+top:35%;
+width:180px;
+z-index:800;
+cursor:grab;
 }
 
 </style>
@@ -300,68 +140,12 @@ font-size:18px;
 
 <body>
 
-<!-- SIDEBAR -->
-
-<div
-class="sidebar"
-id="sidebar"
->
-
-<div class="sidebar-logo">
-VELORA
-</div>
-
-<a href="bot.html">
-Bot
-</a>
-
-<a href="game.html">
-Game
-</a>
-
-<a href="marketplace.html">
-Marketplace
-</a>
-
-<a href="challenges.html">
-Challenges
-</a>
-
-<a href="outfits.html">
-Outfits
-</a>
-
-<a href="group.html">
-Group
-</a>
-
-<a href="profile.html">
-Profile
-</a>
-
-<a href="subscription.html">
-Subscription
-</a>
-
-</div>
-
-<!-- APP -->
-
-<div class="app">
-
-<!-- LEFT -->
-
-<div class="left">
-
 <img
-src="assets/room.png"
-class="room"
+src="assets/full-ui.png"
+class="full-ui"
 />
 
-<img
-src="assets/girl.png"
-class="girl"
-/>
+<!-- MENU -->
 
 <div
 class="menu-button"
@@ -370,29 +154,48 @@ onclick="toggleMenu()"
 ☰
 </div>
 
+<!-- SIDEBAR -->
+
 <div
-class="timer"
-id="timer"
+class="sidebar"
+id="sidebar"
 >
-07:00
+
+<a href="#">
+Bot
+</a>
+
+<a href="#">
+Game
+</a>
+
+<a href="#">
+Marketplace
+</a>
+
+<a href="#">
+Challenges
+</a>
+
+<a href="#">
+Outfits
+</a>
+
+<a href="#">
+Group
+</a>
+
+<a href="#">
+Profile
+</a>
+
 </div>
 
-<div class="score">
-Points: <span id="points">0</span>
-</div>
-
-</div>
-
-<!-- RIGHT -->
-
-<div class="right" id="rightSide">
-
-<img
-src="assets/mannequin.png"
-class="mannequin"
-/>
+<!-- DRAW -->
 
 <canvas id="drawCanvas"></canvas>
+
+<!-- TOOLS -->
 
 <div class="tools">
 
@@ -425,10 +228,6 @@ id="uploadInput"
 accept="image/*"
 />
 
-</div>
-
-</div>
-
 <script>
 
 /* SIDEBAR */
@@ -442,58 +241,44 @@ document
 
 }
 
-/* TIMER */
+document.addEventListener(
+'click',
+function(e){
 
-let time = 420;
+const sidebar =
+document.getElementById(
+'sidebar'
+);
 
-const timer =
-document.getElementById("timer");
+const menu =
+document.querySelector(
+'.menu-button'
+);
 
-setInterval(()=>{
+if(
+!sidebar.contains(e.target)
+&&
+!menu.contains(e.target)
+){
 
-let minutes =
-Math.floor(time / 60);
-
-let seconds =
-time % 60;
-
-seconds =
-seconds < 10
-? "0"+seconds
-: seconds;
-
-timer.innerHTML =
-minutes + ":" + seconds;
-
-if(time > 0){
-
-time--;
+sidebar.classList.remove(
+'active'
+);
 
 }
 
-},1000);
-
-/* POINTS */
-
-let points = 0;
-
-function addPoints(){
-
-points += 10;
-
-document
-.getElementById("points")
-.innerHTML = points;
-
 }
+);
 
 /* CANVAS */
 
 const canvas =
-document.getElementById("drawCanvas");
+document.getElementById(
+'drawCanvas'
+);
 
 const ctx =
-canvas.getContext("2d");
+canvas.getContext('2d');
 
 function resizeCanvas(){
 
@@ -547,9 +332,9 @@ e.clientY - rect.top;
 
 ctx.lineWidth = 5;
 
-ctx.lineCap = "round";
+ctx.lineCap = 'round';
 
-ctx.strokeStyle = "#111111";
+ctx.strokeStyle = '#111';
 
 ctx.lineTo(x,y);
 
@@ -561,7 +346,7 @@ ctx.moveTo(x,y);
 
 }
 
-/* ENABLE DRAW */
+/* ENABLE */
 
 function enableDraw(){
 
@@ -580,43 +365,6 @@ canvas.addEventListener(
 draw
 );
 
-canvas.addEventListener(
-'touchstart',
-(e)=>{
-
-const touch =
-e.touches[0];
-
-startDraw({
-
-clientX:touch.clientX,
-clientY:touch.clientY
-
-});
-
-});
-
-canvas.addEventListener(
-'touchend',
-endDraw
-);
-
-canvas.addEventListener(
-'touchmove',
-(e)=>{
-
-const touch =
-e.touches[0];
-
-draw({
-
-clientX:touch.clientX,
-clientY:touch.clientY
-
-});
-
-});
-
 }
 
 /* CLEAR */
@@ -632,13 +380,12 @@ canvas.height
 
 }
 
-/* UPLOAD CLOTHES */
+/* UPLOAD */
 
 const uploadInput =
-document.getElementById("uploadInput");
-
-const rightSide =
-document.getElementById("rightSide");
+document.getElementById(
+'uploadInput'
+);
 
 uploadInput.addEventListener(
 'change',
@@ -656,23 +403,17 @@ reader.onload =
 function(event){
 
 const img =
-document.createElement("img");
+document.createElement('img');
 
 img.src =
 event.target.result;
 
 img.className =
-"uploaded-clothes";
+'uploaded';
 
-img.style.left = "50%";
-
-img.style.top = "45%";
-
-rightSide.appendChild(img);
-
-dragElement(img);
-
-addPoints();
+document.body.appendChild(
+img
+);
 
 };
 
@@ -680,70 +421,6 @@ reader.readAsDataURL(file);
 
 }
 );
-
-/* DRAG SYSTEM */
-
-function dragElement(elmnt){
-
-let pos1 = 0,
-pos2 = 0,
-pos3 = 0,
-pos4 = 0;
-
-elmnt.onmousedown =
-dragMouseDown;
-
-function dragMouseDown(e){
-
-e = e || window.event;
-
-e.preventDefault();
-
-pos3 = e.clientX;
-
-pos4 = e.clientY;
-
-document.onmouseup =
-closeDragElement;
-
-document.onmousemove =
-elementDrag;
-
-}
-
-function elementDrag(e){
-
-e = e || window.event;
-
-e.preventDefault();
-
-pos1 = pos3 - e.clientX;
-
-pos2 = pos4 - e.clientY;
-
-pos3 = e.clientX;
-
-pos4 = e.clientY;
-
-elmnt.style.top =
-(elmnt.offsetTop - pos2)
-+ "px";
-
-elmnt.style.left =
-(elmnt.offsetLeft - pos1)
-+ "px";
-
-}
-
-function closeDragElement(){
-
-document.onmouseup = null;
-
-document.onmousemove = null;
-
-}
-
-}
 
 </script>
 
