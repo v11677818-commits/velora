@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Game</title>
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-/>
-
-<title>Velora</title>
+<script src="sidebar.js"></script>
 
 <style>
 
@@ -17,412 +13,164 @@ content="width=device-width, initial-scale=1.0"
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial;
+font-family:Arial,sans-serif;
 }
 
 body{
+width:100vw;
+height:100vh;
 overflow:hidden;
-background:black;
+background:#f5f2f3;
 }
 
-/* FULL UI */
-
-.full-ui{
+.menuBtn{
 position:fixed;
+top:20px;
+left:20px;
+width:50px;
+height:50px;
+border:none;
+border-radius:12px;
+background:black;
+color:white;
+font-size:24px;
+cursor:pointer;
+z-index:9999;
+}
+
+.timer{
+position:absolute;
+top:20px;
+left:90px;
+background:black;
+color:white;
+padding:12px 24px;
+border-radius:14px;
+font-size:28px;
+font-weight:bold;
+z-index:10;
+}
+
+.game{
+display:flex;
+width:100%;
+height:100%;
+}
+
+.leftSide{
+position:relative;
+width:50%;
+height:100%;
+overflow:hidden;
+}
+
+.rightSide{
+position:relative;
+width:50%;
+height:100%;
+background:white;
+border-left:4px solid #ececec;
+}
+
+.room{
+position:absolute;
+inset:0;
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* MENU */
-
-.menu-button{
-position:fixed;
-top:25px;
-left:25px;
-width:70px;
-height:70px;
-border-radius:50%;
-background:#111;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:34px;
-color:white;
-cursor:pointer;
-z-index:1000;
+.girl{
+position:absolute;
+bottom:5%;
+left:50%;
+transform:translateX(-50%);
+height:75%;
+object-fit:contain;
+pointer-events:none;
 }
 
-/* SIDEBAR */
-
-.sidebar{
-position:fixed;
-top:0;
-left:-300px;
-width:280px;
-height:100vh;
-background:#111;
-z-index:2000;
-transition:.35s;
-padding-top:120px;
-display:flex;
-flex-direction:column;
+.mannequin{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-55%);
+height:78%;
+object-fit:contain;
+pointer-events:none;
 }
-
-.sidebar.active{
-left:0;
-}
-
-.sidebar a{
-color:white;
-text-decoration:none;
-padding:20px 35px;
-font-size:20px;
-}
-
-.sidebar a:hover{
-background:#1f1f1f;
-}
-
-/* DRAW */
-
-#drawCanvas{
-position:fixed;
-right:0;
-top:0;
-width:50%;
-height:100%;
-z-index:500;
-touch-action:none;
-}
-
-/* TOOLS */
 
 .tools{
-position:fixed;
-bottom:30px;
-right:12%;
+position:absolute;
+bottom:25px;
+left:50%;
+transform:translateX(-50%);
 display:flex;
-gap:18px;
-z-index:1000;
+gap:15px;
 }
 
 .tool{
-width:80px;
-height:80px;
-border-radius:20px;
-background:#555;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:32px;
-color:white;
+width:60px;
+height:60px;
+border:none;
+border-radius:14px;
+background:#f1f1f1;
+font-size:26px;
 cursor:pointer;
 }
 
-/* FILE */
-
-#uploadInput{
-display:none;
+.tool:hover{
+background:#e6e6e6;
 }
 
-.uploaded{
-position:fixed;
-right:15%;
-top:35%;
-width:180px;
-z-index:800;
-cursor:grab;
+.aiBtn{
+width:auto;
+padding:0 18px;
+font-size:22px;
+font-weight:bold;
 }
 
 </style>
 </head>
-
 <body>
 
-<img
-src="assets/full-ui.png"
-class="full-ui"
-/>
+<button class="menuBtn" onclick="toggleMenu()">☰</button>
 
-<!-- MENU -->
-
-<div
-class="menu-button"
-onclick="toggleMenu()"
->
-☰
+<div class="timer" id="timer">
+07:00
 </div>
 
-<!-- SIDEBAR -->
+<div class="game">
 
-<div
-class="sidebar"
-id="sidebar"
->
+<div class="leftSide">
 
-<a href="#">
-Bot
-</a>
+<img src="assets/room.png" class="room">
 
-<a href="#">
-Game
-</a>
-
-<a href="#">
-Marketplace
-</a>
-
-<a href="#">
-Challenges
-</a>
-
-<a href="#">
-Outfits
-</a>
-
-<a href="#">
-Group
-</a>
-
-<a href="#">
-Profile
-</a>
+<img src="assets/girl.png" class="girl">
 
 </div>
 
-<!-- DRAW -->
+<div class="rightSide">
 
-<canvas id="drawCanvas"></canvas>
-
-<!-- TOOLS -->
+<img src="assets/mannequin.png" class="mannequin">
 
 <div class="tools">
 
-<div
-class="tool"
-onclick="document.getElementById('uploadInput').click()"
->
-📷
-</div>
+<button class="tool">🗄️</button>
 
-<div
-class="tool"
-onclick="clearCanvas()"
->
-AI
-</div>
+<button class="tool">📷</button>
 
-<div
-class="tool"
-onclick="enableDraw()"
->
-✏️
+<button class="tool aiBtn">AI</button>
+
+<button class="tool">✏️</button>
+
+<button class="tool">↪</button>
+
 </div>
 
 </div>
 
-<input
-type="file"
-id="uploadInput"
-accept="image/*"
-/>
-
-<script>
-
-/* SIDEBAR */
-
-function toggleMenu(){
-
-document
-.getElementById("sidebar")
-.classList
-.toggle("active");
-
-}
-
-document.addEventListener(
-'click',
-function(e){
-
-const sidebar =
-document.getElementById(
-'sidebar'
-);
-
-const menu =
-document.querySelector(
-'.menu-button'
-);
-
-if(
-!sidebar.contains(e.target)
-&&
-!menu.contains(e.target)
-){
-
-sidebar.classList.remove(
-'active'
-);
-
-}
-
-}
-);
-
-/* CANVAS */
-
-const canvas =
-document.getElementById(
-'drawCanvas'
-);
-
-const ctx =
-canvas.getContext('2d');
-
-function resizeCanvas(){
-
-canvas.width =
-canvas.offsetWidth;
-
-canvas.height =
-canvas.offsetHeight;
-
-}
-
-resizeCanvas();
-
-window.addEventListener(
-'resize',
-resizeCanvas
-);
-
-let drawing = false;
-
-/* DRAW */
-
-function startDraw(e){
-
-drawing = true;
-
-draw(e);
-
-}
-
-function endDraw(){
-
-drawing = false;
-
-ctx.beginPath();
-
-}
-
-function draw(e){
-
-if(!drawing) return;
-
-const rect =
-canvas.getBoundingClientRect();
-
-const x =
-e.clientX - rect.left;
-
-const y =
-e.clientY - rect.top;
-
-ctx.lineWidth = 5;
-
-ctx.lineCap = 'round';
-
-ctx.strokeStyle = '#111';
-
-ctx.lineTo(x,y);
-
-ctx.stroke();
-
-ctx.beginPath();
-
-ctx.moveTo(x,y);
-
-}
-
-/* ENABLE */
-
-function enableDraw(){
-
-canvas.addEventListener(
-'mousedown',
-startDraw
-);
-
-canvas.addEventListener(
-'mouseup',
-endDraw
-);
-
-canvas.addEventListener(
-'mousemove',
-draw
-);
-
-}
-
-/* CLEAR */
-
-function clearCanvas(){
-
-ctx.clearRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-}
-
-/* UPLOAD */
-
-const uploadInput =
-document.getElementById(
-'uploadInput'
-);
-
-uploadInput.addEventListener(
-'change',
-function(e){
-
-const file =
-e.target.files[0];
-
-if(!file) return;
-
-const reader =
-new FileReader();
-
-reader.onload =
-function(event){
-
-const img =
-document.createElement('img');
-
-img.src =
-event.target.result;
-
-img.className =
-'uploaded';
-
-document.body.appendChild(
-img
-);
-
-};
-
-reader.readAsDataURL(file);
-
-}
-);
-
-</script>
+</div>
 
 </body>
 </html>
