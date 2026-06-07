@@ -1,212 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Velora Game</title>
-
-<script src="sidebar.js"></script>
+<title>Test</title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-html,
 body{
-width:100%;
-height:100%;
-overflow:hidden;
-background:#f5f5f5;
-}
-
-.game{
-position:fixed;
-inset:0;
+margin:0;
+height:100vh;
 display:flex;
+background:black;
 }
 
 .left{
-position:relative;
 width:50%;
 height:100%;
-overflow:hidden;
+background:#222;
+position:relative;
 }
 
 .right{
-position:relative;
 width:50%;
 height:100%;
-background:#ffffff;
-overflow:hidden;
+background:white;
+position:relative;
 }
 
-.room{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.girl{
-position:absolute;
-left:50%;
-bottom:0;
-transform:translateX(-50%);
-height:88%;
-object-fit:contain;
-}
-
-.mannequin{
+img{
 position:absolute;
 left:50%;
 top:50%;
-transform:translate(-50%,-55%);
-height:80%;
-object-fit:contain;
-}
-
-.menuBtn{
-position:fixed;
-top:15px;
-left:15px;
-width:55px;
-height:55px;
-border:none;
-border-radius:14px;
-background:#111;
-color:white;
-font-size:24px;
-cursor:pointer;
-z-index:9999;
-}
-
-.timer{
-position:fixed;
-top:15px;
-left:85px;
-background:#111;
-color:white;
-padding:14px 22px;
-border-radius:14px;
-font-size:24px;
-font-weight:700;
-z-index:9999;
-}
-
-.tools{
-position:absolute;
-bottom:25px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:14px;
-}
-
-.tool{
-width:65px;
-height:65px;
-border:none;
-border-radius:18px;
-background:#efefef;
-font-size:28px;
-cursor:pointer;
-}
-
-.rotateWarning{
-display:none;
-}
-
-@media (orientation:portrait){
-
-.game{
-display:none;
-}
-
-.rotateWarning{
-position:fixed;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-background:black;
-color:white;
-font-size:28px;
-text-align:center;
-padding:30px;
-}
-
+transform:translate(-50%,-50%);
+max-width:90%;
+max-height:90%;
 }
 
 </style>
 </head>
-
 <body>
 
-<button class="menuBtn" onclick="toggleMenu()">
-☰
-</button>
-
-<div class="timer">
-07:00
-</div>
-
-<div class="game">
-
 <div class="left">
-
-<img
-src="assets/room.png"
-class="room"
->
-
-<img
-src="assets/girl.png"
-class="girl"
->
-
+<img src="assets/girl.png">
 </div>
 
 <div class="right">
-
-<img
-src="assets/mannequin.png"
-class="mannequin"
->
-
-<div class="tools">
-
-<button class="tool">
-🗄️
-</button>
-
-<button class="tool">
-📷
-</button>
-
-<button class="tool">
-✏️
-</button>
-
-<button class="tool">
-↪️
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="rotateWarning">
-Rotate Device<br>
-Use Landscape Mode
+<img src="assets/mannequin.png">
 </div>
 
 </body>
