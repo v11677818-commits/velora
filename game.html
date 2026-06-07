@@ -1,10 +1,214 @@
 <!DOCTYPE html>
-<html>
-<body style="background:black">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Game</title>
 
-<h1 style="color:white">TEST</h1>
+<script src="sidebar.js"></script>
 
-<img src="assets/girl.png" width="300">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+html,
+body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+}
+
+/* LANDSCAPE ONLY */
+
+.rotateScreen{
+display:none;
+}
+
+@media (orientation:portrait){
+
+#gameContainer{
+display:none !important;
+}
+
+.rotateScreen{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:black;
+color:white;
+font-size:30px;
+font-weight:700;
+text-align:center;
+padding:30px;
+z-index:999999;
+}
+
+}
+
+/* MENU */
+
+.menuBtn{
+position:fixed;
+top:15px;
+left:15px;
+width:60px;
+height:60px;
+border:none;
+border-radius:16px;
+background:black;
+color:white;
+font-size:28px;
+cursor:pointer;
+z-index:10000;
+}
+
+/* TIMER */
+
+.timer{
+position:fixed;
+top:15px;
+left:90px;
+background:black;
+color:white;
+padding:14px 24px;
+border-radius:16px;
+font-size:24px;
+font-weight:700;
+z-index:10000;
+}
+
+/* MAIN */
+
+#gameContainer{
+position:fixed;
+inset:0;
+display:flex;
+}
+
+/* LEFT */
+
+.leftPanel{
+position:relative;
+width:50%;
+height:100%;
+overflow:hidden;
+}
+
+.room{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.girl{
+position:absolute;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+height:90%;
+object-fit:contain;
+}
+
+/* RIGHT */
+
+.rightPanel{
+position:relative;
+width:50%;
+height:100%;
+background:#fff;
+overflow:hidden;
+border-left:4px solid #ececec;
+}
+
+.mannequin{
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%,-55%);
+height:85%;
+object-fit:contain;
+}
+
+/* TOOLS */
+
+.tools{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:15px;
+}
+
+.tool{
+width:70px;
+height:70px;
+border:none;
+border-radius:18px;
+background:#f0f0f0;
+font-size:30px;
+cursor:pointer;
+}
+
+.tool:hover{
+background:#e4e4e4;
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="menuBtn" onclick="toggleMenu()">☰</button>
+
+<div class="timer">
+07:00
+</div>
+
+<div id="gameContainer">
+
+<div class="leftPanel">
+
+<img src="assets/room.png" class="room">
+
+<img src="assets/girl.png" class="girl">
+
+</div>
+
+<div class="rightPanel">
+
+<img src="assets/mannequin.png" class="mannequin">
+
+<div class="tools">
+
+<button class="tool">🗄️</button>
+
+<button class="tool">📷</button>
+
+<button class="tool">✏️</button>
+
+<button class="tool">↪️</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="rotateScreen">
+ROTATE DEVICE<br>
+USE LANDSCAPE MODE
+</div>
 
 </body>
 </html>
