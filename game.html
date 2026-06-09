@@ -833,6 +833,231 @@ return localStorage.getItem(
 
 };
 
-  </script>
+   </script>
+  <input type="file" id="clothUpload" accept="image/*" hidden>
+
+<script>
+
+let currentCloth = null;
+
+let drag = false;
+let offsetX = 0;
+let offsetY = 0;
+
+document
+.querySelectorAll(".tool")[1]
+.onclick = ()=>{
+
+document
+.getElementById("clothUpload")
+.click();
+
+};
+
+document
+.getElementById("clothUpload")
+.addEventListener(
+"change",
+function(e){
+
+const file =
+e.target.files[0];
+
+if(!file) return;
+
+const reader =
+new FileReader();
+
+reader.onload = function(ev){
+
+if(currentCloth){
+
+currentCloth.remove();
+
+}
+
+currentCloth =
+document.createElement("img");
+
+currentCloth.src =
+ev.target.result;
+
+currentCloth.style.position =
+"absolute";
+
+currentCloth.style.left =
+"50%";
+
+currentCloth.style.top =
+"50%";
+
+currentCloth.style.width =
+"180px";
+
+currentCloth.style.transform =
+"translate(-50%,-50%)";
+
+currentCloth.style.zIndex =
+"20";
+
+currentCloth.style.cursor =
+"move";
+
+document
+.querySelector(".right")
+.appendChild(currentCloth);
+
+/* DRAG */
+
+currentCloth.onmousedown =
+startDrag;
+
+currentCloth.ontouchstart =
+startTouchDrag;
+
+/* ZOOM */
+
+currentCloth.addEventListener(
+"wheel",
+function(e){
+
+e.preventDefault();
+
+let w =
+parseInt(
+currentCloth.style.width
+);
+
+if(e.deltaY < 0){
+
+w += 10;
+
+}else{
+
+w -= 10;
+
+}
+
+if(w < 60) w = 60;
+
+currentCloth.style.width =
+w + "px";
+
+}
+);
+
+};
+
+reader.readAsDataURL(file);
+
+}
+);
+
+function startDrag(e){
+
+drag = true;
+
+offsetX =
+e.offsetX;
+
+offsetY =
+e.offsetY;
+
+document.onmousemove =
+moveDrag;
+
+document.onmouseup =
+stopDrag;
+
+}
+
+function moveDrag(e){
+
+if(!drag || !currentCloth) return;
+
+currentCloth.style.left =
+e.pageX - offsetX + "px";
+
+currentCloth.style.top =
+e.pageY - offsetY + "px";
+
+currentCloth.style.transform =
+"none";
+
+}
+
+function stopDrag(){
+
+drag = false;
+
+document.onmousemove = null;
+
+document.onmouseup = null;
+
+}
+
+function startTouchDrag(e){
+
+if(!currentCloth) return;
+
+drag = true;
+
+const touch =
+e.touches[0];
+
+offsetX = 50;
+
+offsetY = 50;
+
+document.ontouchmove =
+function(ev){
+
+if(!drag) return;
+
+const t =
+ev.touches[0];
+
+currentCloth.style.left =
+t.pageX - offsetX + "px";
+
+currentCloth.style.top =
+t.pageY - offsetY + "px";
+
+currentCloth.style.transform =
+"none";
+
+};
+
+document.ontouchend =
+function(){
+
+drag = false;
+
+};
+
+}
+
+/* ↪️ */
+
+const oldUndo =
+document.querySelectorAll(".tool")[3]
+.onclick;
+
+document.querySelectorAll(".tool")[3]
+.onclick = ()=>{
+
+if(oldUndo) oldUndo();
+
+if(currentCloth){
+
+currentCloth.remove();
+
+currentCloth = null;
+
+}
+
+};
+
+</script>
 </body>
   </html>
