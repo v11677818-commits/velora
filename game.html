@@ -1059,5 +1059,175 @@ currentCloth = null;
 };
 
 </script>
+  <script>
+
+/* VELORA INVENTORY */
+
+let wardrobeItems =
+JSON.parse(
+localStorage.getItem(
+"veloraInventory"
+)
+) || [];
+
+/* OPEN WARDROBE */
+
+document
+.querySelectorAll(".tool")[0]
+.onclick = ()=>{
+
+const panel =
+document.getElementById(
+"wardrobe"
+);
+
+panel.classList.toggle(
+"active"
+);
+
+renderWardrobe();
+
+};
+
+/* RENDER ITEMS */
+
+function renderWardrobe(){
+
+const box =
+document.querySelector(
+".emptyWardrobe"
+);
+
+if(
+wardrobeItems.length === 0
+){
+
+box.innerHTML =
+"No Purchased Items Yet";
+
+return;
+
+}
+
+box.innerHTML = "";
+
+wardrobeItems.forEach(
+(item,index)=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.style.marginBottom =
+"15px";
+
+card.style.cursor =
+"pointer";
+
+card.style.padding =
+"12px";
+
+card.style.borderRadius =
+"12px";
+
+card.style.background =
+"#222";
+
+card.style.color =
+"white";
+
+card.innerText =
+item.name;
+
+card.onclick =
+()=>{
+
+equipItem(item);
+
+};
+
+box.appendChild(card);
+
+}
+);
+
+}
+
+/* EQUIP */
+
+function equipItem(item){
+
+if(currentCloth){
+
+currentCloth.remove();
+
+}
+
+currentCloth =
+document.createElement("img");
+
+currentCloth.src =
+item.image;
+
+currentCloth.style.position =
+"absolute";
+
+currentCloth.style.left =
+"50%";
+
+currentCloth.style.top =
+"50%";
+
+currentCloth.style.width =
+"180px";
+
+currentCloth.style.transform =
+"translate(-50%,-50%)";
+
+currentCloth.style.zIndex =
+"20";
+
+document
+.querySelector(".right")
+.appendChild(
+currentCloth
+);
+
+}
+
+/* DEMO ITEM */
+
+if(
+localStorage.getItem(
+"veloraDemoAdded"
+) !== "yes"
+){
+
+wardrobeItems.push({
+
+name:"Starter Outfit",
+
+image:
+"https://dummyimage.com/300x500/ffffff/000000.png&text=Outfit"
+
+});
+
+localStorage.setItem(
+"veloraInventory",
+JSON.stringify(
+wardrobeItems
+)
+);
+
+localStorage.setItem(
+"veloraDemoAdded",
+"yes"
+);
+
+}
+
+  </script>
+  
 </body>
   </html>
