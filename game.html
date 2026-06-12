@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velora Game</title>
-
-<script src="sidebar.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Velora Battle</title>
 
 <style>
 
@@ -16,847 +14,145 @@ box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
-html,body{
-width:100%;
-height:100%;
-overflow:hidden;
+body{
 background:#000;
-}
-
-.game{
-position:fixed;
-inset:0;
+color:white;
+min-height:100vh;
 display:flex;
-width:100vw;
-height:100vh;
+justify-content:center;
+align-items:center;
+padding:20px;
 }
 
-/* LEFT */
+.container{
+width:100%;
+max-width:700px;
+background:#111;
+padding:25px;
+border-radius:24px;
+}
 
-.left{
-position:relative;
-width:50%;
-height:100%;
+.title{
+font-size:32px;
+font-weight:700;
+margin-bottom:25px;
+text-align:center;
+}
+
+.uploadBox{
+width:100%;
+height:320px;
+border:2px dashed #444;
+border-radius:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
 overflow:hidden;
-background:#000;
+margin-bottom:20px;
 }
 
-.room{
-position:absolute;
-inset:0;
+.uploadBox img{
 width:100%;
 height:100%;
 object-fit:cover;
-}
-
-.girl{
-position:absolute;
-left:50%;
-bottom:0;
-transform:translateX(-50%);
-height:92%;
-max-width:90%;
-object-fit:contain;
-z-index:2;
-}
-
-/* RIGHT */
-
-.right{
-position:relative;
-width:50%;
-height:100%;
-background:#fff;
-overflow:hidden;
-border-left:3px solid #e5e5e5;
-}
-
-.mannequin{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-height:84%;
-max-width:90%;
-object-fit:contain;
-z-index:1;
-}
-
-/* DRAW */
-
-#drawCanvas{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-width:60%;
-height:84%;
-z-index:5;
-touch-action:none;
-}
-
-#colorPicker{
 display:none;
 }
 
-/* TOP */
-
-.menuBtn{
-position:fixed;
-top:16px;
-left:16px;
-width:60px;
-height:60px;
-border:none;
-border-radius:16px;
-background:#000;
-color:#fff;
-font-size:28px;
-cursor:pointer;
-z-index:9999;
-}
-
-.timer{
-position:fixed;
-top:16px;
-left:90px;
-background:#000;
-color:#fff;
-padding:16px 24px;
-border-radius:16px;
+.uploadText{
 font-size:22px;
-font-weight:700;
-z-index:9999;
+color:#999;
 }
 
-/* TOOLS */
-
-.tools{
-position:absolute;
-bottom:24px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:14px;
-z-index:100;
+input[type="text"],
+textarea{
+width:100%;
+background:#1a1a1a;
+border:none;
+outline:none;
+padding:16px;
+border-radius:16px;
+color:white;
+margin-bottom:15px;
+font-size:18px;
 }
 
-.tool{
-width:72px;
-height:72px;
+textarea{
+height:140px;
+resize:none;
+}
+
+.publishBtn{
+width:100%;
+height:65px;
 border:none;
 border-radius:18px;
-background:#f2f2f2;
-font-size:30px;
+font-size:22px;
+font-weight:700;
 cursor:pointer;
-}
-
-.tool:active{
-transform:scale(.95);
-}
-
-@media(max-width:900px){
-
-.left{
-width:50%;
-}
-
-.right{
-width:50%;
-}
-
-.girl{
-height:75%;
-}
-
-.mannequin{
-height:70%;
-}
-
-#drawCanvas{
-height:70%;
-}
-
-.tool{
-width:60px;
-height:60px;
-font-size:24px;
-}
-
-.timer{
-font-size:18px;
-padding:12px 18px;
-}
-
 }
 
 </style>
 </head>
-
 <body>
 
-<button class="menuBtn" onclick="toggleMenu()">☰</button>
+<div class="container">
 
-<div class="timer" id="timer">
-07:00
+<div class="title">
+Velora Battle
 </div>
 
-<div class="game">
+<label class="uploadBox">
 
-<div class="left">
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+hidden
+>
 
-<img src="assets/room.png" class="room">
+<img id="preview">
 
-<img src="assets/girl.png" class="girl">
-
+<div class="uploadText" id="uploadText">
+Upload Design
 </div>
 
-<div class="right">
-
-<img src="assets/mannequin.png" class="mannequin">
-
-<canvas id="drawCanvas"></canvas>
-
-<input type="color" id="colorPicker">
-
-<div class="tools">
-
-<button class="tool">🗄️</button>
-
-<button class="tool">📷</button>
-
-<button class="tool">✏️</button>
-
-<button class="tool">↪️</button>
-
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-/* TIMER */
-
-let time = 420;
-
-function updateTimer(){
-
-let min = Math.floor(time/60);
-let sec = time%60;
-
-document.getElementById("timer").innerText =
-String(min).padStart(2,"0")
-+ ":" +
-String(sec).padStart(2,"0");
-
-if(time>0){
-time--;
-}
-
-}
-
-setInterval(updateTimer,1000);
-
-/* DRAW */
-
-const canvas =
-document.getElementById("drawCanvas");
-
-const ctx =
-canvas.getContext("2d");
-
-let drawing = false;
-let color = "#000000";
-
-function resizeCanvas(){
-
-canvas.width =
-canvas.offsetWidth;
-
-canvas.height =
-canvas.offsetHeight;
-
-}
-
-setTimeout(
-resizeCanvas,
-100
-);
-
-window.addEventListener(
-"resize",
-resizeCanvas
-);
-
-function getPos(e){
-
-const rect =
-canvas.getBoundingClientRect();
-
-if(e.touches){
-
-return{
-x:e.touches[0].clientX-rect.left,
-y:e.touches[0].clientY-rect.top
-};
-
-}
-
-return{
-x:e.clientX-rect.left,
-y:e.clientY-rect.top
-};
-
-}
-
-function start(e){
-
-drawing = true;
-
-const pos =
-getPos(e);
-
-ctx.beginPath();
-
-ctx.moveTo(
-pos.x,
-pos.y
-);
-
-}
-
-function move(e){
-
-if(!drawing) return;
-
-e.preventDefault();
-
-const pos =
-getPos(e);
-
-ctx.strokeStyle =
-color;
-
-ctx.lineWidth = 8;
-
-ctx.lineCap = "round";
-
-ctx.lineTo(
-pos.x,
-pos.y
-);
-
-ctx.stroke();
-
-}
-
-function end(){
-
-drawing = false;
-
-ctx.beginPath();
-
-}
-
-canvas.addEventListener(
-"mousedown",
-start
-);
-
-canvas.addEventListener(
-"mousemove",
-move
-);
-
-canvas.addEventListener(
-"mouseup",
-end
-);
-
-canvas.addEventListener(
-"mouseleave",
-end
-);
-
-canvas.addEventListener(
-"touchstart",
-start
-);
-
-canvas.addEventListener(
-"touchmove",
-move
-);
-
-canvas.addEventListener(
-"touchend",
-end
-);
-
-document
-.getElementById("colorPicker")
-.addEventListener(
-"input",
-e=>{
-
-color =
-e.target.value;
-
-}
-);
-
-/* ✏️ */
-
-document
-.querySelectorAll(".tool")[2]
-.onclick = ()=>{
-
-document
-.getElementById("colorPicker")
-.click();
-
-};
-
-/* ↪️ */
-
-document
-.querySelectorAll(".tool")[3]
-.onclick = ()=>{
-
-ctx.clearRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-};
-
-</script>
-<!-- WARDROBE -->
-
-<div id="wardrobe">
-
-<div class="wardrobeHeader">
-Wardrobe
-</div>
-
-<div class="emptyWardrobe">
-
-No Purchased Items Yet
-
-</div>
-
-</div>
-
-<style>
-
-#wardrobe{
-
-position:fixed;
-right:-420px;
-top:0;
-width:420px;
-height:100%;
-
-background:#111;
-
-transition:.3s;
-
-z-index:99999;
-
-padding:20px;
-
-}
-
-#wardrobe.active{
-
-right:0;
-
-}
-
-.wardrobeHeader{
-
-color:white;
-
-font-size:28px;
-
-font-weight:700;
-
-margin-bottom:20px;
-
-}
-
-.emptyWardrobe{
-
-height:calc(100% - 60px);
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-text-align:center;
-
-color:#888;
-
-font-size:22px;
-
-}
-
-</style>
-
-<script>
-
-/* 🗄️ */
-
-document
-.querySelectorAll(".tool")[0]
-.onclick = ()=>{
-
-document
-.getElementById("wardrobe")
-.classList
-.toggle("active");
-
-};
-
-/* 📷 */
-
-document
-.querySelectorAll(".tool")[1]
-.onclick = ()=>{
-
-alert(
-"Upload Clothes Coming Next"
-);
-
-};
-
-  </script>
-<!-- FASHION SHOW -->
-
-<div id="fashionShow">
-
-<img src="assets/girl.png" id="showGirl">
-
-<div id="ratingBox">
-
-<div id="ratingTitle">
-FINAL SCORE
-</div>
-
-<div id="ratingScore">
-0
-</div>
-
-<button id="backBtn">
-RETURN
+</label>
+
+<input
+type="text"
+id="designName"
+placeholder="Design Name"
+>
+
+<textarea
+id="designDescription"
+placeholder="Design Description"
+></textarea>
+
+<button
+class="publishBtn"
+id="publishBtn"
+>
+Publish
 </button>
 
 </div>
 
-</div>
-
-<style>
-
-#fashionShow{
-
-position:fixed;
-inset:0;
-
-background:rgba(0,0,0,.95);
-
-display:none;
-
-justify-content:center;
-
-align-items:center;
-
-flex-direction:column;
-
-z-index:999999;
-
-}
-
-#showGirl{
-
-height:75%;
-
-object-fit:contain;
-
-animation:modelSpin 2s infinite alternate;
-
-}
-
-@keyframes modelSpin{
-
-0%{
-transform:translateX(-20px);
-}
-
-100%{
-transform:translateX(20px);
-}
-
-}
-
-#ratingBox{
-
-display:none;
-
-text-align:center;
-
-color:white;
-
-}
-
-#ratingTitle{
-
-font-size:42px;
-
-font-weight:700;
-
-margin-bottom:20px;
-
-}
-
-#ratingScore{
-
-font-size:90px;
-
-font-weight:900;
-
-margin-bottom:30px;
-
-}
-
-#backBtn{
-
-width:220px;
-
-height:65px;
-
-border:none;
-
-border-radius:16px;
-
-font-size:20px;
-
-cursor:pointer;
-
-}
-
-</style>
-
 <script>
 
-/* TIMER END */
+let imageData = "";
 
-function finishChallenge(){
+const imageInput =
+document.getElementById("imageInput");
 
-document
-.getElementById("fashionShow")
-.style.display="flex";
+const preview =
+document.getElementById("preview");
 
-setTimeout(()=>{
+const uploadText =
+document.getElementById("uploadText");
 
-document
-.getElementById("showGirl")
-.style.display="none";
-
-document
-.getElementById("ratingBox")
-.style.display="block";
-
-const score =
-Math.floor(
-70 + Math.random()*31
-);
-
-document
-.getElementById("ratingScore")
-.innerText =
-score + "/100";
-
-},10000);
-
-}
-
-const oldTimer =
-setInterval(()=>{
-
-if(time<=0){
-
-clearInterval(oldTimer);
-
-finishChallenge();
-
-}
-
-},1000);
-
-/* RETURN */
-
-document
-.getElementById("backBtn")
-.onclick=()=>{
-
-window.location.href=
-"index.html";
-
-};
-
-</script>
-  <script>
-
-/* PLAYER DATA */
-
-let veloraPoints =
-parseInt(
-localStorage.getItem("veloraPoints")
-) || 0;
-
-let veloraStars =
-parseInt(
-localStorage.getItem("veloraStars")
-) || 0;
-
-/* FINAL RESULT */
-
-function saveResult(score){
-
-veloraPoints += score;
-
-let stars = 1;
-
-if(score >= 90){
-
-stars = 5;
-
-}else if(score >= 85){
-
-stars = 4;
-
-}else if(score >= 75){
-
-stars = 3;
-
-}else if(score >= 65){
-
-stars = 2;
-
-}
-
-veloraStars += stars;
-
-localStorage.setItem(
-"veloraPoints",
-veloraPoints
-);
-
-localStorage.setItem(
-"veloraStars",
-veloraStars
-);
-
-localStorage.setItem(
-"lastScore",
-score
-);
-
-localStorage.setItem(
-"lastStars",
-stars
-);
-
-}
-
-/* FASHION SHOW RESULT */
-
-function finishChallenge(){
-
-document
-.getElementById("fashionShow")
-.style.display="flex";
-
-setTimeout(()=>{
-
-document
-.getElementById("showGirl")
-.style.display="none";
-
-document
-.getElementById("ratingBox")
-.style.display="block";
-
-const score =
-Math.floor(
-70 + Math.random()*31
-);
-
-document
-.getElementById("ratingScore")
-.innerText =
-score + "/100";
-
-saveResult(score);
-
-},10000);
-
-}
-
-/* LEADERBOARD DATA */
-
-window.veloraData = {
-
-getPoints(){
-return localStorage.getItem(
-"veloraPoints"
-) || 0;
-},
-
-getStars(){
-return localStorage.getItem(
-"veloraStars"
-) || 0;
-},
-
-getLastScore(){
-return localStorage.getItem(
-"lastScore"
-) || 0;
-}
-
-};
-
-   </script>
-  <input type="file" id="clothUpload" accept="image/*" hidden>
-
-<script>
-
-let currentCloth = null;
-
-let drag = false;
-let offsetX = 0;
-let offsetY = 0;
-
-document
-.querySelectorAll(".tool")[1]
-.onclick = ()=>{
-
-document
-.getElementById("clothUpload")
-.click();
-
-};
-
-document
-.getElementById("clothUpload")
-.addEventListener(
+imageInput.addEventListener(
 "change",
 function(e){
 
@@ -868,83 +164,20 @@ if(!file) return;
 const reader =
 new FileReader();
 
-reader.onload = function(ev){
+reader.onload =
+function(event){
 
-if(currentCloth){
+imageData =
+event.target.result;
 
-currentCloth.remove();
+preview.src =
+imageData;
 
-}
+preview.style.display =
+"block";
 
-currentCloth =
-document.createElement("img");
-
-currentCloth.src =
-ev.target.result;
-
-currentCloth.style.position =
-"absolute";
-
-currentCloth.style.left =
-"50%";
-
-currentCloth.style.top =
-"50%";
-
-currentCloth.style.width =
-"180px";
-
-currentCloth.style.transform =
-"translate(-50%,-50%)";
-
-currentCloth.style.zIndex =
-"20";
-
-currentCloth.style.cursor =
-"move";
-
-document
-.querySelector(".right")
-.appendChild(currentCloth);
-
-/* DRAG */
-
-currentCloth.onmousedown =
-startDrag;
-
-currentCloth.ontouchstart =
-startTouchDrag;
-
-/* ZOOM */
-
-currentCloth.addEventListener(
-"wheel",
-function(e){
-
-e.preventDefault();
-
-let w =
-parseInt(
-currentCloth.style.width
-);
-
-if(e.deltaY < 0){
-
-w += 10;
-
-}else{
-
-w -= 10;
-
-}
-
-if(w < 60) w = 60;
-
-currentCloth.style.width =
-w + "px";
-
-}
-);
+uploadText.style.display =
+"none";
 
 };
 
@@ -953,281 +186,72 @@ reader.readAsDataURL(file);
 }
 );
 
-function startDrag(e){
-
-drag = true;
-
-offsetX =
-e.offsetX;
-
-offsetY =
-e.offsetY;
-
-document.onmousemove =
-moveDrag;
-
-document.onmouseup =
-stopDrag;
-
-}
-
-function moveDrag(e){
-
-if(!drag || !currentCloth) return;
-
-currentCloth.style.left =
-e.pageX - offsetX + "px";
-
-currentCloth.style.top =
-e.pageY - offsetY + "px";
-
-currentCloth.style.transform =
-"none";
-
-}
-
-function stopDrag(){
-
-drag = false;
-
-document.onmousemove = null;
-
-document.onmouseup = null;
-
-}
-
-function startTouchDrag(e){
-
-if(!currentCloth) return;
-
-drag = true;
-
-const touch =
-e.touches[0];
-
-offsetX = 50;
-
-offsetY = 50;
-
-document.ontouchmove =
-function(ev){
-
-if(!drag) return;
-
-const t =
-ev.touches[0];
-
-currentCloth.style.left =
-t.pageX - offsetX + "px";
-
-currentCloth.style.top =
-t.pageY - offsetY + "px";
-
-currentCloth.style.transform =
-"none";
-
-};
-
-document.ontouchend =
-function(){
-
-drag = false;
-
-};
-
-}
-
-/* ↪️ */
-
-const oldUndo =
-document.querySelectorAll(".tool")[3]
-.onclick;
-
-document.querySelectorAll(".tool")[3]
-.onclick = ()=>{
-
-if(oldUndo) oldUndo();
-
-if(currentCloth){
-
-currentCloth.remove();
-
-currentCloth = null;
-
-}
-
-};
-
-</script>
-  <script>
-
-/* VELORA INVENTORY */
-
-let wardrobeItems =
-JSON.parse(
-localStorage.getItem(
-"veloraInventory"
-)
-) || [];
-
-/* OPEN WARDROBE */
-
 document
-.querySelectorAll(".tool")[0]
+.getElementById("publishBtn")
 .onclick = ()=>{
 
-const panel =
-document.getElementById(
-"wardrobe"
-);
+const name =
+document
+.getElementById("designName")
+.value;
 
-panel.classList.toggle(
-"active"
-);
-
-renderWardrobe();
-
-};
-
-/* RENDER ITEMS */
-
-function renderWardrobe(){
-
-const box =
-document.querySelector(
-".emptyWardrobe"
-);
+const description =
+document
+.getElementById("designDescription")
+.value;
 
 if(
-wardrobeItems.length === 0
+!imageData ||
+!name ||
+!description
 ){
 
-box.innerHTML =
-"No Purchased Items Yet";
+alert(
+"Complete All Fields"
+);
 
 return;
 
 }
 
-box.innerHTML = "";
+const battlePost = {
 
-wardrobeItems.forEach(
-(item,index)=>{
+image:imageData,
 
-const card =
-document.createElement(
-"div"
-);
+name:name,
 
-card.style.marginBottom =
-"15px";
+description:description,
 
-card.style.cursor =
-"pointer";
+votes:0,
 
-card.style.padding =
-"12px";
-
-card.style.borderRadius =
-"12px";
-
-card.style.background =
-"#222";
-
-card.style.color =
-"white";
-
-card.innerText =
-item.name;
-
-card.onclick =
-()=>{
-
-equipItem(item);
+createdAt:
+Date.now()
 
 };
 
-box.appendChild(card);
-
-}
-);
-
-}
-
-/* EQUIP */
-
-function equipItem(item){
-
-if(currentCloth){
-
-currentCloth.remove();
-
-}
-
-currentCloth =
-document.createElement("img");
-
-currentCloth.src =
-item.image;
-
-currentCloth.style.position =
-"absolute";
-
-currentCloth.style.left =
-"50%";
-
-currentCloth.style.top =
-"50%";
-
-currentCloth.style.width =
-"180px";
-
-currentCloth.style.transform =
-"translate(-50%,-50%)";
-
-currentCloth.style.zIndex =
-"20";
-
-document
-.querySelector(".right")
-.appendChild(
-currentCloth
-);
-
-}
-
-/* DEMO ITEM */
-
-if(
+let posts =
+JSON.parse(
 localStorage.getItem(
-"veloraDemoAdded"
-) !== "yes"
-){
-
-wardrobeItems.push({
-
-name:"Starter Outfit",
-
-image:
-"https://dummyimage.com/300x500/ffffff/000000.png&text=Outfit"
-
-});
-
-localStorage.setItem(
-"veloraInventory",
-JSON.stringify(
-wardrobeItems
+"veloraBattlePosts"
 )
+) || [];
+
+posts.push(
+battlePost
 );
 
 localStorage.setItem(
-"veloraDemoAdded",
-"yes"
+"veloraBattlePosts",
+JSON.stringify(posts)
 );
 
-}
+alert(
+"Published Successfully"
+);
 
-  </script>
-  
+};
+
+</script>
+
 </body>
-  </html>
+</html>
