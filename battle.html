@@ -250,7 +250,159 @@ alert(
 );
 
 };
+/* =========================
+   VELORA BATTLE PROGRESSION
+========================= */
 
+let battleXP =
+parseInt(
+localStorage.getItem(
+"battleXP"
+)
+) || 0;
+
+let battleWins =
+parseInt(
+localStorage.getItem(
+"battleWins"
+)
+) || 0;
+
+let battleVotes =
+parseInt(
+localStorage.getItem(
+"battleVotes"
+)
+) || 0;
+
+let battleStreak =
+parseInt(
+localStorage.getItem(
+"battleStreak"
+)
+) || 0;
+
+let battleRank =
+localStorage.getItem(
+"battleRank"
+) || "Beginner";
+
+let battleAchievements =
+JSON.parse(
+localStorage.getItem(
+"battleAchievements"
+)
+) || [];
+
+function updateBattleData(){
+
+battleXP += 25;
+
+if(
+battleXP >= 10000
+){
+
+battleRank = "Queen";
+
+}else if(
+battleXP >= 4000
+){
+
+battleRank = "Legendary";
+
+}else if(
+battleXP >= 2000
+){
+
+battleRank = "Professional";
+
+}else if(
+battleXP >= 1000
+){
+
+battleRank = "Designer";
+
+}else{
+
+battleRank = "Beginner";
+
+}
+
+if(
+!battleAchievements.includes(
+"First Design"
+)
+){
+
+battleAchievements.push(
+"First Design"
+);
+
+}
+
+localStorage.setItem(
+"battleXP",
+battleXP
+);
+
+localStorage.setItem(
+"battleRank",
+battleRank
+);
+
+localStorage.setItem(
+"battleWins",
+battleWins
+);
+
+localStorage.setItem(
+"battleVotes",
+battleVotes
+);
+
+localStorage.setItem(
+"battleStreak",
+battleStreak
+);
+
+localStorage.setItem(
+"battleAchievements",
+JSON.stringify(
+battleAchievements
+)
+);
+
+}
+
+/* BATTLE PROFILE */
+
+window.veloraBattle = {
+
+getXP(){
+return battleXP;
+},
+
+getRank(){
+return battleRank;
+},
+
+getWins(){
+return battleWins;
+},
+
+getVotes(){
+return battleVotes;
+},
+
+getStreak(){
+return battleStreak;
+},
+
+getAchievements(){
+return battleAchievements;
+}
+
+};
 </script>
 
 </body>
