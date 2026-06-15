@@ -18,25 +18,23 @@ body{
 background:#000;
 color:white;
 min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
 padding:20px;
 }
 
 .container{
 width:100%;
-max-width:700px;
+max-width:850px;
+margin:auto;
 background:#111;
 padding:25px;
 border-radius:24px;
 }
 
 .title{
-font-size:32px;
+font-size:34px;
 font-weight:700;
-margin-bottom:25px;
 text-align:center;
+margin-bottom:25px;
 }
 
 .uploadBox{
@@ -50,6 +48,7 @@ align-items:center;
 cursor:pointer;
 overflow:hidden;
 margin-bottom:20px;
+background:#181818;
 }
 
 .uploadBox img{
@@ -90,10 +89,106 @@ border-radius:18px;
 font-size:22px;
 font-weight:700;
 cursor:pointer;
+background:white;
+color:black;
+transition:.2s;
+}
+
+.publishBtn:hover{
+opacity:.9;
+}
+
+.battlePanel{
+margin-top:25px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.battleCard{
+background:#1a1a1a;
+padding:18px;
+border-radius:18px;
+text-align:center;
+}
+
+.battleLabel{
+font-size:14px;
+color:#888;
+margin-bottom:8px;
+}
+
+.battleValue{
+font-size:22px;
+font-weight:700;
+}
+
+.achievementBox{
+margin-top:20px;
+background:#1a1a1a;
+padding:18px;
+border-radius:18px;
+}
+
+.sectionTitle{
+font-size:20px;
+font-weight:700;
+margin-bottom:12px;
+}
+
+.achievementItem{
+padding:12px;
+background:#242424;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.rewardBox{
+margin-top:20px;
+background:#1a1a1a;
+padding:18px;
+border-radius:18px;
+text-align:center;
+}
+
+.rewardBtn{
+width:100%;
+height:55px;
+border:none;
+border-radius:14px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+margin-top:10px;
+}
+
+.vipBox{
+margin-top:20px;
+background:#1a1a1a;
+padding:18px;
+border-radius:18px;
+}
+
+.vipItem{
+margin-bottom:8px;
+color:#ccc;
+}
+
+@media(max-width:700px){
+
+.battlePanel{
+grid-template-columns:1fr;
+}
+
+.title{
+font-size:28px;
+}
+
 }
 
 </style>
 </head>
+
 <body>
 
 <div class="container">
@@ -113,7 +208,10 @@ hidden
 
 <img id="preview">
 
-<div class="uploadText" id="uploadText">
+<div
+class="uploadText"
+id="uploadText"
+>
 Upload Design
 </div>
 
@@ -137,20 +235,141 @@ id="publishBtn"
 Publish
 </button>
 
+<div class="battlePanel">
+
+<div class="battleCard">
+<div class="battleLabel">👑 Rank</div>
+<div class="battleValue" id="battleRank">
+Beginner
+</div>
+</div>
+
+<div class="battleCard">
+<div class="battleLabel">⭐ XP</div>
+<div class="battleValue" id="battleXP">
+0
+</div>
+</div>
+
+<div class="battleCard">
+<div class="battleLabel">🔥 Streak</div>
+<div class="battleValue" id="battleStreak">
+0
+</div>
+</div>
+
+<div class="battleCard">
+<div class="battleLabel">📊 Posts</div>
+<div class="battleValue" id="battlePosts">
+0
+</div>
+</div>
+
+</div>
+
+<div class="achievementBox">
+
+<div class="sectionTitle">
+🏅 Achievements
+</div>
+
+<div
+class="achievementItem"
+id="achievementText"
+>
+No Achievements Yet
+</div>
+
+</div>
+
+<div class="rewardBox">
+
+<div class="sectionTitle">
+🎁 Reward Box
+</div>
+
+<button
+class="rewardBtn"
+id="rewardBtn"
+>
+Locked
+</button>
+
+</div>
+
+<div class="vipBox">
+
+<div class="sectionTitle">
+💎 VIP Benefits
+</div>
+
+<div class="vipItem">
++20% XP
+</div>
+
+<div class="vipItem">
+VIP Badge
+</div>
+
+<div class="vipItem">
+VIP Frame
+</div>
+
+<div class="vipItem">
+Weekly VIP Box
+</div>
+
+</div>
+
 </div>
 
 <script>
 
+/* PART 2 COMING */
 let imageData = "";
 
+let battleXP =
+parseInt(
+localStorage.getItem(
+"battleXP"
+)
+) || 0;
+
+let battlePosts =
+parseInt(
+localStorage.getItem(
+"battlePosts"
+)
+) || 0;
+
+let battleStreak =
+parseInt(
+localStorage.getItem(
+"battleStreak"
+)
+) || 0;
+
+let achievements =
+JSON.parse(
+localStorage.getItem(
+"battleAchievements"
+)
+) || [];
+
 const imageInput =
-document.getElementById("imageInput");
+document.getElementById(
+"imageInput"
+);
 
 const preview =
-document.getElementById("preview");
+document.getElementById(
+"preview"
+);
 
 const uploadText =
-document.getElementById("uploadText");
+document.getElementById(
+"uploadText"
+);
 
 imageInput.addEventListener(
 "change",
@@ -181,23 +400,144 @@ uploadText.style.display =
 
 };
 
-reader.readAsDataURL(file);
+reader.readAsDataURL(
+file
+);
 
 }
 );
 
+function updateBattleUI(){
+
+document.getElementById(
+"battleXP"
+).innerText =
+battleXP;
+
+document.getElementById(
+"battlePosts"
+).innerText =
+battlePosts;
+
+document.getElementById(
+"battleStreak"
+).innerText =
+battleStreak;
+
+let rank =
+"Beginner";
+
+if(
+battleXP >= 10000
+){
+rank = "Queen";
+}
+else if(
+battleXP >= 4000
+){
+rank = "Legendary";
+}
+else if(
+battleXP >= 2000
+){
+rank = "Professional";
+}
+else if(
+battleXP >= 1000
+){
+rank = "Designer";
+}
+
+document.getElementById(
+"battleRank"
+).innerText =
+rank;
+
+if(
+achievements.length > 0
+){
+
+document.getElementById(
+"achievementText"
+).innerHTML =
+achievements.join("<br>");
+
+}
+
+if(
+battlePosts >= 5
+){
+
+document.getElementById(
+"rewardBtn"
+).innerText =
+"🎁 Open Reward Box";
+
+}
+
+}
+
+updateBattleUI();
+
 document
-.getElementById("publishBtn")
+.getElementById(
+"rewardBtn"
+)
+.onclick = ()=>{
+
+if(
+battlePosts < 5
+){
+return;
+}
+
+const rewards = [
+
+"💰 100 Coins",
+
+"🏷️ New Title",
+
+"🖼️ Profile Picture",
+
+"✨ Special Frame",
+
+"🎖️ Battle Badge"
+
+];
+
+const reward =
+
+rewards[
+Math.floor(
+Math.random() *
+rewards.length
+)
+];
+
+alert(
+reward
+);
+
+};
+
+document
+.getElementById(
+"publishBtn"
+)
 .onclick = ()=>{
 
 const name =
 document
-.getElementById("designName")
+.getElementById(
+"designName"
+)
 .value;
 
 const description =
 document
-.getElementById("designDescription")
+.getElementById(
+"designDescription"
+)
 .value;
 
 if(
@@ -242,24 +582,81 @@ battlePost
 
 localStorage.setItem(
 "veloraBattlePosts",
-JSON.stringify(posts)
+JSON.stringify(
+posts
+)
 );
 
+battleXP += 25;
+
+battlePosts++;
+
+localStorage.setItem(
+"battleXP",
+battleXP
+);
+
+localStorage.setItem(
+"battlePosts",
+battlePosts
+);
+
+if(
+battlePosts === 1 &&
+!achievements.includes(
+"🥉 First Design"
+)
+){
+
+achievements.push(
+"🥉 First Design"
+);
+
+}
+
+if(
+battlePosts === 10 &&
+!achievements.includes(
+"🥈 10 Designs"
+)
+){
+
+achievements.push(
+"🥈 10 Designs"
+);
+
+}
+
+if(
+battlePosts === 50 &&
+!achievements.includes(
+"🥇 50 Designs"
+)
+){
+
+achievements.push(
+"🥇 50 Designs"
+);
+
+}
+
+localStorage.setItem(
+"battleAchievements",
+JSON.stringify(
+achievements
+)
+);
+
+updateBattleUI();
+
 alert(
-"Published Successfully"
+"Published Successfully +25 XP"
 );
 
 };
-/* =========================
-   VELORA BATTLE PROGRESSION
+ /* =========================
+   EXTRA BATTLE SYSTEM
 ========================= */
-
-let battleXP =
-parseInt(
-localStorage.getItem(
-"battleXP"
-)
-) || 0;
 
 let battleWins =
 parseInt(
@@ -275,81 +672,6 @@ localStorage.getItem(
 )
 ) || 0;
 
-let battleStreak =
-parseInt(
-localStorage.getItem(
-"battleStreak"
-)
-) || 0;
-
-let battleRank =
-localStorage.getItem(
-"battleRank"
-) || "Beginner";
-
-let battleAchievements =
-JSON.parse(
-localStorage.getItem(
-"battleAchievements"
-)
-) || [];
-
-function updateBattleData(){
-
-battleXP += 25;
-
-if(
-battleXP >= 10000
-){
-
-battleRank = "Queen";
-
-}else if(
-battleXP >= 4000
-){
-
-battleRank = "Legendary";
-
-}else if(
-battleXP >= 2000
-){
-
-battleRank = "Professional";
-
-}else if(
-battleXP >= 1000
-){
-
-battleRank = "Designer";
-
-}else{
-
-battleRank = "Beginner";
-
-}
-
-if(
-!battleAchievements.includes(
-"First Design"
-)
-){
-
-battleAchievements.push(
-"First Design"
-);
-
-}
-
-localStorage.setItem(
-"battleXP",
-battleXP
-);
-
-localStorage.setItem(
-"battleRank",
-battleRank
-);
-
 localStorage.setItem(
 "battleWins",
 battleWins
@@ -360,49 +682,309 @@ localStorage.setItem(
 battleVotes
 );
 
-localStorage.setItem(
-"battleStreak",
-battleStreak
+/* ADD THESE INSIDE updateBattleUI() */
+
+if(
+battlePosts >= 100 &&
+!achievements.includes(
+"👑 100 Designs"
+)
+){
+
+achievements.push(
+"👑 100 Designs"
 );
+
+}
 
 localStorage.setItem(
 "battleAchievements",
 JSON.stringify(
-battleAchievements
+achievements
+)
+);
+
+/* VICTORY EFFECT */
+
+function showVictory(){
+
+const popup =
+document.createElement(
+"div"
+);
+
+popup.innerHTML =
+"🎉 Victory";
+
+popup.style.position =
+"fixed";
+
+popup.style.top =
+"50%";
+
+popup.style.left =
+"50%";
+
+popup.style.transform =
+"translate(-50%,-50%)";
+
+popup.style.background =
+"#111";
+
+popup.style.padding =
+"30px";
+
+popup.style.borderRadius =
+"20px";
+
+popup.style.fontSize =
+"32px";
+
+popup.style.zIndex =
+"9999";
+
+document.body.appendChild(
+popup
+);
+
+setTimeout(()=>{
+
+popup.remove();
+
+},2000);
+
+}
+
+/* ACHIEVEMENT EFFECT */
+
+function showAchievement(
+text
+){
+
+const popup =
+document.createElement(
+"div"
+);
+
+popup.innerHTML =
+"🏅 " + text;
+
+popup.style.position =
+"fixed";
+
+popup.style.top =
+"20px";
+
+popup.style.left =
+"50%";
+
+popup.style.transform =
+"translateX(-50%)";
+
+popup.style.background =
+"#222";
+
+popup.style.padding =
+"18px";
+
+popup.style.borderRadius =
+"14px";
+
+popup.style.zIndex =
+"9999";
+
+document.body.appendChild(
+popup
+);
+
+setTimeout(()=>{
+
+popup.remove();
+
+},2500);
+
+}
+
+/* PROFILE DATA */
+
+window.veloraBattle = {
+
+xp:()=>battleXP,
+
+posts:()=>battlePosts,
+
+wins:()=>battleWins,
+
+votes:()=>battleVotes,
+
+streak:()=>battleStreak,
+
+achievements:()=>achievements
+
+};
+  /* =========================
+   TOP 10 LEADERBOARD
+========================= */
+
+function getLeaderboard(){
+
+let board =
+JSON.parse(
+localStorage.getItem(
+"veloraLeaderboard"
+)
+) || [];
+
+return board;
+
+}
+
+function saveToLeaderboard(){
+
+let board =
+getLeaderboard();
+
+board.push({
+
+name:
+document.getElementById(
+"designName"
+).value,
+
+xp:battleXP,
+
+posts:battlePosts,
+
+date:Date.now()
+
+});
+
+board.sort(
+(a,b)=>
+b.xp - a.xp
+);
+
+board =
+board.slice(0,10);
+
+localStorage.setItem(
+"veloraLeaderboard",
+JSON.stringify(
+board
 )
 );
 
 }
 
-/* BATTLE PROFILE */
+/* ADD INSIDE PUBLISH BUTTON */
 
-window.veloraBattle = {
+saveToLeaderboard();
 
-getXP(){
-return battleXP;
-},
+/* =========================
+   VIP SYSTEM
+========================= */
 
-getRank(){
-return battleRank;
-},
+let isVIP =
+localStorage.getItem(
+"isVIP"
+) === "true";
 
-getWins(){
-return battleWins;
-},
+if(isVIP){
 
-getVotes(){
-return battleVotes;
-},
+battleXP += 5;
 
-getStreak(){
-return battleStreak;
-},
-
-getAchievements(){
-return battleAchievements;
 }
 
-};
+/* =========================
+   WIN RATE
+========================= */
+
+function getWinRate(){
+
+if(
+battlePosts === 0
+){
+return "0%";
+}
+
+return Math.floor(
+
+(battleWins /
+battlePosts)
+
+* 100
+
+) + "%";
+
+}
+
+/* =========================
+   STREAK REWARDS
+========================= */
+
+if(
+battleStreak === 5
+){
+
+showAchievement(
+"🔥 Streak x5"
+);
+
+}
+
+if(
+battleStreak === 10
+){
+
+showAchievement(
+"🔥 Streak x10"
+);
+
+}
+
+/* =========================
+   RANK CELEBRATIONS
+========================= */
+
+if(
+battleXP === 1000
+){
+
+alert(
+"🥈 Designer Unlocked"
+);
+
+}
+
+if(
+battleXP === 2000
+){
+
+alert(
+"🥇 Professional Unlocked"
+);
+
+}
+
+if(
+battleXP === 4000
+){
+
+alert(
+"💎 Legendary Unlocked"
+);
+
+}
+
+if(
+battleXP === 10000
+){
+
+alert(
+"👑 Queen Unlocked"
+);
+
+            } 
 </script>
 
 </body>
