@@ -985,6 +985,333 @@ alert(
 );
 
             } 
+ /* =========================
+   REGISTERED LIMIT
+========================= */
+
+const DAILY_LIMIT = 3;
+const IS_SUBSCRIBER = false;
+
+function canPublishBattle(){
+
+if(
+IS_SUBSCRIBER
+){
+return true;
+}
+
+if(
+battlePosts >= DAILY_LIMIT
+){
+
+alert(
+"Maximum 3 Battle Posts Reached Today"
+);
+
+return false;
+
+}
+
+return true;
+
+}
+
+/* =========================
+   MENU SYSTEM
+========================= */
+
+const battleMenu = document.createElement(
+"div"
+);
+
+battleMenu.innerHTML = `
+<div style="
+display:flex;
+gap:10px;
+overflow:auto;
+margin-bottom:20px;
+">
+
+<button class="battleMenuBtn">
+🏆 Top 10
+</button>
+
+<button class="battleMenuBtn">
+📊 Stats
+</button>
+
+<button class="battleMenuBtn">
+🏅 Achievements
+</button>
+
+<button class="battleMenuBtn">
+🎁 Rewards
+</button>
+
+<button class="battleMenuBtn">
+💎 VIP
+</button>
+
+</div>
+`;
+
+document
+.querySelector(".container")
+.insertBefore(
+battleMenu,
+document.querySelector(".title")
+);
+
+/* =========================
+   REAL XP SYSTEM
+========================= */
+
+function addXP(amount){
+
+battleXP += amount;
+
+localStorage.setItem(
+"battleXP",
+battleXP
+);
+
+updateBattleUI();
+
+}
+
+function battleVictory(){
+
+battleWins++;
+
+battleStreak++;
+
+addXP(50);
+
+showVictory();
+
+localStorage.setItem(
+"battleWins",
+battleWins
+);
+
+localStorage.setItem(
+"battleStreak",
+battleStreak
+);
+
+if(
+battleWins === 1
+){
+
+showAchievement(
+"🥉 First Victory"
+);
+
+}
+
+if(
+battleWins === 10
+){
+
+showAchievement(
+"🥈 10 Victories"
+);
+
+}
+
+if(
+battleWins === 50
+){
+
+showAchievement(
+"🥇 50 Victories"
+);
+
+}
+
+if(
+battleWins === 100
+){
+
+showAchievement(
+"👑 100 Victories"
+);
+
+}
+
+}
+
+/* =========================
+   TOP 10
+========================= */
+
+function saveToLeaderboard(){
+
+let board =
+JSON.parse(
+localStorage.getItem(
+"veloraLeaderboard"
+)
+) || [];
+
+board.push({
+
+name:
+document.getElementById(
+"designName"
+).value,
+
+xp:battleXP,
+
+posts:battlePosts,
+
+wins:battleWins,
+
+createdAt:
+Date.now()
+
+});
+
+board.sort(
+(a,b)=>
+b.xp-a.xp
+);
+
+board =
+board.slice(0,10);
+
+localStorage.setItem(
+"veloraLeaderboard",
+JSON.stringify(board)
+);
+
+}
+
+/* =========================
+   REPLACE PUBLISH BUTTON
+========================= */
+
+document
+.getElementById(
+"publishBtn"
+)
+.onclick = ()=>{
+
+if(
+!canPublishBattle()
+){
+return;
+}
+
+const name =
+document
+.getElementById(
+"designName"
+)
+.value;
+
+const description =
+document
+.getElementById(
+"designDescription"
+)
+.value;
+
+if(
+!imageData ||
+!name ||
+!description
+){
+
+alert(
+"Complete All Fields"
+);
+
+return;
+
+}
+
+const battlePost = {
+
+image:imageData,
+
+name:name,
+
+description:description,
+
+votes:0,
+
+createdAt:
+Date.now()
+
+};
+
+let posts =
+JSON.parse(
+localStorage.getItem(
+"veloraBattlePosts"
+)
+) || [];
+
+posts.push(
+battlePost
+);
+
+localStorage.setItem(
+"veloraBattlePosts",
+JSON.stringify(
+posts
+)
+);
+
+battlePosts++;
+
+addXP(5);
+
+localStorage.setItem(
+"battlePosts",
+battlePosts
+);
+
+saveToLeaderboard();
+
+if(
+battlePosts === 1
+){
+
+showAchievement(
+"🥉 First Design"
+);
+
+}
+
+if(
+battlePosts === 10
+){
+
+showAchievement(
+"🥈 10 Designs"
+);
+
+}
+
+if(
+battlePosts === 50
+){
+
+showAchievement(
+"🥇 50 Designs"
+);
+
+}
+
+updateBattleUI();
+
+alert(
+"Published Successfully"
+);
+
+};
 </script>
 
 </body>
