@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<title>Velora Voting</title>
+
+<style>
+
+body{
+background:#000;
+color:white;
+font-family:Arial;
+padding:20px;
+}
+
+.title{
+font-size:35px;
+font-weight:700;
+text-align:center;
+margin-bottom:25px;
+}
+
+.posts{
+display:grid;
+gap:20px;
+}
+
+.card{
+background:#111;
+padding:15px;
+border-radius:20px;
+}
+
+.card img{
+width:100%;
+border-radius:15px;
+margin-bottom:10px;
+}
+
+.name{
+font-size:22px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.desc{
+color:#aaa;
+margin-bottom:15px;
+}
+
+.voteBtn{
+width:100%;
+height:55px;
+border:none;
+border-radius:15px;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+background:white;
+color:black;
+}
+
+.voteCount{
+margin-top:10px;
+font-size:18px;
+font-weight:700;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="title">
+🏆 Velora Voting
+</div>
+
+<div
+class="posts"
+id="posts"
+>
+</div>
+
+<script>
+
+let posts =
+JSON.parse(
+localStorage.getItem(
+"veloraBattlePosts"
+)
+) || [];
+
+const container =
+document.getElementById(
+"posts"
+);
+
+function renderPosts(){
+
+container.innerHTML="";
+
+posts.sort(
+(a,b)=>
+b.votes-a.votes
+);
+
+posts.forEach(
+(post,index)=>{
+
+const card =
+document.createElement(
+"div"
+);
+
+card.className =
+"card";
+
+card.innerHTML =
+
+`
+
+<img src="${post.image}">
+
+<div class="name">
+
+🥇 #${index+1}
+
+${post.name}
+
+</div>
+
+<div class="desc">
+
+${post.description}
+
+</div>
+
+<button
+class="voteBtn"
+onclick="vote(${index})"
+>
+
+🗳️ Vote
+
+</button>
+
+<div class="voteCount">
+
+Votes:
+${post.votes}
+
+</div>
+
+`;
+
+container.appendChild(
+card
+);
+
+}
+);
+
+}
+
+function vote(index){
+
+let votedPosts =
+JSON.parse(
+localStorage.getItem(
+"veloraVotedPosts"
+)
+) || [];
+
+if(
+votedPosts.includes(index)
+){
+
+alert(
+"You Already Voted"
+);
+
+return;
+
+}
+
+posts[index].votes++;
+
+votedPosts.push(index);
+
+localStorage.setItem(
+"veloraVotedPosts",
+JSON.stringify(
+votedPosts
+)
+);
+
+localStorage.setItem(
+"veloraBattlePosts",
+JSON.stringify(
+posts
+)
+);
+
+renderPosts();
+
+}
+
+renderPosts();
+
+</script>
+
+</body>
+</html>
