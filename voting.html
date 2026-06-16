@@ -1,91 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Velora Voting</title>
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
 background:#000;
 color:white;
-font-family:Arial;
+min-height:100vh;
 padding:20px;
 }
 
+.header{
+max-width:700px;
+margin:auto;
+margin-bottom:20px;
+}
+
 .title{
-font-size:35px;
+font-size:34px;
 font-weight:700;
 text-align:center;
-margin-bottom:25px;
-}
-
-.posts{
-display:grid;
-gap:20px;
-}
-
-.card{
-background:#111;
-padding:15px;
-border-radius:20px;
-}
-
-.card img{
-width:100%;
-border-radius:15px;
-margin-bottom:10px;
-}
-
-.name{
-font-size:22px;
-font-weight:700;
-margin-bottom:10px;
-}
-
-.desc{
-color:#aaa;
 margin-bottom:15px;
 }
 
-.voteBtn{
-width:100%;
-height:55px;
-border:none;
-border-radius:15px;
-font-size:18px;
+.topDesign{
+background:#111;
+padding:18px;
+border-radius:20px;
+text-align:center;
+}
+
+.topLabel{
+color:#999;
+margin-bottom:8px;
+}
+
+.topName{
+font-size:20px;
 font-weight:700;
+}
+
+.voteContainer{
+max-width:700px;
+margin:auto;
+}
+
+.voteCard{
+background:#111;
+padding:15px;
+border-radius:24px;
+}
+
+.voteImage{
+width:100%;
+height:450px;
+object-fit:cover;
+border-radius:18px;
+margin-bottom:15px;
+background:#1a1a1a;
+}
+
+.voteName{
+font-size:28px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.voteDescription{
+font-size:16px;
+color:#aaa;
+line-height:1.6;
+margin-bottom:20px;
+}
+
+.voteActions{
+display:flex;
+gap:12px;
+}
+
+.voteBtn{
+flex:1;
+height:65px;
+border:none;
+border-radius:18px;
+font-size:28px;
 cursor:pointer;
+}
+
+.dislikeBtn{
+background:#1d1d1d;
+color:white;
+}
+
+.likeBtn{
 background:white;
 color:black;
 }
 
 .voteCount{
-margin-top:10px;
+margin-top:18px;
+text-align:center;
 font-size:18px;
 font-weight:700;
 }
 
 </style>
-
 </head>
 
 <body>
 
+<div class="header">
+
 <div class="title">
-🏆 Velora Voting
+Velora Battle
+</div>
+
+<div class="topDesign">
+
+<div class="topLabel">
+🏆 Top Design
+</div>
+
+<div id="topDesignName" class="topName">
+No Designs Yet
+</div>
+
+</div>
+
+</div>
+
+<div class="voteContainer">
+
+<div class="voteCard">
+
+<img
+id="voteImage"
+class="voteImage"
+>
+
+<div
+id="voteName"
+class="voteName"
+>
+Waiting...
 </div>
 
 <div
-class="posts"
-id="posts"
+id="voteDescription"
+class="voteDescription"
 >
+Waiting...
+</div>
+
+<div class="voteActions">
+
+<button
+class="voteBtn dislikeBtn"
+id="dislikeBtn"
+>
+👎🏻
+</button>
+
+<button
+class="voteBtn likeBtn"
+id="likeBtn"
+>
+👍🏻
+</button>
+
+</div>
+
+<div
+id="voteCount"
+class="voteCount"
+>
+❤️ 0 Votes
+</div>
+
+</div>
+
 </div>
 
 <script>
 
+/* PART 2 */
 let posts =
 JSON.parse(
 localStorage.getItem(
@@ -93,123 +203,149 @@ localStorage.getItem(
 )
 ) || [];
 
-const container =
+let currentIndex = 0;
+
+const voteImage =
 document.getElementById(
-"posts"
+"voteImage"
 );
 
-function renderPosts(){
+const voteName =
+document.getElementById(
+"voteName"
+);
 
-container.innerHTML="";
+const voteDescription =
+document.getElementById(
+"voteDescription"
+);
+
+const voteCount =
+document.getElementById(
+"voteCount"
+);
+
+const topDesignName =
+document.getElementById(
+"topDesignName"
+);
+
+function loadTopDesign(){
+
+if(
+posts.length === 0
+){
+
+topDesignName.innerText =
+"No Designs Yet";
+
+return;
+
+}
 
 posts.sort(
 (a,b)=>
 b.votes-a.votes
 );
 
-posts.forEach(
-(post,index)=>{
-
-const card =
-document.createElement(
-"div"
-);
-
-card.className =
-"card";
-
-card.innerHTML =
-
-`
-
-<img src="${post.image}">
-
-<div class="name">
-
-🥇 #${index+1}
-
-${post.name}
-
-</div>
-
-<div class="desc">
-
-${post.description}
-
-</div>
-
-<button
-class="voteBtn"
-onclick="vote(${index})"
->
-
-🗳️ Vote
-
-</button>
-
-<div class="voteCount">
-
-Votes:
-${post.votes}
-
-</div>
-
-`;
-
-container.appendChild(
-card
-);
-
-}
-);
+topDesignName.innerText =
+posts[0].name +
+" ❤️ " +
+posts[0].votes;
 
 }
 
-function vote(index){
-
-let votedPosts =
-JSON.parse(
-localStorage.getItem(
-"veloraVotedPosts"
-)
-) || [];
+function loadPost(){
 
 if(
-votedPosts.includes(index)
+posts.length === 0
 ){
 
-alert(
-"You Already Voted"
-);
+voteName.innerText =
+"No Designs";
+
+voteDescription.innerText =
+"Publish designs from Velora Battle";
 
 return;
 
 }
 
-posts[index].votes++;
+if(
+currentIndex >= posts.length
+){
 
-votedPosts.push(index);
-
-localStorage.setItem(
-"veloraVotedPosts",
-JSON.stringify(
-votedPosts
-)
-);
-
-localStorage.setItem(
-"veloraBattlePosts",
-JSON.stringify(
-posts
-)
-);
-
-renderPosts();
+currentIndex = 0;
 
 }
 
-renderPosts();
+const post =
+posts[currentIndex];
 
+voteImage.src =
+post.image;
+
+voteName.innerText =
+post.name;
+
+voteDescription.innerText =
+post.description;
+
+voteCount.innerText =
+"❤️ " +
+post.votes +
+" Votes";
+
+}
+
+document
+.getElementById(
+"likeBtn"
+)
+.onclick = ()=>{
+
+if(
+posts.length === 0
+){
+return;
+}
+
+posts[currentIndex].votes++;
+
+localStorage.setItem(
+"veloraBattlePosts",
+JSON.stringify(posts)
+);
+
+currentIndex++;
+
+loadTopDesign();
+
+loadPost();
+
+};
+
+document
+.getElementById(
+"dislikeBtn"
+)
+.onclick = ()=>{
+
+if(
+posts.length === 0
+){
+return;
+}
+
+currentIndex++;
+
+loadPost();
+
+};
+
+loadTopDesign();
+
+loadPost();
 </script>
 
 </body>
