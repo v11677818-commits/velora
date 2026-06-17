@@ -346,6 +346,404 @@ loadPost();
 loadTopDesign();
 
 loadPost();
+  /* =========================
+   WINNER SYSTEM
+========================= */
+
+function calculateWinners(){
+
+let posts =
+JSON.parse(
+localStorage.getItem(
+"veloraBattlePosts"
+)
+) || [];
+
+if(
+posts.length === 0
+){
+return;
+}
+
+posts.sort(
+(a,b)=>
+b.votes-a.votes
+);
+
+const winners = {
+
+first:
+posts[0] || null,
+
+second:
+posts[1] || null,
+
+third:
+posts[2] || null
+
+};
+
+localStorage.setItem(
+"veloraWinners",
+JSON.stringify(
+winners
+)
+);
+
+}
+
+calculateWinners();
+
+/* =========================
+   WIN RATE
+========================= */
+
+function getWinRate(){
+
+if(
+battlePosts === 0
+){
+return 0;
+}
+
+return Math.floor(
+(battleWins /
+battlePosts)
+* 100
+);
+
+}
+
+/* =========================
+   AUTO WIN REWARD
+========================= */
+
+function checkWinnerReward(){
+
+let winners =
+JSON.parse(
+localStorage.getItem(
+"veloraWinners"
+)
+);
+
+if(
+!winners ||
+!winners.first
+){
+return;
+}
+
+const currentName =
+document.getElementById(
+"designName"
+)?.value;
+
+if(
+currentName &&
+winners.first.name === currentName
+){
+
+battleWins++;
+
+battleXP += 50;
+
+localStorage.setItem(
+"battleWins",
+battleWins
+);
+
+localStorage.setItem(
+"battleXP",
+battleXP
+);
+
+showAchievement(
+"🏆 First Place"
+);
+
+updateBattleUI();
+
+}
+
+}
+
+checkWinnerReward();
+  /* =========================
+   ANTI SPAM VOTING
+========================= */
+
+let votedPosts =
+JSON.parse(
+localStorage.getItem(
+"veloraVotedPosts"
+)
+) || [];
+
+function alreadyVoted(postId){
+
+return votedPosts.includes(
+postId
+);
+
+}
+
+function saveVote(postId){
+
+votedPosts.push(postId);
+
+localStorage.setItem(
+"veloraVotedPosts",
+JSON.stringify(votedPosts)
+);
+
+}
+
+/* =========================
+   WIN STREAK
+========================= */
+
+let bestStreak =
+parseInt(
+localStorage.getItem(
+"battleBestStreak"
+)
+) || 0;
+
+if(
+battleStreak > bestStreak
+){
+
+bestStreak =
+battleStreak;
+
+localStorage.setItem(
+"battleBestStreak",
+bestStreak
+);
+
+}
+
+/* =========================
+   WIN RATE
+========================= */
+
+function getWinRate(){
+
+if(
+battlePosts === 0
+){
+
+return 0;
+
+}
+
+return Math.floor(
+
+(battleWins /
+battlePosts)
+
+*100
+
+);
+
+}
+
+/* =========================
+   PROFILE STATS
+========================= */
+
+function renderProfileStats(){
+
+const statsBox =
+document.createElement(
+"div"
+);
+
+statsBox.style.marginTop =
+"20px";
+
+statsBox.style.padding =
+"15px";
+
+statsBox.style.background =
+"#111";
+
+statsBox.style.borderRadius =
+"20px";
+
+statsBox.innerHTML = `
+
+<h2>📊 Battle Stats</h2>
+
+<p>Posts: ${battlePosts}</p>
+
+<p>Wins: ${battleWins}</p>
+
+<p>XP: ${battleXP}</p>
+
+<p>Win Rate: ${getWinRate()}%</p>
+
+<p>🔥 Best Streak: ${bestStreak}</p>
+
+`;
+
+document.body.appendChild(
+statsBox
+);
+
+}
+
+renderProfileStats();
+
+/* =========================
+   ACHIEVEMENTS GALLERY
+========================= */
+
+function renderAchievements(){
+
+let achievements =
+JSON.parse(
+localStorage.getItem(
+"battleAchievements"
+)
+) || [];
+
+const box =
+document.createElement(
+"div"
+);
+
+box.style.marginTop =
+"20px";
+
+box.style.padding =
+"15px";
+
+box.style.background =
+"#111";
+
+box.style.borderRadius =
+"20px";
+
+box.innerHTML =
+"<h2>🏅 Achievements</h2>";
+
+achievements.forEach(a=>{
+
+box.innerHTML +=
+`<p>${a}</p>`;
+
+});
+
+document.body.appendChild(
+box
+);
+
+}
+
+renderAchievements();
+
+/* =========================
+   TOP 10
+========================= */
+
+function renderTop10(){
+
+let board =
+JSON.parse(
+localStorage.getItem(
+"veloraLeaderboard"
+)
+) || [];
+
+const topBox =
+document.createElement(
+"div"
+);
+
+topBox.style.marginTop =
+"20px";
+
+topBox.style.padding =
+"15px";
+
+topBox.style.background =
+"#111";
+
+topBox.style.borderRadius =
+"20px";
+
+topBox.innerHTML =
+"<h2>🏆 Top 10</h2>";
+
+board.forEach(
+(player,index)=>{
+
+topBox.innerHTML +=
+
+`<p>
+
+#${index+1}
+${player.name}
+-
+${player.xp} XP
+
+</p>`;
+
+}
+);
+
+document.body.appendChild(
+topBox
+);
+
+}
+
+renderTop10();
+
+/* =========================
+   VIP BADGE
+========================= */
+
+let isVIP =
+localStorage.getItem(
+"isVIP"
+) === "true";
+
+if(isVIP){
+
+const vip =
+document.createElement(
+"div"
+);
+
+vip.innerHTML =
+"👑 VIP MEMBER";
+
+vip.style.marginTop =
+"20px";
+
+vip.style.padding =
+"15px";
+
+vip.style.background =
+"gold";
+
+vip.style.color =
+"black";
+
+vip.style.borderRadius =
+"20px";
+
+vip.style.fontWeight =
+"bold";
+
+document.body.appendChild(
+vip
+);
+
+  }
 </script>
 
 </body>
