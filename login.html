@@ -5,48 +5,48 @@
 <title>Velora</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #d69ac2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#d69ac2;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-.container {
-    width: 300px;
-    text-align: center;
+.container{
+width:300px;
+text-align:center;
 }
 
-.title {
-    font-size: 32px;
-    margin-bottom: 40px;
-    color: black;
+.title{
+font-size:32px;
+margin-bottom:40px;
+color:black;
 }
 
-.btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 25px;
-    border: none;
-    margin-bottom: 12px;
-    font-size: 14px;
-    cursor: pointer;
+.btn{
+width:100%;
+padding:14px;
+border-radius:25px;
+border:none;
+margin-bottom:12px;
+font-size:14px;
+cursor:pointer;
 }
 
-.google {
-    background: white;
+.google{
+background:white;
 }
 
-.login {
-    background: #ccc;
+.login{
+background:#ccc;
 }
 
-.guest {
-    background: black;
-    color: white;
+.guest{
+background:black;
+color:white;
 }
 </style>
 
@@ -56,34 +56,51 @@ body {
 
 <div class="container">
 
-    <div class="title">Thanks</div>
+<div class="title">Thanks</div>
 
-    <button class="btn google" onclick="googleLogin()">
-        Continue with Google
-    </button>
+<button class="btn google" onclick="googleLogin()">
+Continue with Google
+</button>
 
-    <button class="btn login" onclick="login()">
-        Login
-    </button>
+<button class="btn login" onclick="loginPage()">
+Login
+</button>
 
-    <button class="btn guest" onclick="guestLogin()">
-        Guest
-    </button>
+<button class="btn guest" onclick="guestLogin()">
+Guest
+</button>
 
 </div>
 
 <script>
-function googleLogin() {
-    alert("Google login");
+
+function googleLogin(){
+
+alert(
+"Google Login Coming Soon"
+);
+
 }
 
-function login() {
-    alert("Go to login page");
+function loginPage(){
+
+window.location.href =
+"login-form.html";
+
 }
 
-function guestLogin() {
-    alert("Guest mode");
+function guestLogin(){
+
+localStorage.setItem(
+"userRole",
+"Guest"
+);
+
+window.location.href =
+"home.html";
+
 }
+
 </script>
 
 </body>
