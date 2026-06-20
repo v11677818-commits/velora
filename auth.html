@@ -1,0 +1,156 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Velora Login</title><style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#d69ac2;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+width:320px;
+text-align:center;
+}
+
+.title{
+font-size:32px;
+margin-bottom:30px;
+color:black;
+}
+
+input{
+width:100%;
+padding:14px;
+border:none;
+border-radius:25px;
+margin-bottom:12px;
+box-sizing:border-box;
+}
+
+.btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+margin-bottom:12px;
+}
+
+.loginBtn{
+background:black;
+color:white;
+}
+
+.registerBtn{
+background:white;
+}
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body><div class="container"><div class="title">Velora</div><input
+type="email"
+id="email"
+placeholder="Email"
+
+«»
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+
+«»
+
+<button
+class="btn loginBtn"
+onclick="login()"
+
+«»
+
+Login
+</button>
+
+<button
+class="btn registerBtn"
+onclick="register()"
+
+«»
+
+Create Account
+</button>
+
+</div><script>
+
+const supabaseUrl =
+https://dixrzubdvtbrqhgnrwal.supabase.co/rest/v1/";
+
+const supabaseKey =
+"sb_publishable_TZqO6lK4pqWhR-4qC3p6dA_S-wnQtlF";
+
+const supabase =
+window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+async function register(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+const { error } =
+await supabase.auth.signUp({
+
+email,
+password
+
+});
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+alert("Account Created");
+
+}
+
+async function login(){
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+const { error } =
+await supabase.auth.signInWithPassword({
+
+email,
+password
+
+});
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+window.location.href =
+"bot.html";
+
+}
+
+</script></body>
+  </html>
