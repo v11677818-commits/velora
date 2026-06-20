@@ -1,95 +1,29 @@
 document.write(`
 
-<div id="sidebar" class="sidebar">
+<div class="sidebar" id="sidebar">
 
-  <div class="sideHeader">
-    VELORA
-  </div>
+<a href="chat.html">Bot</a>
 
-  <div class="item" onclick="go('bot.html')">Bot</div>
+<a href="store.html">Marketplace</a>
 
-  <div class="item" onclick="go('marketplace.html')">Marketplace</div>
+<a href="challenges.html">Challenges</a>
 
-  <div class="item" onclick="go('challenges.html')">Challenges</div>
+<a href="styles.html">Outfits</a>
 
-  <div class="item" onclick="go('outfits.html')">Outfits</div>
+<a href="group.html">Group Chat</a>
 
-  <div class="item" onclick="go('group.html')">Group Chat</div>
+<a href="game.html">Velora Game</a>
 
-  <div class="item" onclick="go('game.html')">Game</div>
+<a href="battle.html">Velora Battle</a>
 
-  <div class="item" onclick="go('profile.html')">Profile</div>
+<a href="voting.html">Voting</a>
 
-  <div class="item" onclick="go('subscription.html')">Subscription</div>
+<a href="profile.html">Profile</a>
 
-  <div class="item" onclick="go('login.html')">Logout</div>
+<a href="subscription.html">Subscription</a>
+
+<a href="login.html">Logout</a>
 
 </div>
 
-<style>
-
-.sidebar{
-position:fixed;
-top:0;
-left:-280px;
-width:280px;
-height:100vh;
-background:#0f0f0f;
-border-right:1px solid #222;
-transition:.3s;
-z-index:99999;
-overflow-y:auto;
-}
-
-.sidebar.active{
-left:0;
-}
-
-.sideHeader{
-padding:30px;
-font-size:26px;
-font-weight:700;
-color:white;
-border-bottom:1px solid #222;
-text-align:center;
-}
-
-.item{
-padding:18px 25px;
-color:white;
-font-size:16px;
-cursor:pointer;
-border-bottom:1px solid #1a1a1a;
-transition:.2s;
-}
-
-.item:hover{
-background:#1a1a1a;
-}
-
-</style>
-
 `);
-
-function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("active");
-}
-
-function go(page){
-  window.location.href = page;
-}
-
-document.addEventListener("click", function(e){
-
-  const sidebar = document.getElementById("sidebar");
-
-  if(
-    sidebar &&
-    sidebar.classList.contains("active") &&
-    !sidebar.contains(e.target) &&
-    !e.target.closest(".menuBtn")
-  ){
-    sidebar.classList.remove("active");
-  }
-
-});
