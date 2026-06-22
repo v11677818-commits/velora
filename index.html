@@ -1,82 +1,11 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Velora</title><style>
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#d69ac2;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
+<title>Velora Test</title>
+</head>
+<body>
 
-.container{
-width:300px;
-text-align:center;
-}
+<h1>Velora Works 🎉</h1>
 
-.title{
-font-size:32px;
-margin-bottom:40px;
-color:black;
-}
-
-.btn{
-width:100%;
-padding:14px;
-border-radius:25px;
-border:none;
-margin-bottom:12px;
-font-size:14px;
-cursor:pointer;
-}
-
-.google{
-background:white;
-}
-
-.login{
-background:#ccc;
-}
-
-.guest{
-background:black;
-color:white;
-}
-</style></head><body><div class="container"><div class="title">Thanks</div><button class="btn google" onclick="googleLogin()">
-Continue with Google
-</button><button class="btn login" onclick="loginPage()">
-Login
-</button><button class="btn guest" onclick="guestLogin()">
-Guest
-</button></div><script>
-
-function googleLogin(){
-
-alert("Google Login Coming Soon");
-
-}
-
-function loginPage(){
-
-window.location.href =
-"auth.html";
-
-}
-
-function guestLogin(){
-
-localStorage.setItem(
-"userRole",
-"Guest"
-);
-
-window.location.href =
-"bot.html";
-
-}
-
-</script></body>
+</body>
 </html>
