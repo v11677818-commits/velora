@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Group | Velora</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+
+background:#F7F7FC;
+display:flex;
+justify-content:center;
+padding:40px 15px;
+
+}
+
+.container{
+
+width:100%;
+max-width:430px;
+
+}
+
+.card{
+
+background:#fff;
+padding:28px;
+border-radius:30px;
+box-shadow:0 15px 35px rgba(0,0,0,.05);
+
+}
+
+h1{
+
+font-size:28px;
+font-weight:700;
+text-align:center;
+color:#1f1f1f;
+margin-bottom:28px;
+
+}
+
+.image{
+
+width:130px;
+height:130px;
+margin:auto;
+border-radius:50%;
+border:3px solid #7C5CFC;
+background:#F1EDFF;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+overflow:hidden;
+
+}
+
+.image img{
+
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
+
+}
+
+.upload{
+
+text-align:center;
+margin-top:12px;
+color:#7C5CFC;
+font-weight:600;
+cursor:pointer;
+
+}
+
+label{
+
+display:block;
+margin-top:22px;
+margin-bottom:8px;
+font-size:15px;
+font-weight:600;
+color:#202124;
+
+}
+
+input[type=text],
+input[type=number],
+textarea{
+
+width:100%;
+padding:15px;
+border-radius:16px;
+border:1.8px solid #E7E7EE;
+outline:none;
+font-size:15px;
+
+}
+
+textarea{
+
+resize:none;
+height:95px;
+
+}
+
+input:focus,
+textarea:focus{
+
+border-color:#7C5CFC;
+
+}
+  .privacy{
+
+display:flex;
+gap:25px;
+margin-top:10px;
+
+}
+
+.privacy label{
+
+display:flex;
+align-items:center;
+gap:8px;
+margin:0;
+font-weight:500;
+
+}
+
+.private-box{
+
+display:none;
+margin-top:18px;
+
+}
+
+.link{
+
+background:#F6F6FB;
+padding:14px;
+border-radius:15px;
+font-size:14px;
+word-break:break-all;
+
+}
+
+.buttons{
+
+display:flex;
+gap:10px;
+margin-top:12px;
+
+}
+
+.buttons button{
+
+flex:1;
+border:none;
+background:#7C5CFC;
+color:#fff;
+padding:12px;
+border-radius:14px;
+cursor:pointer;
+font-weight:600;
+
+}
+
+.create{
+
+width:100%;
+margin-top:28px;
+padding:17px;
+border:none;
+border-radius:18px;
+background:#7C5CFC;
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+
+}
+
+.create:hover{
+
+background:#6E4EFF;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Create Group</h1>
+
+<div class="image" id="preview">
+
+📷
+
+<img id="groupImage">
+
+</div>
+
+<div class="upload">
+
+Upload Group Image
+
+</div>
+
+<input
+type="file"
+id="imageInput"
+hidden
+accept="image/*">
+
+<label>Group Name</label>
+
+<input
+type="text"
+id="groupName"
+placeholder="Enter group name...">
+
+<label>Description</label>
+
+<textarea
+id="description"
+placeholder="Write about your group..."></textarea>
+
+<label>Privacy</label>
+
+<div class="privacy">
+
+<label>
+
+<input
+type="radio"
+name="privacy"
+value="public"
+checked>
+
+Public
+
+</label>
+
+<label>
+
+<input
+type="radio"
+name="privacy"
+value="private">
+
+Private
+
+</label>
+
+</div>
+<div class="private-box" id="privateBox">
+
+<label>Invite Link</label>
+
+<div class="link" id="inviteLink">
+
+https://velora.app/group/X8K4PQ
+
+</div>
+
+<div class="buttons">
+
+<button
+type="button"
+id="copyBtn">
+
+Copy Link
+
+</button>
+
+<button
+type="button"
+id="newBtn">
+
+Generate New
+
+</button>
+
+</div>
+
+</div>
+
+<label>
+
+Maximum Members
+
+</label>
+
+<input
+type="number"
+id="maxMembers"
+placeholder="Enter any number...">
+
+<button
+class="create"
+id="createGroup">
+
+Create Group
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const imageInput=document.getElementById("imageInput");
+const preview=document.getElementById("preview");
+const image=document.getElementById("groupImage");
+
+preview.onclick=()=>imageInput.click();
+
+document.querySelector(".upload").onclick=()=>imageInput.click();
+
+imageInput.onchange=e=>{
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+reader.onload=function(x){
+
+image.src=x.target.result;
+
+image.style.display="block";
+
+preview.innerHTML="";
+
+preview.appendChild(image);
+
+}
+
+reader.readAsDataURL(file);
+
+};
+
+const privateBox=document.getElementById("privateBox");
+
+document.querySelectorAll("input[name='privacy']").forEach(r=>{
+
+r.onchange=function(){
+
+privateBox.style.display=
+
+document.querySelector("input[value='private']").checked
+
+? "block"
+
+: "none";
+
+}
+
+});
+  function randomCode(){
+
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+let code="";
+
+for(let i=0;i<6;i++){
+
+code+=chars[Math.floor(Math.random()*chars.length)];
+
+}
+
+return code;
+
+}
+
+const invite=document.getElementById("inviteLink");
+
+document.getElementById("newBtn").onclick=function(){
+
+invite.innerHTML="https://velora.app/group/"+randomCode();
+
+};
+
+document.getElementById("copyBtn").onclick=function(){
+
+navigator.clipboard.writeText(invite.innerText);
+
+this.innerHTML="Copied ✓";
+
+setTimeout(()=>{
+
+this.innerHTML="Copy Link";
+
+},1500);
+
+};
+
+document.getElementById("createGroup").onclick=function(){
+
+const group={
+
+name:document.getElementById("groupName").value,
+
+description:document.getElementById("description").value,
+
+members:document.getElementById("maxMembers").value,
+
+privacy:document.querySelector("input[name='privacy']:checked").value,
+
+image:image.src,
+
+invite:invite.innerText
+
+};
+
+if(group.name===""){
+
+alert("Enter group name");
+
+return;
+
+}
+
+if(group.members===""){
+
+alert("Enter maximum members");
+
+return;
+
+}
+
+let groups=
+
+JSON.parse(localStorage.getItem("veloraGroups")) || [];
+
+groups.push(group);
+
+localStorage.setItem(
+
+"veloraGroups",
+
+JSON.stringify(groups)
+
+);
+
+alert("Group Created Successfully!");
+
+};
+<!-- ضع هذا بعد زر Create Group مباشرة -->
+
+<hr style="margin:35px 0;border:none;border-top:1px solid #ececf5;">
+
+<h2 style="
+font-size:22px;
+font-weight:700;
+color:#202124;
+margin-bottom:18px;
+">
+
+Search Group
+
+</h2>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search groups..."
+style="
+width:100%;
+padding:15px;
+border:1.8px solid #E7E7EE;
+border-radius:16px;
+font-size:15px;
+outline:none;
+">
+
+<div id="searchResults" style="margin-top:18px;"></div>
+
+<hr style="margin:35px 0;border:none;border-top:1px solid #ececf5;">
+
+<h2 style="
+font-size:22px;
+font-weight:700;
+color:#202124;
+margin-bottom:18px;
+">
+
+My Groups
+
+</h2>
+
+<div id="myGroups">
+
+<p style="
+text-align:center;
+color:#888;
+">
+
+No groups yet.
+
+</p>
+
+</div>
+</script>
+
+</body>
+
+</html>
