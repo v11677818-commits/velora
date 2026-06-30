@@ -525,6 +525,161 @@ No groups yet.
 </p>
 
 </div>
+  <!-- أضف هذا قبل </script> مباشرة -->
+
+function renderGroups(){
+
+const groups=
+JSON.parse(localStorage.getItem("veloraGroups"))||[];
+
+const container=
+document.getElementById("myGroups");
+
+container.innerHTML="";
+
+if(groups.length===0){
+
+container.innerHTML=`
+
+<p style="
+text-align:center;
+color:#888;
+">
+
+No groups yet.
+
+</p>
+
+`;
+
+return;
+
+}
+
+groups.forEach((group,index)=>{
+
+container.innerHTML+=`
+
+<div onclick="openGroup(${index})"
+
+style="
+background:#fff;
+padding:16px;
+border-radius:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.05);
+margin-bottom:15px;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:15px;
+">
+
+<img
+src="${group.image||''}"
+
+style="
+width:65px;
+height:65px;
+border-radius:50%;
+background:#eee;
+object-fit:cover;
+">
+
+<div>
+
+<div style="
+font-weight:700;
+font-size:17px;
+">
+
+${group.name}
+
+</div>
+
+<div style="
+font-size:14px;
+color:#777;
+margin-top:5px;
+">
+
+${group.members} Members
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+renderGroups();
+
+function openGroup(index){
+
+const groups=
+JSON.parse(localStorage.getItem("veloraGroups"))||[];
+
+localStorage.setItem(
+"openedGroup",
+JSON.stringify(groups[index])
+);
+
+alert(
+"Next step: open Group Chat page."
+);
+
+}
+
+document.getElementById("searchInput")
+.onkeyup=function(){
+
+const value=this.value.toLowerCase();
+
+const groups=
+JSON.parse(localStorage.getItem("veloraGroups"))||[];
+
+const results=
+document.getElementById("searchResults");
+
+results.innerHTML="";
+
+groups.forEach(group=>{
+
+if(group.name.toLowerCase().includes(value)){
+
+results.innerHTML+=`
+
+<div style="
+background:#fff;
+padding:14px;
+border-radius:15px;
+margin-bottom:12px;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+">
+
+<b>${group.name}</b>
+
+<br>
+
+<span style="color:#777">
+
+${group.members} Members
+
+</span>
+
+</div>
+
+`;
+
+}
+
+});
+
+  }
 </script>
 
 </body>
