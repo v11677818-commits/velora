@@ -813,7 +813,188 @@ alert("Group created successfully.");
 location.reload();
 
 }
+document.getElementById("finishBtn").addEventListener("click", async function(){
 
+const role = localStorage.getItem("userRole") || "guest";
+
+if(role==="guest"){
+alert("Guests cannot create groups.");
+return;
+}
+
+const created =
+Number(localStorage.getItem("groupsCreated")||0);
+
+if(role==="registered" && created>=3){
+alert("Registered users can create only 3 groups.");
+return;
+}
+
+const name=document.getElementById("groupName").value.trim();
+
+const description=document.getElementById("groupDescription").value.trim();
+
+const privacy=document.querySelector("input[name='privacy']:checked").value;
+
+const members=document.getElementById("maxMembers").value;
+
+if(name===""){
+return;
+}
+
+const file=document.getElementById("groupImage").files[0];
+
+let image="";
+
+if(file){
+
+const fileName=Date.now()+"-"+file.name;
+
+await supabase.storage
+.from("group-images")
+.upload(fileName,file);
+
+image=supabase.storage
+.from("group-images")
+.getPublicUrl(fileName).data.publicUrl;
+
+}
+
+const {data:{user}}=
+await supabase.auth.getUser();
+
+await supabase
+.from("groups")
+.insert({
+
+owner:user.id,
+
+name,
+
+description,
+
+privacy,
+
+max_members:Number(members),
+
+invite_link:
+privacy==="private"
+?document.getElementById("inviteLink").value
+:null,
+
+image
+
+});
+
+if(role==="registered"){
+
+localStorage.setItem(
+"groupsCreated",
+created+1
+);
+
+}
+
+alert("Group Created Successfully");
+
+});
+  async function loadMyGroups(){
+
+const { data:{ user } } =
+await supabase.auth.getUser();
+
+if(!user) return;
+
+const { data,error } =
+await supabase
+.from("groups")
+.select("*")
+.eq("owner",user.id)
+.order("created_at",{ascending:false});
+
+if(error){
+console.log(error);
+return;
+}
+
+const container =
+document.getElementById("myGroups");
+
+container.innerHTML = "";
+
+if(data.length===0){
+
+container.innerHTML = `
+
+<div class="empty">
+
+<div class="emptyIcon">📂</div>
+
+<div class="emptyTitle">
+No Groups Yet
+</div>
+
+<div class="emptyText">
+Create your first group to start chatting with friends.
+</div>
+
+<button
+class="emptyBtn"
+onclick="openCreatePage()"
+>
+
+Create Group
+
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+data.forEach(group=>{
+
+container.innerHTML += `
+
+<div class="groupCard"
+onclick="window.location='groupchat.html?id=${group.id}'">
+
+<img
+src="${group.image || 'https://via.placeholder.com/70'}"
+class="groupImageCard"
+>
+
+<div class="groupInfo">
+
+<h3>${group.name}</h3>
+
+<p>${group.description}</p>
+
+<span>
+
+${group.privacy}
+
+•
+
+${group.max_members} Members
+
+</span>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadMyGroups();
+  
 </script>
 </body>
 
