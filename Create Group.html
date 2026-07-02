@@ -8,7 +8,6 @@
 <title>Create Group | Velora</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
 
 *{
@@ -19,191 +18,169 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-
 background:#F7F7FC;
 display:flex;
 justify-content:center;
-padding:40px 15px;
-
+padding:25px 15px;
 }
 
 .container{
-
 width:100%;
 max-width:430px;
-
 }
 
 .card{
-
 background:#fff;
-padding:28px;
-border-radius:30px;
-box-shadow:0 15px 35px rgba(0,0,0,.05);
-
+border-radius:28px;
+padding:25px;
+box-shadow:0 12px 30px rgba(0,0,0,.06);
 }
 
-h1{
+.top-bar{
+display:flex;
+align-items:center;
+margin-bottom:25px;
+}
 
+.back-btn{
+border:none;
+background:none;
+font-size:26px;
+cursor:pointer;
+margin-right:12px;
+}
+
+.top-bar h1{
 font-size:28px;
 font-weight:700;
-text-align:center;
-color:#1f1f1f;
-margin-bottom:28px;
-
+color:#202124;
 }
 
-.image{
+.group-image{
+text-align:center;
+margin-bottom:25px;
+}
 
-width:130px;
-height:130px;
+.image-circle{
+width:125px;
+height:125px;
 margin:auto;
 border-radius:50%;
 border:3px solid #7C5CFC;
-background:#F1EDFF;
+background:#F4F0FF;
 display:flex;
 align-items:center;
 justify-content:center;
-cursor:pointer;
+position:relative;
 overflow:hidden;
-
+cursor:pointer;
 }
 
-.image img{
-
+.image-circle img{
 width:100%;
 height:100%;
 object-fit:cover;
 display:none;
-
 }
 
-.upload{
+.camera-icon{
+font-size:34px;
+}
 
-text-align:center;
+.group-image p{
 margin-top:12px;
-color:#7C5CFC;
+font-size:15px;
 font-weight:600;
+color:#7C5CFC;
 cursor:pointer;
-
 }
 
-label{
+.field{
+margin-top:18px;
+}
 
+.field label{
 display:block;
-margin-top:22px;
 margin-bottom:8px;
 font-size:15px;
 font-weight:600;
 color:#202124;
-
 }
 
-input[type=text],
-input[type=number],
+input,
 textarea{
-
 width:100%;
 padding:15px;
-border-radius:16px;
 border:1.8px solid #E7E7EE;
+border-radius:16px;
 outline:none;
 font-size:15px;
-
 }
 
 textarea{
-
-resize:none;
 height:95px;
-
+resize:none;
 }
 
 input:focus,
 textarea:focus{
-
 border-color:#7C5CFC;
-
 }
-  .privacy{
 
+.privacy{
 display:flex;
 gap:25px;
-margin-top:10px;
-
+margin-top:8px;
 }
 
 .privacy label{
-
 display:flex;
 align-items:center;
 gap:8px;
-margin:0;
 font-weight:500;
-
 }
 
-.private-box{
-
+#inviteSection{
 display:none;
 margin-top:18px;
-
 }
 
-.link{
-
-background:#F6F6FB;
-padding:14px;
-border-radius:15px;
-font-size:14px;
-word-break:break-all;
-
-}
-
-.buttons{
-
+.invite-buttons{
 display:flex;
 gap:10px;
 margin-top:12px;
-
 }
 
-.buttons button{
-
+.invite-buttons button{
 flex:1;
+padding:12px;
 border:none;
+border-radius:14px;
 background:#7C5CFC;
 color:#fff;
-padding:12px;
-border-radius:14px;
-cursor:pointer;
 font-weight:600;
-
+cursor:pointer;
 }
 
-.create{
-
+.create-btn{
 width:100%;
 margin-top:28px;
-padding:17px;
+padding:16px;
 border:none;
 border-radius:18px;
 background:#7C5CFC;
-color:white;
+color:#fff;
 font-size:16px;
 font-weight:700;
 cursor:pointer;
-
+transition:.25s;
 }
 
-.create:hover{
-
-background:#6E4EFF;
-
+.create-btn:hover{
+background:#6948F5;
 }
 
-</style>
-
+  </style>
 </head>
 
 <body>
@@ -212,27 +189,39 @@ background:#6E4EFF;
 
 <div class="card">
 
+<div class="top-bar">
+
+<button class="back-btn">
+
+←
+
+</button>
+
 <h1>Create Group</h1>
 
-<div class="image" id="preview">
+</div>
 
-📷
+<div class="group-image">
 
-<img id="groupImage">
+<div class="image-circle">
+
+<img id="previewImage">
+
+<span class="camera-icon">📷</span>
 
 </div>
 
-<div class="upload">
-
-Upload Group Image
-
-</div>
+<p>Upload Group Image</p>
 
 <input
 type="file"
-id="imageInput"
-hidden
-accept="image/*">
+id="groupImage"
+accept="image/*"
+hidden>
+
+</div>
+
+<div class="field">
 
 <label>Group Name</label>
 
@@ -241,11 +230,19 @@ type="text"
 id="groupName"
 placeholder="Enter group name...">
 
+</div>
+
+<div class="field">
+
 <label>Description</label>
 
 <textarea
 id="description"
 placeholder="Write about your group..."></textarea>
+
+</div>
+
+<div class="field">
 
 <label>Privacy</label>
 
@@ -275,31 +272,30 @@ Private
 </label>
 
 </div>
-<div class="private-box" id="privateBox">
-
-<label>Invite Link</label>
-
-<div class="link" id="inviteLink">
-
-https://velora.app/group/X8K4PQ
 
 </div>
 
-<div class="buttons">
+<div
+id="inviteSection">
 
-<button
-type="button"
-id="copyBtn">
+<label>Invite Link</label>
+
+<input
+type="text"
+value="velora.app/group/X8K4PQ"
+readonly>
+
+<div class="invite-buttons">
+
+<button>
 
 Copy Link
 
 </button>
 
-<button
-type="button"
-id="newBtn">
+<button>
 
-Generate New
+Generate New Link
 
 </button>
 
@@ -307,20 +303,18 @@ Generate New
 
 </div>
 
-<label>
+<div class="field">
 
-Maximum Members
-
-</label>
+<label>Maximum Members</label>
 
 <input
 type="number"
-id="maxMembers"
-placeholder="Enter any number...">
+placeholder="Enter maximum number of members...">
+
+</div>
 
 <button
-class="create"
-id="createGroup">
+class="create-btn">
 
 Create Group
 
@@ -329,359 +323,59 @@ Create Group
 </div>
 
 </div>
-
 <script>
 
-const imageInput=document.getElementById("imageInput");
-const preview=document.getElementById("preview");
-const image=document.getElementById("groupImage");
+const imageInput=document.getElementById("groupImage");
+const preview=document.getElementById("previewImage");
+const circle=document.querySelector(".image-circle");
+const uploadText=document.querySelector(".group-image p");
 
-preview.onclick=()=>imageInput.click();
+circle.onclick=()=>imageInput.click();
+uploadText.onclick=()=>imageInput.click();
 
-document.querySelector(".upload").onclick=()=>imageInput.click();
+imageInput.onchange=function(){
 
-imageInput.onchange=e=>{
+const file=this.files[0];
 
-const file=e.target.files[0];
-
-if(!file)return;
+if(!file) return;
 
 const reader=new FileReader();
 
-reader.onload=function(x){
+reader.onload=function(e){
 
-image.src=x.target.result;
+preview.src=e.target.result;
+preview.style.display="block";
 
-image.style.display="block";
+const icon=document.querySelector(".camera-icon");
 
-preview.innerHTML="";
-
-preview.appendChild(image);
+if(icon) icon.style.display="none";
 
 }
 
 reader.readAsDataURL(file);
 
-};
+}
 
-const privateBox=document.getElementById("privateBox");
+const inviteSection=document.getElementById("inviteSection");
 
 document.querySelectorAll("input[name='privacy']").forEach(r=>{
 
-r.onchange=function(){
+r.addEventListener("change",()=>{
 
-privateBox.style.display=
+if(document.querySelector("input[value='private']").checked){
 
-document.querySelector("input[value='private']").checked
+inviteSection.style.display="block";
 
-? "block"
+}else{
 
-: "none";
-
-}
-
-});
-  function randomCode(){
-
-const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-let code="";
-
-for(let i=0;i<6;i++){
-
-code+=chars[Math.floor(Math.random()*chars.length)];
-
-}
-
-return code;
-
-}
-
-const invite=document.getElementById("inviteLink");
-
-document.getElementById("newBtn").onclick=function(){
-
-invite.innerHTML="https://velora.app/group/"+randomCode();
-
-};
-
-document.getElementById("copyBtn").onclick=function(){
-
-navigator.clipboard.writeText(invite.innerText);
-
-this.innerHTML="Copied ✓";
-
-setTimeout(()=>{
-
-this.innerHTML="Copy Link";
-
-},1500);
-
-};
-
-document.getElementById("createGroup").onclick=function(){
-
-const group={
-
-name:document.getElementById("groupName").value,
-
-description:document.getElementById("description").value,
-
-members:document.getElementById("maxMembers").value,
-
-privacy:document.querySelector("input[name='privacy']:checked").value,
-
-image:image.src,
-
-invite:invite.innerText
-
-};
-
-if(group.name===""){
-
-alert("Enter group name");
-
-return;
-
-}
-
-if(group.members===""){
-
-alert("Enter maximum members");
-
-return;
-
-}
-
-let groups=
-
-JSON.parse(localStorage.getItem("veloraGroups")) || [];
-
-groups.push(group);
-
-localStorage.setItem(
-
-"veloraGroups",
-
-JSON.stringify(groups)
-
-);
-
-alert("Group Created Successfully!");
-
-};
-<!-- ضع هذا بعد زر Create Group مباشرة -->
-
-<hr style="margin:35px 0;border:none;border-top:1px solid #ececf5;">
-
-<h2 style="
-font-size:22px;
-font-weight:700;
-color:#202124;
-margin-bottom:18px;
-">
-
-Search Group
-
-</h2>
-
-<input
-type="text"
-id="searchInput"
-placeholder="Search groups..."
-style="
-width:100%;
-padding:15px;
-border:1.8px solid #E7E7EE;
-border-radius:16px;
-font-size:15px;
-outline:none;
-">
-
-<div id="searchResults" style="margin-top:18px;"></div>
-
-<hr style="margin:35px 0;border:none;border-top:1px solid #ececf5;">
-
-<h2 style="
-font-size:22px;
-font-weight:700;
-color:#202124;
-margin-bottom:18px;
-">
-
-My Groups
-
-</h2>
-
-<div id="myGroups">
-
-<p style="
-text-align:center;
-color:#888;
-">
-
-No groups yet.
-
-</p>
-
-</div>
-  <!-- أضف هذا قبل </script> مباشرة -->
-
-function renderGroups(){
-
-const groups=
-JSON.parse(localStorage.getItem("veloraGroups"))||[];
-
-const container=
-document.getElementById("myGroups");
-
-container.innerHTML="";
-
-if(groups.length===0){
-
-container.innerHTML=`
-
-<p style="
-text-align:center;
-color:#888;
-">
-
-No groups yet.
-
-</p>
-
-`;
-
-return;
-
-}
-
-groups.forEach((group,index)=>{
-
-container.innerHTML+=`
-
-<div onclick="openGroup(${index})"
-
-style="
-background:#fff;
-padding:16px;
-border-radius:18px;
-box-shadow:0 8px 20px rgba(0,0,0,.05);
-margin-bottom:15px;
-cursor:pointer;
-display:flex;
-align-items:center;
-gap:15px;
-">
-
-<img
-src="${group.image||''}"
-
-style="
-width:65px;
-height:65px;
-border-radius:50%;
-background:#eee;
-object-fit:cover;
-">
-
-<div>
-
-<div style="
-font-weight:700;
-font-size:17px;
-">
-
-${group.name}
-
-</div>
-
-<div style="
-font-size:14px;
-color:#777;
-margin-top:5px;
-">
-
-${group.members} Members
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-renderGroups();
-
-function openGroup(index){
-
-const groups=
-JSON.parse(localStorage.getItem("veloraGroups"))||[];
-
-localStorage.setItem(
-"openedGroup",
-JSON.stringify(groups[index])
-);
-
-alert(
-"Next step: open Group Chat page."
-);
-
-}
-
-document.getElementById("searchInput")
-.onkeyup=function(){
-
-const value=this.value.toLowerCase();
-
-const groups=
-JSON.parse(localStorage.getItem("veloraGroups"))||[];
-
-const results=
-document.getElementById("searchResults");
-
-results.innerHTML="";
-
-groups.forEach(group=>{
-
-if(group.name.toLowerCase().includes(value)){
-
-results.innerHTML+=`
-
-<div style="
-background:#fff;
-padding:14px;
-border-radius:15px;
-margin-bottom:12px;
-box-shadow:0 5px 18px rgba(0,0,0,.05);
-">
-
-<b>${group.name}</b>
-
-<br>
-
-<span style="color:#777">
-
-${group.members} Members
-
-</span>
-
-</div>
-
-`;
+inviteSection.style.display="none";
 
 }
 
 });
 
-  }
-</script>
+});
 
+  </script>
 </body>
-
 </html>
