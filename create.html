@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Velora Groups</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+.createPanel{
+
+display:none;
+
+margin-top:30px;
+
+background:#111;
+
+border:1px solid #222;
+
+border-radius:28px;
+
+padding:28px;
+
+}
+
+.createHeader{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+margin-bottom:25px;
+
+}
+
+.backBtn{
+
+width:46px;
+
+height:46px;
+
+border:none;
+
+border-radius:50%;
+
+background:#1b1b1b;
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+}
+
+.imageUpload{
+
+text-align:center;
+
+margin-bottom:28px;
+
+}
+
+.imageCircle{
+
+width:130px;
+
+height:130px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:#1b1b1b;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:42px;
+
+cursor:pointer;
+
+}
+
+.uploadText{
+
+margin-top:12px;
+
+color:#aaa;
+
+}
+
+.field{
+
+margin-bottom:22px;
+
+}
+
+.field label{
+
+display:block;
+
+margin-bottom:10px;
+
+font-weight:600;
+
+}
+
+.field input,
+.field textarea{
+
+width:100%;
+
+padding:15px;
+
+background:#181818;
+
+border:1px solid #2b2b2b;
+
+border-radius:18px;
+
+color:white;
+
+}
+
+.field textarea{
+
+height:120px;
+
+resize:none;
+
+}
+
+.privacy{
+
+display:flex;
+
+gap:25px;
+
+}
+
+.inviteButtons{
+
+display:flex;
+
+gap:10px;
+
+margin-top:12px;
+
+}
+
+.inviteButtons button{
+
+flex:1;
+
+padding:13px;
+
+border:none;
+
+border-radius:14px;
+
+background:#7C5CFC;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+.finishCreate{
+
+width:100%;
+
+padding:18px;
+
+background:#7C5CFC;
+
+border:none;
+
+border-radius:22px;
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+cursor:pointer;
+
+margin-top:15px;
+
+}
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#000;
+color:white;
+}
+
+.page{
+max-width:900px;
+margin:auto;
+padding:100px 22px 40px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:35px;
+}
+
+.title{
+font-size:38px;
+font-weight:700;
+}
+
+.createBtn{
+
+width:100%;
+padding:18px;
+
+border:none;
+border-radius:22px;
+
+background:#7C5CFC;
+
+color:white;
+font-size:18px;
+font-weight:600;
+
+cursor:pointer;
+
+margin-bottom:35px;
+
+transition:.25s;
+
+}
+
+.createBtn:hover{
+
+transform:scale(1.02);
+
+}
+
+.section{
+
+margin-bottom:30px;
+
+}
+
+.section h2{
+
+font-size:18px;
+margin-bottom:14px;
+
+}
+
+.search{
+
+width:100%;
+
+padding:17px;
+
+border-radius:18px;
+
+border:1px solid #262626;
+
+background:#151515;
+
+color:white;
+
+font-size:16px;
+
+outline:none;
+
+}
+
+.search::placeholder{
+
+color:#888;
+
+}
+
+.groups{
+
+margin-top:35px;
+
+}
+
+.empty{
+
+margin-top:80px;
+
+background:#111;
+
+border:1px solid #232323;
+
+border-radius:28px;
+
+padding:70px 30px;
+
+text-align:center;
+
+}
+
+.emptyIcon{
+
+font-size:65px;
+
+margin-bottom:18px;
+
+}
+
+.emptyTitle{
+
+font-size:28px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.emptyText{
+
+color:#999;
+
+line-height:1.7;
+
+margin-bottom:28px;
+
+}
+
+.emptyBtn{
+
+padding:16px 28px;
+
+background:#7C5CFC;
+
+color:white;
+
+border:none;
+
+border-radius:18px;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<script src="sidebar.js"></script>
+
+<div class="page">
+
+<div class="header">
+
+<h1 class="title">
+Groups
+</h1>
+
+<button class="menuBtn" onclick="toggleMenu()">
+☰
+</button>
+
+</div>
+
+<button class="createBtn" id="createGroup">
+
+➕ Create Group
+
+</button>
+
+<div class="section">
+
+<h2>
+Search Groups
+</h2>
+
+<input
+class="search"
+type="text"
+placeholder="Search groups..."
+>
+
+</div>
+
+<div class="groups">
+
+<h2>
+My Groups
+</h2>
+
+<div class="empty">
+
+<div class="emptyIcon">
+📂
+</div>
+
+<div class="emptyTitle">
+No Groups Yet
+</div>
+
+<div class="emptyText">
+
+Create your first group to start chatting with friends.
+
+</div>
+
+<button class="emptyBtn">
+
+Create Group
+
+</button>
+
+</div>
+
+</div>
+<div id="createPanel" class="createPanel">
+
+<div class="createHeader">
+
+<button class="backBtn" id="backBtn">
+←
+</button>
+
+<h2>Create Group</h2>
+
+</div>
+
+<div class="imageUpload">
+
+<div class="imageCircle" id="imageCircle">
+📷
+</div>
+
+<input
+type="file"
+id="groupImage"
+accept="image/*"
+hidden
+>
+
+<div class="uploadText">
+Upload Group Image
+</div>
+
+</div>
+
+<div class="field">
+
+<label>Group Name</label>
+
+<input
+type="text"
+id="groupName"
+placeholder="Enter group name..."
+>
+
+</div>
+
+<div class="field">
+
+<label>Description</label>
+
+<textarea
+id="groupDescription"
+placeholder="Write about your group..."
+></textarea>
+
+</div>
+
+<div class="field">
+
+<label>Privacy</label>
+
+<div class="privacy">
+
+<label>
+<input
+type="radio"
+name="privacy"
+value="public"
+checked
+>
+
+Public
+
+</label>
+
+<label>
+
+<input
+type="radio"
+name="privacy"
+value="private"
+>
+
+Private
+
+</label>
+
+</div>
+
+</div>
+
+<div
+class="inviteBox"
+id="inviteBox"
+style="display:none;"
+>
+
+<label>Invite Link</label>
+
+<input
+type="text"
+id="inviteLink"
+readonly
+value="velora.app/group/A8XK4P"
+>
+
+<div class="inviteButtons">
+
+<button id="copyLink">
+
+Copy Link
+
+</button>
+
+<button id="newLink">
+
+Generate New Link
+
+</button>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>Maximum Members</label>
+
+<input
+type="number"
+id="maxMembers"
+placeholder="100"
+>
+
+</div>
+
+<button
+class="finishCreate"
+id="finishCreate"
+>
+
+Create Group
+
+</button>
+
+</div>
+</div>
+<script>
+
+const createBtn =
+document.getElementById("createGroup");
+
+const emptyBtn =
+document.querySelector(".emptyBtn");
+
+const createPanel =
+document.getElementById("createPanel");
+
+const groupsSection =
+document.querySelector(".groups");
+
+const backBtn =
+document.getElementById("backBtn");
+
+createBtn.onclick = openCreate;
+emptyBtn.onclick = openCreate;
+backBtn.onclick = closeCreate;
+
+function openCreate(){
+
+document.querySelector(".section").style.display="none";
+
+groupsSection.style.display="none";
+
+createBtn.style.display="none";
+
+createPanel.style.display="block";
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function closeCreate(){
+
+document.querySelector(".section").style.display="block";
+
+groupsSection.style.display="block";
+
+createBtn.style.display="block";
+
+createPanel.style.display="none";
+
+}
+
+const imageCircle =
+document.getElementById("imageCircle");
+
+const groupImage =
+document.getElementById("groupImage");
+
+imageCircle.onclick = ()=>{
+
+groupImage.click();
+
+};
+
+groupImage.onchange = function(){
+
+const file = this.files[0];
+
+if(!file) return;
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+imageCircle.innerHTML =
+`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+const privacy =
+document.querySelectorAll("input[name='privacy']");
+
+const inviteBox =
+document.getElementById("inviteBox");
+
+privacy.forEach(item=>{
+
+item.onchange = ()=>{
+
+if(item.value==="private" && item.checked){
+
+inviteBox.style.display="block";
+
+}else{
+
+inviteBox.style.display="none";
+
+}
+
+}
+
+});
+
+function randomCode(){
+
+return Math.random()
+.toString(36)
+.substring(2,8)
+.toUpperCase();
+
+}
+
+const inviteLink =
+document.getElementById("inviteLink");
+
+document.getElementById("newLink").onclick=function(){
+
+inviteLink.value=
+"velora.app/group/"+randomCode();
+
+}
+
+document.getElementById("copyLink").onclick=function(){
+
+navigator.clipboard.writeText(inviteLink.value);
+
+alert("Invite link copied");
+
+}
+
+document.getElementById("finishCreate").onclick=function(){
+
+const name =
+document.getElementById("groupName").value.trim();
+
+const members =
+document.getElementById("maxMembers").value.trim();
+
+if(name===""){
+
+alert("Enter group name");
+
+return;
+
+}
+
+if(members===""){
+
+alert("Enter maximum members");
+
+return;
+
+}
+
+alert("Group Created Successfully");
+
+const role = localStorage.getItem("userRole") || "guest";
+
+if(role === "guest"){
+
+alert("Guests cannot create groups.");
+
+return;
+
+}
+
+const createdGroups =
+Number(localStorage.getItem("groupsCreated") || 0);
+
+if(role === "registered" && createdGroups >= 3){
+
+alert("Registered users can create only 3 groups.");
+
+return;
+
+}
+
+const {
+data:{user}
+} = await supabase.auth.getUser();
+
+const {error} = await supabase
+.from("groups")
+.insert({
+
+name:name,
+
+description:
+document.getElementById("groupDescription").value,
+
+privacy:
+document.querySelector(
+"input[name='privacy']:checked"
+).value,
+
+invite_link:
+inviteLink.value,
+
+max_members:
+Number(members),
+
+image:"",
+
+owner:user.id
+
+});
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+if(role === "registered"){
+
+localStorage.setItem(
+"groupsCreated",
+createdGroups + 1
+);
+
+}
+
+alert("Group created successfully.");
+
+location.reload();
+
+}
+
+</script>
+</body>
+
+</html>
