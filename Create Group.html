@@ -375,7 +375,168 @@ inviteSection.style.display="none";
 });
 
 });
+<script>
 
-  </script>
+const imageInput = document.getElementById("groupImage");
+const preview = document.getElementById("previewImage");
+const circle = document.querySelector(".image-circle");
+const uploadText = document.querySelector(".group-image p");
+const inviteSection = document.getElementById("inviteSection");
+
+let selectedImage = "";
+
+// رفع الصورة
+circle.onclick = () => imageInput.click();
+uploadText.onclick = () => imageInput.click();
+
+imageInput.onchange = function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        selectedImage = e.target.result;
+
+        preview.src = selectedImage;
+        preview.style.display = "block";
+
+        const icon = document.querySelector(".camera-icon");
+
+        if (icon) icon.style.display = "none";
+
+    };
+
+    reader.readAsDataURL(file);
+
+};
+
+// إظهار وإخفاء Invite Link
+document.querySelectorAll("input[name='privacy']").forEach(r => {
+
+    r.addEventListener("change", () => {
+
+        if (document.querySelector("input[value='private']").checked) {
+
+            inviteSection.style.display = "block";
+
+        } else {
+
+            inviteSection.style.display = "none";
+
+        }
+
+    });
+
+});
+
+// حفظ القروب
+document.querySelector(".create-btn").addEventListener("click", function () {
+
+    const groupName = document.getElementById("groupName").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const members = document.querySelector("input[type='number']").value;
+    const privacy = document.querySelector("input[name='privacy']:checked").value;
+    const invite = document.querySelector("#inviteSection input").value;
+
+    if (groupName === "") {
+
+        alert("Please enter group name.");
+        return;
+
+    }
+
+    if (members === "") {
+
+        alert("Please enter maximum members.");
+        return;
+
+    }
+
+    const group = {
+
+        name: groupName,
+        description: description,
+        members: members,
+        privacy: privacy,
+        invite: invite,
+        image: selectedImage
+
+    };
+
+    let groups = JSON.parse(localStorage.getItem("veloraGroups")) || [];
+
+    groups.push(group);
+
+    localStorage.setItem("veloraGroups", JSON.stringify(groups));
+
+    alert("Group created successfully!");
+
+});
+// ---------- Invite Link ----------
+
+const inviteInput =
+document.querySelector("#inviteSection input");
+
+const copyButton =
+document.querySelectorAll(".invite-buttons button")[0];
+
+const newButton =
+document.querySelectorAll(".invite-buttons button")[1];
+
+function generateCode(){
+
+const chars =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+let code="";
+
+for(let i=0;i<6;i++){
+
+code+=chars.charAt(
+Math.floor(Math.random()*chars.length)
+);
+
+}
+
+return code;
+
+}
+
+function generateInvite(){
+
+inviteInput.value =
+"velora.app/group/"+generateCode();
+
+}
+
+generateInvite();
+
+newButton.addEventListener("click",function(){
+
+generateInvite();
+
+});
+
+copyButton.addEventListener("click",function(){
+
+navigator.clipboard.writeText(
+inviteInput.value
+);
+
+copyButton.innerText="Copied ✓";
+
+setTimeout(function(){
+
+copyButton.innerText="Copy Link";
+
+},1500);
+
+});
+</script>
+  
 </body>
 </html>
